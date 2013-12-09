@@ -5,19 +5,24 @@ Created on 5 Dec 2013
 '''
 
 import sys
+
 import pygame
 
-pygame.init()
-size = width, height = 1280, 720
-black = 0, 0, 0
+from gg.GGrender import Render
+from gg.GGspaceship import SpaceShip
 
-screen = pygame.display.set_mode(size)
+
+pygame.init()
+render = Render()
+ss = SpaceShip()
 
 while 1:
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             sys.exit()
+        elif event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_o:
+                ss.oxygen = ss.oxygen - 1
 
-screen.fill(black)
-pygame.display.flip()
+    render.render(str(ss.oxygen))
