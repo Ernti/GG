@@ -18,9 +18,9 @@ class Render(object):
 
         self.font = pygame.font.Font(None, 36)
 
-    def render(self, oxygen):
+    def render(self, oxygen, fps):
 
-        self.background = pygame.Surface(self.screen.get_size())
+        self.background = pygame.Surface(self.size)
         self.background = self.background.convert()
         self.background.fill(self.black)
 
@@ -28,6 +28,11 @@ class Render(object):
         self.textpos = self.text.get_rect()
         self.textpos = self.background.get_rect()
         self.background.blit(self.text, self.textpos)
+
+        self.text2 = self.font.render("fps: " + fps, 1, (255, 255, 255))
+        self.text2pos = self.text2.get_rect()
+        self.text2pos.centerx = self.background.get_rect().centerx
+        self.background.blit(self.text2, self.text2pos)
 
         self.screen.blit(self.background, (0, 0))
         pygame.display.flip()

@@ -15,6 +15,7 @@ from gg.GGspaceship import SpaceShip
 pygame.init()
 render = Render()
 ss = SpaceShip()
+clock = pygame.time.Clock()
 
 while 1:
 
@@ -26,5 +27,6 @@ while 1:
                 ss.oxygen = ss.oxygen - 1
         elif event.type == pygame.VIDEORESIZE:
             render.size = event.size
+    clock.tick()
 
-    render.render(str(ss.oxygen))
+    render.render(str(ss.oxygen), str(int(clock.get_fps())))
