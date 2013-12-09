@@ -24,5 +24,7 @@ while 1:
         elif event.type == pygame.KEYDOWN:
             if event.key == pygame.K_o:
                 ss.oxygen = ss.oxygen - 1
+        elif event.type == pygame.VIDEORESIZE:
+            render.size = event.size
 
     render.render(str(ss.oxygen))

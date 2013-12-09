@@ -14,7 +14,7 @@ class Render(object):
         self.size = self.width, self.height = 1280, 720
         self.black = 0, 0, 0
 
-        self.screen = pygame.display.set_mode(self.size)
+        self.screen = pygame.display.set_mode(self.size, pygame.RESIZABLE)
 
         self.font = pygame.font.Font(None, 36)
 
