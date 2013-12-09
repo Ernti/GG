@@ -32,11 +32,14 @@ while 1:
                                                              pygame.RESIZABLE)
                 else:
                     render.fullscreen = True
-                    render.screen = pygame.display.set_mode((0, 0),
+                    render.screen = pygame.display.set_mode(render.fsres,
                                                             pygame.FULLSCREEN |
                                                              pygame.HWSURFACE |
                                                              pygame.DOUBLEBUF)
+            if event.key == pygame.K_d:
+                ss.ssrect = ss.ssrect.move(2, 0)
         elif event.type == pygame.VIDEORESIZE:
+            ss.oxygen = event.w
             if(event.w > 640):
                 render.size = (event.w, int(event.w / 16 * 9))
                 render.screen = pygame.display.set_mode(render.size,
@@ -47,4 +50,4 @@ while 1:
                                                              pygame.RESIZABLE)
     clock.tick()
 
-    render.render(str(ss.oxygen), str(int(clock.get_fps())))
+    render.render(str(ss.oxygen), str(int(clock.get_fps())), ss)
