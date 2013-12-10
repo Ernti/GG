@@ -18,6 +18,8 @@ class UserEvents(object):
         self.d = False
         self.lmsbtn = False
         self.rmsbtn = False
+        self.swdwn = False
+        self.swup = False
 
 
 class Events(object):
@@ -34,6 +36,16 @@ class Events(object):
 
             if event.type == pygame.QUIT:
                 sys.exit()
+
+            elif event.type == pygame.MOUSEBUTTONDOWN:
+
+                if event.dict['button'] == 5:
+                    self.uevents.swdwn = True
+                    print('true')
+
+                if event.dict['button'] == 4:
+                    self.uevents.swup = True
+                    print('true')
 
             elif event.type == pygame.KEYDOWN:
 

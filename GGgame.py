@@ -23,10 +23,11 @@ sg.addObject(ss)
 
 ss.eventtest(events.uevents)
 
+
 while 1:
 
     events.eventLoop()
-    sg.gridLoop()
+    sg.gridLoop(events)
     clock.tick()
 
     render.render(str(ss.oxygen), str(int(clock.get_fps())), sg)

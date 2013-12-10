@@ -31,8 +31,10 @@ class Render(object):
 
         for objects in sg.go.objects:
 
-            self.background.blit(objects.ssimg, objects.ssrect)
-            objects.ssimg.set_colorkey((255, 0, 255))
+            ssimg = pygame.transform.rotozoom(objects.ssimg, 0, sg.z)
+            # objects.ssrect = objects.ssimg.get_rect()
+            ssimg.set_colorkey((255, 0, 255))
+            self.background.blit(ssimg, objects.ssrect)
 
         self.text = self.font.render("Oxygen: " + oxygen, 1, (255, 255, 255))
         self.textpos = self.text.get_rect()
