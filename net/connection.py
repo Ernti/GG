@@ -38,6 +38,10 @@ class Network(object):
 
             stop_requested = True
 
+        except socket.error:
+
+            print("couldn't connect to server!")
+
     def close(self):
 
         self.sock.close()
