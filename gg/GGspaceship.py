@@ -29,14 +29,14 @@ class SpaceShip(object):
 
             self.ssrect = self.ssrect.move(0, -1)
 
-        elif self.uevent.a == True:
+        if self.uevent.a == True:
 
             self.ssrect = self.ssrect.move(-1, 0)
 
-        elif self.uevent.s == True:
+        if self.uevent.s == True:
 
             self.ssrect = self.ssrect.move(0, 1)
 
-        elif self.uevent.d == True:
+        if self.uevent.d == True:
 
             self.ssrect = self.ssrect.move(1, 0)
