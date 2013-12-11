@@ -3,7 +3,6 @@ Created on 9 Dec 2013
 
 @author: tore
 '''
-import sys
 
 import pygame.event
 
