@@ -29,13 +29,15 @@ class Events(object):
         self.uevents = UserEvents()
         self.ss = ss
         self.render = render
+        self.running = True
 
     def eventLoop(self):
 
         for event in pygame.event.get():
 
             if event.type == pygame.QUIT:
-                sys.exit()
+
+                self.running = False
 
             elif event.type == pygame.MOUSEBUTTONDOWN:
 
@@ -93,6 +95,10 @@ class Events(object):
 
                 elif event.key == pygame.K_d:
                     self.uevents.d = False
+
+            elif event.type == 25:
+
+                print('tick')
 
             elif event.type == pygame.VIDEORESIZE:
                 self.ss.oxygen = event.w

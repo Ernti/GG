@@ -4,30 +4,20 @@ Created on 5 Dec 2013
 @author: tore
 '''
 
-import pygame
+import sys
 
-from gg.GGevents import Events
-from gg.GGgrid import SpaceGrid
-from gg.GGrender import Render
-from gg.GGspaceship import SpaceShip
+from gg.GGcore import GGcore
+from net.connection import Network
 
 
-pygame.init()
-render = Render()
-ss = SpaceShip()
-events = Events(ss, render)
-clock = pygame.time.Clock()
-
-sg = SpaceGrid()
-sg.addObject(ss)
-
-ss.eventtest(events.uevents)
+net = Network()
+net.connect()
 
 
-while 1:
+if net.connected == True:
 
-    events.eventLoop()
-    sg.gridLoop(events)
-    clock.tick()
+    game = GGcore()
+    game.gameLoop()
 
-    render.render(str(ss.oxygen), str(int(clock.get_fps())), sg)
+net.close()
+sys.exit()
