@@ -30,12 +30,13 @@ class Network(object):
 
                 self.connected = True
                 print("connected")
-                self.conthread = ConnectionThread(self.sock)
-                self.conthread.start()
 
             elif data.decode() == "loginerror":
 
                 print("Wrong Username or Password!")
+
+            self.conthread = ConnectionThread(self.sock)
+            self.conthread.start()
 
         except KeyboardInterrupt:
 
@@ -48,7 +49,8 @@ class Network(object):
     def close(self):
 
         print("stopping...")
-        self.conthread._stop()
+        global stop_requested
+        stop_requested = True
         self.sock.close()
 
 
@@ -58,6 +60,7 @@ class ConnectionThread(Thread):
 
         Thread.__init__(self)
         self.sock = socket
+        global stop_requested
 
     def run(self):
         while not stop_requested:

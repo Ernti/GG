@@ -19,17 +19,16 @@ class GGcore(object):
         pygame.init()
         self.render = Render()
         self.ss = SpaceShip()
-        self.events = Events(self.ss, self.render)
-        self.clock = pygame.time.Clock()
-
         self.sg = SpaceGrid()
         self.sg.addObject(self.ss)
+        self.events = Events(self.ss, self.sg, self.render)
+        self.clock = pygame.time.Clock()
 
         self.ss.eventtest(self.events.uevents)
 
         GAMETICK = 25
         pygame.event.Event(GAMETICK)
-        pygame.time.set_timer(GAMETICK, 1000)
+        pygame.time.set_timer(GAMETICK, 100)
 
     def gameLoop(self):
 

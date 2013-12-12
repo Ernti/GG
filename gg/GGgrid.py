@@ -16,10 +16,6 @@ class SpaceGrid(object):
 
     def gridLoop(self, events):
 
-        for objects in self.go.objects:
-
-            objects.move()
-
         if events.uevents.swdwn == True:
 
             print('test')

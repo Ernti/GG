@@ -23,10 +23,11 @@ class UserEvents(object):
 
 class Events(object):
 
-    def __init__(self, ss, render):
+    def __init__(self, ss, sg, render):
 
         self.uevents = UserEvents()
         self.ss = ss
+        self.sg = sg
         self.render = render
         self.running = True
 
@@ -98,6 +99,9 @@ class Events(object):
             elif event.type == 25:
 
                 print('tick')
+                for objects in self.sg.go.objects:
+
+                        objects.move()
 
             elif event.type == pygame.VIDEORESIZE:
                 self.ss.oxygen = event.w
