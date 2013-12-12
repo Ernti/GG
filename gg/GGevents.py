@@ -103,6 +103,12 @@ class Events(object):
 
                         objects.move()
 
+            elif event.type == pygame.USEREVENT:
+
+                if event.data == "QUIT":
+
+                    self.running = False
+
             elif event.type == pygame.VIDEORESIZE:
                 self.ss.oxygen = event.w
 

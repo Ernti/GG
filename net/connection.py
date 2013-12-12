@@ -8,6 +8,9 @@ import json
 import socket
 from threading import Thread
 
+import pygame.event
+
+
 stop_requested = False
 
 
@@ -30,13 +33,12 @@ class Network(object):
 
                 self.connected = True
                 print("connected")
+                self.conthread = ConnectionThread(self.sock)
+                self.conthread.start()
 
             elif data.decode() == "loginerror":
 
                 print("Wrong Username or Password!")
-
-            self.conthread = ConnectionThread(self.sock)
-            self.conthread.start()
 
         except KeyboardInterrupt:
 
@@ -49,8 +51,8 @@ class Network(object):
     def close(self):
 
         print("stopping...")
-        global stop_requested
-        stop_requested = True
+        if self.connected == True:
+            self.conthread._stop()
         self.sock.close()
 
 
@@ -63,9 +65,20 @@ class ConnectionThread(Thread):
         global stop_requested
 
     def run(self):
+        global stop_requested
         while not stop_requested:
-            data = self.sock.recv(1024)
-            if data == "shutdown":
-                self.sock.close()
+            try:
+                data = self.sock.recv(1024)
+                if data.decode() == "shutdown":
+                    pygame.event.post(pygame.event.Event(pygame.USEREVENT,
+                                                         {'data': 'QUIT'}))
+                    stop_requested = True
 
-            print(data.decode())
+                    print(data.decode())
+
+            except socket.error:
+
+                print("Connection Lost!")
+                pygame.event.post(pygame.event.Event(pygame.USEREVENT,
+                                                    {'data': 'QUIT'}))
+                stop_requested = True
