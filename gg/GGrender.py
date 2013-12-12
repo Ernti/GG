@@ -4,6 +4,8 @@ Created on 9 Dec 2013
 @author: tore
 '''
 
+import os.path
+
 import pygame
 
 
@@ -18,7 +20,8 @@ class Render(object):
         self.screen.set_colorkey((255, 0, 255))
         pygame.display.set_caption('GG')
 
-        self.font = pygame.font.Font(None, 36)
+        fontpath = os.path.join(".", "gg", "data", "fonts", "arial.ttf")
+        self.font = pygame.font.Font(fontpath, 36)
 
         self.fullscreen = False
         self.fsres = (1920, 1080)

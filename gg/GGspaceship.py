@@ -3,6 +3,8 @@ Created on 8 Dec 2013
 
 @author: tore
 '''
+import os.path
+
 import pygame.image
 
 
@@ -10,9 +12,11 @@ class SpaceShip(object):
 
     def __init__(self):
 
+        ssimgpath = os.path.join(".", "gg", "data", "gfx", "ss1.bmp")
+
         self.oxygen = 100
         self.hull = 0
-        self.ssimg = pygame.image.load("./gg/data/gfx/ss1.bmp").convert()
+        self.ssimg = pygame.image.load(ssimgpath).convert()
         self.ssrect = self.ssimg.get_rect()
         self.x = 0
         self.y = 0
