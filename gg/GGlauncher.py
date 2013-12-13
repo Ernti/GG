@@ -5,20 +5,24 @@ Created on 11.12.2013
 '''
 import pygame
 import sys
+import os
 
 pygame.init()
 
 class GGlauncher():
     
-    launcherScreen = pygame.display.set_mode((0,0))
+    tbimgpath = os.path.join(".", "gg", "data", "gfx", "TestButton.png")
     
-    def __init__(self,launcherScreen):
-        launcherScreen = pygame.display.set_mode((300,500), pygame.NOFRAME)
-        launcherScreen = pygame.display.set_caption("GGLauncher")
+    def __init__(self):
+        self.launcherScreen = pygame.display.set_mode((300,500), pygame.NOFRAME)
+        self.launcherScreen = pygame.display.set_caption("GGLauncher")
         
     def launcherLoop(self):
         launcherUp = True
-        paintButtons = True
+        
+        self.background = pygame.Surface((300,500))
+        self.background = self.background.convert()
+        
         clock = pygame.time.Clock()
         
         while launcherUp == True:
@@ -38,13 +42,15 @@ class GGlauncher():
                         launcherUp = False
                         sys.exit()
                         
-                if launcherUp == paintButtons:
-                    self.launcherScreen.fill((255,255,255))
+            self.background.fill((255,255,255))
                     
-                    pygame.draw.rect(self.launcherScreen, (0,0,0), [200, 410, 75, 50])    
-                    pygame.draw.rect(self.launcherScreen, (0,0,0), [200, 350, 75, 50])
+            #pygame.image.load(self.tbimgpath).convert()
+                    #pygame.draw.rect(self.launcherScreen, (0,0,0), [200, 410, 75, 50])    
+            pygame.draw.rect(self.background, (255,0,0), [200, 350, 75, 50])
             
-                    pygame.display.flip()
             
-                    clock.tick(20)
+            self.launcherScreen.blit(self.background,(0,0))
+            pygame.display.flip()
+            
+            clock.tick(20)
             

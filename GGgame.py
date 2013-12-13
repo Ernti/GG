@@ -10,7 +10,7 @@ from gg.GGcore import GGcore
 from net.connection import Network
 from gg.GGlauncher import GGlauncher
 
-launcher = GGlauncher(GGlauncher.launcherScreen)
+launcher = GGlauncher()
 launcher.launcherLoop()
 
 net = Network()
