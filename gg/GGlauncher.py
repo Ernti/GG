@@ -11,12 +11,14 @@ pygame.init()
 
 class GGlauncher():
     
-    tbimgpath = os.path.join(".", "gg", "data", "gfx", "TestButton.png")
+    lbimgpath = os.path.join(".", "gg", "data", "gfx", "LoginButton.png")
+    ebimgpath = os.path.join(".", "gg", "data", "gfx", "ExitButton.png")
     
     def __init__(self):
         self.launcherScreen = pygame.display.set_mode((300,500), pygame.NOFRAME)
         pygame.display.set_caption("GGLauncher")
-        self.tbimg = pygame.image.load(self.tbimgpath).convert()
+        self.lbimg = pygame.image.load(self.lbimgpath).convert()
+        self.ebimg = pygame.image.load(self.ebimgpath).convert()
         
     def launcherLoop(self):
         launcherUp = True
@@ -43,14 +45,10 @@ class GGlauncher():
                         launcherUp = False
                         sys.exit()
                         
-            self.background.fill((255,255,255))
-                    
-            
-            self.background.blit(self.tbimg,(200,350))
-            #pygame.draw.rect(self.launcherScreen, (0,0,0), [200, 410, 75, 50])    
-            #pygame.draw.rect(self.background, (255,0,0), [200, 350, 75, 50])
-            
-            
+            self.background.fill((255,255,255))     
+            self.background.blit(self.lbimg,(200,350))
+            self.background.blit(self.ebimg,(200,410))
+               
             self.launcherScreen.blit(self.background,(0,0))
             pygame.display.flip()
             
