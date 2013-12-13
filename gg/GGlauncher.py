@@ -15,7 +15,8 @@ class GGlauncher():
     
     def __init__(self):
         self.launcherScreen = pygame.display.set_mode((300,500), pygame.NOFRAME)
-        self.launcherScreen = pygame.display.set_caption("GGLauncher")
+        pygame.display.set_caption("GGLauncher")
+        self.tbimg = pygame.image.load(self.tbimgpath).convert()
         
     def launcherLoop(self):
         launcherUp = True
@@ -35,18 +36,19 @@ class GGlauncher():
                     print(x, end=", ")
                     print(y)
                     
-                    if (x > 200) & (x < 250) & (y > 350) & (y < 400):
+                    if (x > 200) & (x < 275) & (y > 350) & (y < 400):
                         launcherUp = False
                         
-                    if (x > 200) & (x < 250) & (y > 410) & (y < 460):
+                    if (x > 200) & (x < 275) & (y > 410) & (y < 460):
                         launcherUp = False
                         sys.exit()
                         
             self.background.fill((255,255,255))
                     
-            #pygame.image.load(self.tbimgpath).convert()
-                    #pygame.draw.rect(self.launcherScreen, (0,0,0), [200, 410, 75, 50])    
-            pygame.draw.rect(self.background, (255,0,0), [200, 350, 75, 50])
+            
+            self.background.blit(self.tbimg,(200,350))
+            #pygame.draw.rect(self.launcherScreen, (0,0,0), [200, 410, 75, 50])    
+            #pygame.draw.rect(self.background, (255,0,0), [200, 350, 75, 50])
             
             
             self.launcherScreen.blit(self.background,(0,0))
