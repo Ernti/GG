@@ -12,5 +12,5 @@ class Player(GridObject):
 
         super(GridObject, self).__init__()
 
-        self.x = 0
-        self.y = 0
+        self.x = 640
+        self.y = 360
