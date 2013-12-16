@@ -26,7 +26,7 @@ class Render(object):
         self.fullscreen = False
         self.fsres = (1920, 1080)
 
-    def render(self, oxygen, fps, sg):
+    def render(self, oxygen, fps, sg, player):
 
         self.background = pygame.Surface(self.size)
         self.background = self.background.convert()
@@ -34,10 +34,15 @@ class Render(object):
 
         for objects in sg.go.objects:
 
-            ssimg = pygame.transform.rotozoom(objects.ssimg, 0, sg.z)
+            if (objects.x > (player.x - (self.width / 2))) and (objects.x < (player.x + self.width / 2)):
+
+                if (objects.y > (player.y - (self.height / 2))) and (objects.y < (player.y + (self.height / 2))):
+                    objects.render(self.background)
+
+            # ssimg = pygame.transform.rotozoom(objects.ssimg, 0, sg.z)
             # objects.ssrect = objects.ssimg.get_rect()
-            ssimg.set_colorkey((255, 0, 255))
-            self.background.blit(ssimg, objects.ssrect)
+            # ssimg.set_colorkey((255, 0, 255))
+            # self.background.blit(ssimg, objects.ssrect)
 
         self.text = self.font.render("Oxygen: " + oxygen, 1, (255, 255, 255))
         self.textpos = self.text.get_rect()

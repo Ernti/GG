@@ -5,9 +5,9 @@ Created on 9 Dec 2013
 '''
 
 
-class SpaceGrid(object):
+class SpaceGrid:
 
-    def __init__(self):
+    def __init__(self, x, y):
 
         self.go = GridObjects()
         self.x = 0
