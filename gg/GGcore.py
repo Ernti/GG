@@ -37,7 +37,6 @@ class GGcore(object):
         while self.events.running:
 
             self.events.eventLoop()
-            self.sg.gridLoop(self.events)
             self.clock.tick()
 
             self.render.render(str(self.ss.oxygen),

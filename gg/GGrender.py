@@ -34,13 +34,14 @@ class Render(object):
 
         for objects in sg.go.objects:
 
-            if (objects.x > (player.x - self.width)) and (objects.x < player.x + objects.rect.w):
+            if (objects.rect.x > 0 - objects.rect.w) and (objects.rect.x < self.width):
 
-                if (objects.y > (player.y - self.height)) and (objects.y < (player.y + objects.rect.h)):
+                if (objects.rect.y > 0 - objects.rect.h) and (objects.rect.y < self.height):
                     objects.render(self.background)
                     print('rendered')
-                    print(objects.x)
-                    print(player.x)
+            print(objects.x)
+            print(objects.rect.x)
+            print(player.x)
 
             # ssimg = pygame.transform.rotozoom(objects.ssimg, 0, sg.z)
             # objects.ssrect = objects.ssimg.get_rect()
