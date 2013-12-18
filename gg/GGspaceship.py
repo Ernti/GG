@@ -10,7 +10,7 @@ import pygame.image
 
 class SpaceShip(object):
 
-    def __init__(self):
+    def __init__(self, x, y):
 
         ssimgpath = os.path.join(".", "gg", "data", "gfx", "ss1.bmp")
 
@@ -18,8 +18,8 @@ class SpaceShip(object):
         self.hull = 0
         self.img = pygame.image.load(ssimgpath).convert()
         self.rect = self.img.get_rect()
-        self.x = 0
-        self.y = 0
+        self.x = x
+        self.y = y
 
     def eventtest(self, uevent):
 
@@ -27,31 +27,35 @@ class SpaceShip(object):
 
     def move(self):
 
-        if self.uevent.w == True:
+        if self.uevent is not None:
 
-            print('test')
+            if self.uevent.w == True:
 
-            self.y -= 1
+                print('test')
 
-            # self.rect = self.rect.move(0, -1)
+                self.y -= 1
 
-        if self.uevent.a == True:
+                # self.rect = self.rect.move(0, -1)
 
-            self.x -= 1
+            if self.uevent.a == True:
 
-            # self.rect = self.rect.move(-1, 0)
+                self.x -= 1
 
-        if self.uevent.s == True:
+                # self.rect = self.rect.move(-1, 0)
 
-            self.y += 1
+            if self.uevent.s == True:
 
-            # self.rect = self.rect.move(0, 1)
+                self.y += 1
 
-        if self.uevent.d == True:
+                # self.rect = self.rect.move(0, 1)
 
-            self.x += 1
+            if self.uevent.d == True:
 
-            # self.rect = self.rect.move(1, 0)
+                self.x += 1
+
+                # self.rect = self.rect.move(1, 0)
+
+            pygame.event.post(pygame.event.Event(26, {'type': 'playermoved', 'x': self.x, 'y': self.y}))
 
     def render(self, background):
 

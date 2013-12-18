@@ -6,6 +6,7 @@ Created on 11 Dec 2013
 
 import pygame
 
+from gg.GGcoreinterface import GGCI
 from gg.GGevents import Events
 from gg.GGgrid import SpaceGrid
 from gg.GGplayer import Player
@@ -18,12 +19,13 @@ class GGcore(object):
     def __init__(self):
 
         pygame.init()
-        self.render = Render()
-        self.ss = SpaceShip()
+        self.ggci = GGCI()
+        self.render = Render(self.ggci)
+        self.ss = SpaceShip(0, 0)
         self.player = Player()
         self.sg = SpaceGrid(0, 0)
-        self.sg.addObject(self.ss)
-        self.events = Events(self.ss, self.sg, self.render, self.player)
+        self.ggci.objectlist.addObject(self.ss)
+        self.events = Events(self.ggci, self.ss, self.sg, self.render, self.player)
         self.clock = pygame.time.Clock()
 
         self.ss.eventtest(self.events.uevents)

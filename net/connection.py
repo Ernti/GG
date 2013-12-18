@@ -69,16 +69,27 @@ class ConnectionThread(Thread):
         while not stop_requested:
             try:
                 data = self.sock.recv(1024)
+                data_json = json.loads(data.decode())
                 if data.decode() == "shutdown":
                     pygame.event.post(pygame.event.Event(pygame.USEREVENT,
-                                                         {'data': 'QUIT'}))
+                                                         {'type': 'QUIT'}))
                     stop_requested = True
 
                     print(data.decode())
+
+                elif data_json['type'] == 'newspaceobject':
+
+                    pygame.event.post(pygame.event.Event(pygame.USEREVENT, data_json))
+
+                for event in pygame.event.get(26):
+
+                    if event.type == 26:
+
+                        self.sock.send(json.dumps(event.dict).encode())
 
             except socket.error:
 
                 print("Connection Lost!")
                 pygame.event.post(pygame.event.Event(pygame.USEREVENT,
-                                                    {'data': 'QUIT'}))
+                                                    {'type': 'QUIT'}))
                 stop_requested = True

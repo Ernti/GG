@@ -11,7 +11,9 @@ import pygame
 
 class Render(object):
 
-    def __init__(self):
+    def __init__(self, ggci):
+
+        self.ggci = ggci
 
         self.size = self.width, self.height = 1280, 720
         self.black = 0, 0, 0
@@ -32,7 +34,7 @@ class Render(object):
         self.background = self.background.convert()
         self.background.fill(self.black)
 
-        for objects in sg.go.objects:
+        for objects in self.ggci.objectlist.objectlist:
 
             if (objects.rect.x > 0 - objects.rect.w) and (objects.rect.x < self.width):
 
@@ -60,3 +62,7 @@ class Render(object):
 
         self.screen.blit(self.background, (0, 0))
         pygame.display.flip()
+
+        # testing
+
+        # pygame.display.update(self.ggci.objectlist.updatelist)

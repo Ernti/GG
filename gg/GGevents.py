@@ -6,6 +6,8 @@ Created on 9 Dec 2013
 
 import pygame.event
 
+from gg.GGspaceship import SpaceShip
+
 
 class UserEvents(object):
 
@@ -23,8 +25,9 @@ class UserEvents(object):
 
 class Events(object):
 
-    def __init__(self, ss, sg, render, player):
+    def __init__(self, ggci, ss, sg, render, player):
 
+        self.ggci = ggci
         self.uevents = UserEvents()
         self.ss = ss
         self.player = player
@@ -34,7 +37,10 @@ class Events(object):
 
     def eventLoop(self):
 
-        for event in pygame.event.get():
+        for event in pygame.event.get([pygame.QUIT, pygame.KEYDOWN,
+                                       pygame.KEYUP, pygame.USEREVENT,
+                                       25, pygame.MOUSEMOTION,
+                                       pygame.VIDEORESIZE]):
 
             if event.type == pygame.QUIT:
 
@@ -128,22 +134,29 @@ class Events(object):
 
                 print('tick')
 
-
-                for objects in self.sg.go.objects:
+                for objects in self.ggci.objectlist.objectlist:
 
                         objects.move()
 
             elif event.type == pygame.USEREVENT:
 
-                if event.data == "QUIT":
+                data = event.dict
+                if data['type'] == 'QUIT':
 
                     self.running = False
+
+                elif data['type'] == 'newspaceobject':
+
+                    if data['spaceobjecttype'] == 'ss':
+
+                        spaceship = SpaceShip(data['x'], data['y'])
+                        self.ggci.objectlist.addObject(spaceship)
 
             elif event.type == pygame.VIDEORESIZE:
                 self.ss.oxygen = event.w
 
                 if(event.w > 640):
-                    self.render.size = (event.w, int(event.w / 16 * 9))
+                    self.render.size = self.render.width, self.render.height = (event.w, int(event.w / 16 * 9))
                     self.render.screen = pygame.display. \
                     set_mode(self.render.size,
                             pygame.RESIZABLE)
@@ -154,7 +167,13 @@ class Events(object):
                     set_mode(self.render.size,
                             pygame.RESIZABLE)
 
-        for objects in self.sg.go.objects:
+        for objects in self.ggci.objectlist.objectlist:
 
+            lastx = objects.rect.x
             objects.rect.x = objects.x + self.player.x
             objects.rect.y = objects.y + self.player.y
+
+            if lastx != objects.rect.x:
+
+                self.ggci.objectlist.addUpdateRect(objects.rect)
+
