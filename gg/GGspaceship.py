@@ -10,10 +10,11 @@ import pygame.image
 
 class SpaceShip(object):
 
-    def __init__(self, x, y):
+    def __init__(self, ssid, x, y):
 
         ssimgpath = os.path.join(".", "gg", "data", "gfx", "ss1.bmp")
 
+        self.id = ssid
         self.oxygen = 100
         self.hull = 0
         self.img = pygame.image.load(ssimgpath).convert()
@@ -55,7 +56,10 @@ class SpaceShip(object):
 
                 # self.rect = self.rect.move(1, 0)
 
-            pygame.event.post(pygame.event.Event(26, {'type': 'playermoved', 'x': self.x, 'y': self.y}))
+            pygame.event.post(pygame.event.Event(26, {'type': 'playermoved',
+                                                      'soid': self.id,
+                                                      'x': self.x,
+                                                      'y': self.y}))
 
     def render(self, background):
 

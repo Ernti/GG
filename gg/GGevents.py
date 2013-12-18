@@ -149,8 +149,19 @@ class Events(object):
 
                     if data['spaceobjecttype'] == 'ss':
 
-                        spaceship = SpaceShip(data['x'], data['y'])
+                        spaceship = SpaceShip(data['soid'],
+                                              data['x'],
+                                              data['y'])
                         self.ggci.objectlist.addObject(spaceship)
+
+                elif data['type'] == 'spaceobjectmoved':
+
+                    for objects in self.ggci.objectlist.objectlist:
+
+                        if objects.id == data['soid']:
+
+                            objects.x = data['x']
+                            objects.y = data['y']
 
             elif event.type == pygame.VIDEORESIZE:
                 self.ss.oxygen = event.w

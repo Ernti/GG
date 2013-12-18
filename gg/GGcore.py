@@ -21,7 +21,7 @@ class GGcore(object):
         pygame.init()
         self.ggci = GGCI()
         self.render = Render(self.ggci)
-        self.ss = SpaceShip(0, 0)
+        self.ss = SpaceShip(-1, 0, 0)
         self.player = Player()
         self.sg = SpaceGrid(0, 0)
         self.ggci.objectlist.addObject(self.ss)

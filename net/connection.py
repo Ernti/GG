@@ -79,7 +79,13 @@ class ConnectionThread(Thread):
 
                 elif data_json['type'] == 'newspaceobject':
 
-                    pygame.event.post(pygame.event.Event(pygame.USEREVENT, data_json))
+                    pygame.event.post(pygame.event.Event(pygame.USEREVENT,
+                                                         data_json))
+
+                elif data_json['type'] == 'spaceobjectmoved':
+
+                    pygame.event.post(pygame.event.Event(pygame.USEREVENT,
+                                                         data_json))
 
                 for event in pygame.event.get(26):
 
