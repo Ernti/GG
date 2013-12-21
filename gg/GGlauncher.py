@@ -19,6 +19,11 @@ class GGlauncher():
         pygame.display.set_caption("GGLauncher")
         self.lbimg = pygame.image.load(self.lbimgpath).convert()
         self.ebimg = pygame.image.load(self.ebimgpath).convert()
+        self.canTypeLoginName = False
+        self.loginName = ""
+        self.myFont = pygame.font.SysFont("monospace", 15)
+        self.countLetters = 0
+        
 
     def launcherLoop(self):
         launcherUp = True
@@ -44,10 +49,24 @@ class GGlauncher():
                     if (x > 200) & (x < 275) & (y > 410) & (y < 460):
                         launcherUp = False
                         sys.exit()
-
-            self.background.fill((255, 255, 255))
+                        
+                    if (x > 25) & (x < 175) & (y > 350) & (y < 375):
+                        self.canTypeLoginName = True
+                        
+                if (event.type == pygame.KEYDOWN) & (self.canTypeLoginName == True) & (self.countLetters <=7):
+                    self.loginName += pygame.key.name(event.key)
+                    print(self.loginName)
+                    self.countLetters += 1
+                    
+            self.printFont = self.myFont.render(self.loginName, 1, (0,0,0))
+            
+            self.background.fill((0, 0, 0))
             self.background.blit(self.lbimg, (200, 350))
             self.background.blit(self.ebimg, (200, 410))
+            
+            pygame.draw.rect(self.background, (255,255,255), (25,350,150,25))
+            
+            self.background.blit(self.printFont,(27,355))
 
             self.launcherScreen.blit(self.background, (0, 0))
             pygame.display.flip()
