@@ -60,7 +60,20 @@ class GGlauncher():
                         self.canTypeLoginName = True
                         
                 if (event.type == pygame.KEYDOWN) & (self.canTypeLoginName == True) & (self.countLetters <=7):
-                    if (event.key != pygame.K_BACKSPACE):
+                    
+                    #Numbers from 0-9 & Letters from a-z
+                    if (event.key == pygame.K_0) | (event.key == pygame.K_1) | (event.key == pygame.K_2) \
+                    | (event.key == pygame.K_3) | (event.key == pygame.K_4) | (event.key == pygame.K_5) \
+                    | (event.key == pygame.K_6) | (event.key == pygame.K_7) | (event.key == pygame.K_8) \
+                    | (event.key == pygame.K_9) | (event.key == pygame.K_a) | (event.key == pygame.K_b) \
+                    | (event.key == pygame.K_c) | (event.key == pygame.K_d) | (event.key == pygame.K_e) \
+                    | (event.key == pygame.K_f) | (event.key == pygame.K_g) | (event.key == pygame.K_h) \
+                    | (event.key == pygame.K_i) | (event.key == pygame.K_j) | (event.key == pygame.K_k) \
+                    | (event.key == pygame.K_l) | (event.key == pygame.K_m) | (event.key == pygame.K_n) \
+                    | (event.key == pygame.K_o) | (event.key == pygame.K_p) | (event.key == pygame.K_o) \
+                    | (event.key == pygame.K_r) | (event.key == pygame.K_s) | (event.key == pygame.K_t) \
+                    | (event.key == pygame.K_u) | (event.key == pygame.K_v) | (event.key == pygame.K_w) \
+                    | (event.key == pygame.K_x) | (event.key == pygame.K_y) | (event.key == pygame.K_z):
                         self.loginName += pygame.key.name(event.key)
                         print(self.loginName)
                         self.countLetters += 1
