@@ -15,10 +15,16 @@ class GGlauncher():
     ebimgpath = os.path.join(".", "gg", "data", "gfx", "ExitButton.png")
 
     def __init__(self):
+        
+        #Entire Screen
         self.launcherScreen = pygame.display.set_mode((300, 500), pygame.NOFRAME)
         pygame.display.set_caption("GGLauncher")
+        
+        #Images to render
         self.lbimg = pygame.image.load(self.lbimgpath).convert()
         self.ebimg = pygame.image.load(self.ebimgpath).convert()
+        
+        #Login Variables
         self.canTypeLoginName = False
         self.loginName = ""
         self.myFont = pygame.font.SysFont("monospace", 15)
@@ -54,10 +60,17 @@ class GGlauncher():
                         self.canTypeLoginName = True
                         
                 if (event.type == pygame.KEYDOWN) & (self.canTypeLoginName == True) & (self.countLetters <=7):
-                    self.loginName += pygame.key.name(event.key)
-                    print(self.loginName)
-                    self.countLetters += 1
+                    if (event.key != pygame.K_BACKSPACE):
+                        self.loginName += pygame.key.name(event.key)
+                        print(self.loginName)
+                        self.countLetters += 1
                     
+                if (event.type == pygame.KEYDOWN) & (self.canTypeLoginName == True) & (self.countLetters > 0):
+                    if (event.key == pygame.K_BACKSPACE):
+                        self.loginName = self.loginName[:-1]
+                        print(self.loginName)
+                        self.countLetters -= 1    
+
             self.printFont = self.myFont.render(self.loginName, 1, (0,0,0))
             
             self.background.fill((0, 0, 0))
