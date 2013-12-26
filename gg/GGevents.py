@@ -123,15 +123,6 @@ class Events(object):
                 elif event.key == pygame.K_d:
                     self.uevents.d = False
 
-            elif self.uevents.lmsbtn == True:
-
-                    if event.type == pygame.MOUSEMOTION:
-
-                        self.player.x += event.rel[0]
-                        self.player.y += event.rel[1]
-
-                        print(event.rel)
-
             elif event.type == 25:
 
                 print('tick')
@@ -180,3 +171,11 @@ class Events(object):
                     set_mode(self.render.size,
                             pygame.RESIZABLE)
 
+            if self.uevents.lmsbtn == True:
+
+                if event.type == pygame.MOUSEMOTION:
+
+                    self.player.x += event.rel[0]
+                    self.player.y += event.rel[1]
+
+                    print(event.rel)

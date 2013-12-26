@@ -32,7 +32,7 @@ class GGcore(object):
 
         GAMETICK = 25
         pygame.event.Event(GAMETICK)
-        pygame.time.set_timer(GAMETICK, 100)
+        pygame.time.set_timer(GAMETICK, 10)
 
     def gameLoop(self):
 

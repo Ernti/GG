@@ -22,7 +22,7 @@ class SpaceShip(object):
         self.rect = self.img.get_rect()
         self.x = x
         self.y = y
-        self.angle = 90
+        self.angle = 0
         self.speed = 1
 
 
@@ -38,8 +38,6 @@ class SpaceShip(object):
         self.velocity_x = (self.speed * self.scale_x)
         self.velocity_y = (self.speed * self.scale_y)
 
-        self.x = self.x + self.velocity_x
-        self.y = self.y + self.velocity_y
         print(self.x, self.y)
 
         if self.uevent is not None:
@@ -47,6 +45,9 @@ class SpaceShip(object):
             if self.uevent.w == True:
 
                 print('test')
+
+                self.x = self.x + self.velocity_x
+                self.y = self.y + self.velocity_y
 
                 # self.y -= 10
 
@@ -78,11 +79,12 @@ class SpaceShip(object):
 #                                                 'x': self.x,
 #                                                 'y': self.y}))
 
-    def render(self, background):
+    def render(self, background, player):
 
         # self.img = pygame.transform.rotozoom(self.img, 0, 1)
         # objects.ssrect = objects.ssimg.get_rect()
-        self.rect.x = self.x
-        self.rect.y = self.y
+        self.rect.x = self.x + player.x
+        self.rect.y = self.y + player.y
+
         self.img.set_colorkey((255, 0, 255))
         background.blit(self.img, self.rect)

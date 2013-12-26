@@ -36,7 +36,7 @@ class Render(object):
 
         for objects in self.ggci.objectlist.objectlist:
 
-            objects.render(self.background)
+            objects.render(self.background, player)
             print('rendered')
             print('rect.x ', objects.rect.x)
             print(player.x)
