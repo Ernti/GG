@@ -39,7 +39,9 @@ class Events(object):
 
         for event in pygame.event.get([pygame.QUIT, pygame.KEYDOWN,
                                        pygame.KEYUP, pygame.USEREVENT,
-                                       25, pygame.MOUSEMOTION,
+                                       25, pygame.MOUSEBUTTONDOWN,
+                                       pygame.MOUSEBUTTONUP,
+                                       pygame.MOUSEMOTION,
                                        pygame.VIDEORESIZE]):
 
             if event.type == pygame.QUIT:
@@ -177,14 +179,4 @@ class Events(object):
                     self.render.screen = pygame.display. \
                     set_mode(self.render.size,
                             pygame.RESIZABLE)
-
-        for objects in self.ggci.objectlist.objectlist:
-
-            lastx = objects.rect.x
-            objects.rect.x = objects.x + self.player.x
-            objects.rect.y = objects.y + self.player.y
-
-            if lastx != objects.rect.x:
-
-                self.ggci.objectlist.addUpdateRect(objects.rect)
 

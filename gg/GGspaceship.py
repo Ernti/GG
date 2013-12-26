@@ -3,6 +3,7 @@ Created on 8 Dec 2013
 
 @author: tore
 '''
+import math
 import os.path
 
 import pygame.image
@@ -21,6 +22,9 @@ class SpaceShip(object):
         self.rect = self.img.get_rect()
         self.x = x
         self.y = y
+        self.angle = 90
+        self.speed = 1
+
 
     def eventtest(self, uevent):
 
@@ -28,42 +32,57 @@ class SpaceShip(object):
 
     def move(self):
 
+        self.scale_x = math.cos(math.radians(self.angle))
+        self.scale_y = math.sin(math.radians(self.angle))
+
+        self.velocity_x = (self.speed * self.scale_x)
+        self.velocity_y = (self.speed * self.scale_y)
+
+        self.x = self.x + self.velocity_x
+        self.y = self.y + self.velocity_y
+        print(self.x, self.y)
+
         if self.uevent is not None:
 
             if self.uevent.w == True:
 
                 print('test')
 
-                self.y -= 1
+                # self.y -= 10
 
                 # self.rect = self.rect.move(0, -1)
 
             if self.uevent.a == True:
 
-                self.x -= 1
+                # self.x -= 10
+
+                self.angle -= 1
 
                 # self.rect = self.rect.move(-1, 0)
 
-            if self.uevent.s == True:
-
-                self.y += 1
-
-                # self.rect = self.rect.move(0, 1)
+#            if self.uevent.s == True:
+#
+#                #self.y += 10
+#
+#                # self.rect = self.rect.move(0, 1)
 
             if self.uevent.d == True:
 
-                self.x += 1
+                # self.x += 10
+
+                self.angle += 1
 
                 # self.rect = self.rect.move(1, 0)
-
-            pygame.event.post(pygame.event.Event(26, {'type': 'playermoved',
-                                                      'soid': self.id,
-                                                      'x': self.x,
-                                                      'y': self.y}))
+#            pygame.event.post(pygame.event.Event(26, {'type': 'playermoved',
+#                                                 'soid': self.id,
+#                                                 'x': self.x,
+#                                                 'y': self.y}))
 
     def render(self, background):
 
         # self.img = pygame.transform.rotozoom(self.img, 0, 1)
         # objects.ssrect = objects.ssimg.get_rect()
+        self.rect.x = self.x
+        self.rect.y = self.y
         self.img.set_colorkey((255, 0, 255))
         background.blit(self.img, self.rect)

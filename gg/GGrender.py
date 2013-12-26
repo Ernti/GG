@@ -36,13 +36,9 @@ class Render(object):
 
         for objects in self.ggci.objectlist.objectlist:
 
-            if (objects.rect.x > 0 - objects.rect.w) and (objects.rect.x < self.width):
-
-                if (objects.rect.y > 0 - objects.rect.h) and (objects.rect.y < self.height):
-                    objects.render(self.background)
-                    print('rendered')
-            print(objects.x)
-            print(objects.rect.x)
+            objects.render(self.background)
+            print('rendered')
+            print('rect.x ', objects.rect.x)
             print(player.x)
 
             # ssimg = pygame.transform.rotozoom(objects.ssimg, 0, sg.z)
