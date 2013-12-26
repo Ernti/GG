@@ -11,18 +11,19 @@ pygame.init()
 
 class GGlauncher():
 
-    lbimgpath = os.path.join(".", "gg", "data", "gfx", "LoginButton.png")
-    ebimgpath = os.path.join(".", "gg", "data", "gfx", "ExitButton.png")
-
+    launcherimgpath = os.path.join(".", "gg", "data", "gfx", "GGLauncher.png")
+    
     def __init__(self):
         
         #Entire Screen
-        self.launcherScreen = pygame.display.set_mode((300, 500), pygame.NOFRAME)
+        self.sizeX = 500
+        self.sizeY = 600
+        self.launcherScreen = pygame.display.set_mode((self.sizeX, self.sizeY), pygame.NOFRAME)
         pygame.display.set_caption("GGLauncher")
         
         #Images to render
-        self.lbimg = pygame.image.load(self.lbimgpath).convert()
-        self.ebimg = pygame.image.load(self.ebimgpath).convert()
+        self.launcherimg = pygame.image.load(self.launcherimgpath).convert()
+        
         
         #Login Variables
         self.canTypeLoginName = False
@@ -30,16 +31,16 @@ class GGlauncher():
         self.loginName = ""
         self.password = ""
         self.passStars = ""
-        self.myFont1 = pygame.font.SysFont("monospace", 15)
-        self.myFont2 = pygame.font.SysFont("monospace", 15)
+        self.myFont = pygame.font.SysFont("monospace", 20)
         self.countLoginLetters = 0
         self.countPassLetters = 0
+        self.shiftIsPressed = False
         
 
     def launcherLoop(self):
         launcherUp = True
 
-        self.background = pygame.Surface((300, 500))
+        self.background = pygame.Surface((self.sizeX, self.sizeY))
         self.background = self.background.convert()
 
         clock = pygame.time.Clock()
@@ -53,27 +54,40 @@ class GGlauncher():
 
                     print(x, end=", ")
                     print(y)
-
-                    if (x > 200) & (x < 275) & (y > 350) & (y < 400):
+                    
+                    
+                    #Usage of Login and Exit Buttons
+                    if (x > 386) & (x < 477) & (y > 416) & (y < 474):
                         launcherUp = False
 
-                    if (x > 200) & (x < 275) & (y > 410) & (y < 460):
+                    if (x > 386) & (x < 477) & (y > 496) & (y < 554):
                         launcherUp = False
                         sys.exit()
-                        
-                    if (x > 25) & (x < 175) & (y > 350) & (y < 375):
+                    
+                    # Whether Password and Username can be entered or not    
+                    if (x > 43) & (x < 271) & (y > 416) & (y < 455):
                         self.canTypeLoginName = True
                     
-                    if (x < 25) | (x > 175) | (y < 350) | (y > 375):
+                    if (x < 43) | (x > 271) | (y < 416) | (y > 455):
                         self.canTypeLoginName = False
                         
-                    if (x > 25) & (x < 175) & (y > 385) & (y < 410):
+                    if (x > 43) & (x < 271) & (y > 476) & (y < 516):
                         self.canTypePassword = True
                         
-                    if (x < 25) | (x > 175) | (y < 385) | (y > 410):
+                    if (x < 43) | (x > 271) | (y < 476) | (y > 516):
                         self.canTypePassword = False
+                
+                
+                if (event.type == pygame.KEYDOWN):
+                    if (event.key == pygame.K_LSHIFT) | (event.key == pygame.K_RSHIFT):
+                        self.shiftIsPressed = True
                         
-                if (event.type == pygame.KEYDOWN) & (self.canTypeLoginName == True) & (self.countLoginLetters <=7):
+                if (event.type == pygame.KEYUP):
+                    if (event.key == pygame.K_LSHIFT) | (event.key == pygame.K_RSHIFT):
+                        self.shiftIsPressed = False
+                
+                #Username-Entering        
+                if (event.type == pygame.KEYDOWN) & (self.canTypeLoginName == True) & (self.countLoginLetters <=15):
                     
                     #Numbers from 0-9 & Letters from a-z
                     if (event.key == pygame.K_0) | (event.key == pygame.K_1) | (event.key == pygame.K_2) \
@@ -84,21 +98,24 @@ class GGlauncher():
                     | (event.key == pygame.K_f) | (event.key == pygame.K_g) | (event.key == pygame.K_h) \
                     | (event.key == pygame.K_i) | (event.key == pygame.K_j) | (event.key == pygame.K_k) \
                     | (event.key == pygame.K_l) | (event.key == pygame.K_m) | (event.key == pygame.K_n) \
-                    | (event.key == pygame.K_o) | (event.key == pygame.K_p) | (event.key == pygame.K_o) \
+                    | (event.key == pygame.K_o) | (event.key == pygame.K_p) | (event.key == pygame.K_q) \
                     | (event.key == pygame.K_r) | (event.key == pygame.K_s) | (event.key == pygame.K_t) \
                     | (event.key == pygame.K_u) | (event.key == pygame.K_v) | (event.key == pygame.K_w) \
                     | (event.key == pygame.K_x) | (event.key == pygame.K_y) | (event.key == pygame.K_z):
-                        self.loginName += pygame.key.name(event.key)
+                        keyHolder = pygame.key.name(event.key)
+                        self.loginName += keyHolder
                         print(self.loginName)
                         self.countLoginLetters += 1
-                    
+                
+                #Username-Deletion    
                 if (event.type == pygame.KEYDOWN) & (self.canTypeLoginName == True) & (self.countLoginLetters > 0):
                     if (event.key == pygame.K_BACKSPACE):
                         self.loginName = self.loginName[:-1]
                         print(self.loginName)
                         self.countLoginLetters -= 1
-                        
-                if (event.type == pygame.KEYDOWN) & (self.canTypePassword == True) & (self.countPassLetters <= 7):
+                
+                #Password-Entering        
+                if (event.type == pygame.KEYDOWN) & (self.canTypePassword == True) & (self.countPassLetters <= 15):
                     
                     #Numbers from 0-9 & Letters from a-z
                     if (event.key == pygame.K_0) | (event.key == pygame.K_1) | (event.key == pygame.K_2) \
@@ -109,7 +126,7 @@ class GGlauncher():
                     | (event.key == pygame.K_f) | (event.key == pygame.K_g) | (event.key == pygame.K_h) \
                     | (event.key == pygame.K_i) | (event.key == pygame.K_j) | (event.key == pygame.K_k) \
                     | (event.key == pygame.K_l) | (event.key == pygame.K_m) | (event.key == pygame.K_n) \
-                    | (event.key == pygame.K_o) | (event.key == pygame.K_p) | (event.key == pygame.K_o) \
+                    | (event.key == pygame.K_o) | (event.key == pygame.K_p) | (event.key == pygame.K_q) \
                     | (event.key == pygame.K_r) | (event.key == pygame.K_s) | (event.key == pygame.K_t) \
                     | (event.key == pygame.K_u) | (event.key == pygame.K_v) | (event.key == pygame.K_w) \
                     | (event.key == pygame.K_x) | (event.key == pygame.K_y) | (event.key == pygame.K_z):
@@ -117,7 +134,8 @@ class GGlauncher():
                         print(self.password)
                         self.passStars = (self.countPassLetters+1)*"*"
                         self.countPassLetters += 1
-                      
+                
+                #Password-Deletion      
                 if (event.type == pygame.KEYDOWN) & (self.canTypePassword == True) & (self.countPassLetters > 0):
                     if (event.key == pygame.K_BACKSPACE):
                         self.password = self.password[:-1]
@@ -126,18 +144,18 @@ class GGlauncher():
                         self.countPassLetters -= 1
                     
 
-            self.printLoginFont = self.myFont1.render(self.loginName, 1, (0,0,0))
-            self.printPassFont = self.myFont2.render(self.passStars, 1, (0,0,0))
+            self.printLoginTitleFont = self.myFont.render("Username:", 1, (0,0,0))
+            self.printPassTitleFont = self.myFont.render("Password:", 1, (0,0,0))
+            self.printLoginFont = self.myFont.render(self.loginName, 1, (0,0,0))
+            self.printPassFont = self.myFont.render(self.passStars, 1, (0,0,0))
             
-            self.background.fill((0, 0, 0))
-            self.background.blit(self.lbimg, (200, 350))
-            self.background.blit(self.ebimg, (200, 410))
+            self.background.fill((200, 200, 200))
+            self.background.blit(self.launcherimg,(0,0))
             
-            pygame.draw.rect(self.background, (255,255,255), (25,350,150,25))
-            pygame.draw.rect(self.background, (255,255,255), (25,385,150,25))
-            
-            self.background.blit(self.printLoginFont,(27,355))
-            self.background.blit(self.printPassFont,(27,390))
+            #self.background.blit(self.printLoginTitleFont,(25,434))
+            #self.background.blit(self.printPassTitleFont,(25,484))
+            self.background.blit(self.printLoginFont,(45,426))
+            self.background.blit(self.printPassFont,(45,486))
 
             self.launcherScreen.blit(self.background, (0, 0))
             pygame.display.flip()
