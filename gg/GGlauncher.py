@@ -35,6 +35,7 @@ class GGlauncher():
         self.countLoginLetters = 0
         self.countPassLetters = 0
         self.shiftIsPressed = False
+        self.backspaceIsPressed = False
         
 
     def launcherLoop(self):
@@ -86,6 +87,16 @@ class GGlauncher():
                     if (event.key == pygame.K_LSHIFT) | (event.key == pygame.K_RSHIFT):
                         self.shiftIsPressed = False
                 
+                if (event.type == pygame.KEYDOWN):
+                    if (event.key == pygame.K_BACKSPACE):
+                        self.backspaceIsPressed = True
+                        print("True")
+                        
+                if (event.type == pygame.KEYUP):
+                    if (event.key == pygame.K_BACKSPACE):
+                        self.backspaceIsPressed = False
+                        print("False")
+                    
                 #Username-Entering        
                 if (event.type == pygame.KEYDOWN) & (self.canTypeLoginName == True) & (self.countLoginLetters <=15):
                     
@@ -107,13 +118,6 @@ class GGlauncher():
                         print(self.loginName)
                         self.countLoginLetters += 1
                 
-                #Username-Deletion    
-                if (event.type == pygame.KEYDOWN) & (self.canTypeLoginName == True) & (self.countLoginLetters > 0):
-                    if (event.key == pygame.K_BACKSPACE):
-                        self.loginName = self.loginName[:-1]
-                        print(self.loginName)
-                        self.countLoginLetters -= 1
-                
                 #Password-Entering        
                 if (event.type == pygame.KEYDOWN) & (self.canTypePassword == True) & (self.countPassLetters <= 15):
                     
@@ -134,14 +138,19 @@ class GGlauncher():
                         print(self.password)
                         self.passStars = (self.countPassLetters+1)*"*"
                         self.countPassLetters += 1
+            
+            #Username-Deletion    
+            if (self.canTypeLoginName == True) & (self.countLoginLetters > 0) & (self.backspaceIsPressed == True):
+                    self.loginName = self.loginName[:-1]
+                    print(self.loginName)
+                    self.countLoginLetters -= 1    
                 
-                #Password-Deletion      
-                if (event.type == pygame.KEYDOWN) & (self.canTypePassword == True) & (self.countPassLetters > 0):
-                    if (event.key == pygame.K_BACKSPACE):
-                        self.password = self.password[:-1]
-                        print(self.password)
-                        self.passStars = (self.countPassLetters-1)*"*"
-                        self.countPassLetters -= 1
+            #Password-Deletion      
+            if (self.canTypePassword == True) & (self.countPassLetters > 0) & (self.backspaceIsPressed == True):
+                    self.password = self.password[:-1]
+                    print(self.password)
+                    self.passStars = (self.countPassLetters-1)*"*"
+                    self.countPassLetters -= 1            
                     
 
             self.printLoginTitleFont = self.myFont.render("Username:", 1, (0,0,0))
