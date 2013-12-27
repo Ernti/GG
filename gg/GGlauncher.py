@@ -37,7 +37,29 @@ class GGlauncher():
         self.shiftIsPressed = False
         self.backspaceIsPressed = False
         
-
+    def isLetter(self,character):
+        if (character == pygame.K_a) | (character == pygame.K_b) \
+        | (character == pygame.K_c) | (character == pygame.K_d) | (character == pygame.K_e) \
+        | (character == pygame.K_f) | (character == pygame.K_g) | (character == pygame.K_h) \
+        | (character == pygame.K_i) | (character == pygame.K_j) | (character == pygame.K_k) \
+        | (character == pygame.K_l) | (character == pygame.K_m) | (character == pygame.K_n) \
+        | (character == pygame.K_o) | (character == pygame.K_p) | (character == pygame.K_q) \
+        | (character == pygame.K_r) | (character == pygame.K_s) | (character == pygame.K_t) \
+        | (character == pygame.K_u) | (character == pygame.K_v) | (character == pygame.K_w) \
+        | (character == pygame.K_x) | (character == pygame.K_y) | (character == pygame.K_z): 
+            return True
+        else:
+            return False
+        
+    def isDigit(self,character):
+        if (character == pygame.K_0) | (character == pygame.K_1) | (character == pygame.K_2) \
+        | (character == pygame.K_3) | (character == pygame.K_4) | (character == pygame.K_5) \
+        | (character == pygame.K_6) | (character == pygame.K_7) | (character == pygame.K_8) \
+        | (character == pygame.K_9):
+            return True
+        else:
+            return False
+        
     def launcherLoop(self):
         launcherUp = True
 
@@ -55,8 +77,7 @@ class GGlauncher():
 
                     print(x, end=", ")
                     print(y)
-                    
-                    
+                         
                     #Usage of Login and Exit Buttons
                     if (x > 386) & (x < 477) & (y > 416) & (y < 474):
                         launcherUp = False
@@ -83,25 +104,21 @@ class GGlauncher():
                     if (event.key == pygame.K_LSHIFT) | (event.key == pygame.K_RSHIFT):
                         self.shiftIsPressed = True
                         
+                    if (event.key == pygame.K_BACKSPACE):
+                        self.backspaceIsPressed = True
+                        
                 if (event.type == pygame.KEYUP):
                     if (event.key == pygame.K_LSHIFT) | (event.key == pygame.K_RSHIFT):
                         self.shiftIsPressed = False
-                
-                if (event.type == pygame.KEYDOWN):
-                    if (event.key == pygame.K_BACKSPACE):
-                        self.backspaceIsPressed = True
-                        print("True")
                         
-                if (event.type == pygame.KEYUP):
                     if (event.key == pygame.K_BACKSPACE):
                         self.backspaceIsPressed = False
-                        print("False")
                     
                 #Username-Entering        
                 if (event.type == pygame.KEYDOWN) & (self.canTypeLoginName == True) & (self.countLoginLetters <=15):
                     
                     #Numbers from 0-9 & Letters from a-z
-                    if (event.key == pygame.K_0) | (event.key == pygame.K_1) | (event.key == pygame.K_2) \
+                    """if (event.key == pygame.K_0) | (event.key == pygame.K_1) | (event.key == pygame.K_2) \
                     | (event.key == pygame.K_3) | (event.key == pygame.K_4) | (event.key == pygame.K_5) \
                     | (event.key == pygame.K_6) | (event.key == pygame.K_7) | (event.key == pygame.K_8) \
                     | (event.key == pygame.K_9) | (event.key == pygame.K_a) | (event.key == pygame.K_b) \
@@ -112,7 +129,9 @@ class GGlauncher():
                     | (event.key == pygame.K_o) | (event.key == pygame.K_p) | (event.key == pygame.K_q) \
                     | (event.key == pygame.K_r) | (event.key == pygame.K_s) | (event.key == pygame.K_t) \
                     | (event.key == pygame.K_u) | (event.key == pygame.K_v) | (event.key == pygame.K_w) \
-                    | (event.key == pygame.K_x) | (event.key == pygame.K_y) | (event.key == pygame.K_z):
+                    | (event.key == pygame.K_x) | (event.key == pygame.K_y) | (event.key == pygame.K_z):"""
+                    
+                    if (self.isLetter(event.key) == True) | (self.isDigit(event.key) == True):
                         keyHolder = pygame.key.name(event.key)
                         self.loginName += keyHolder
                         print(self.loginName)
@@ -151,6 +170,8 @@ class GGlauncher():
                     print(self.password)
                     self.passStars = (self.countPassLetters-1)*"*"
                     self.countPassLetters -= 1            
+                    
+                    
                     
 
             self.printLoginTitleFont = self.myFont.render("Username:", 1, (0,0,0))
