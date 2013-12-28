@@ -23,8 +23,7 @@ class GGlauncher():
         
         #Images to render
         self.launcherimg = pygame.image.load(self.launcherimgpath).convert()
-        
-        
+           
         #Login Variables
         self.canTypeLoginName = False
         self.canTypePassword = False
@@ -36,6 +35,8 @@ class GGlauncher():
         self.countPassLetters = 0
         self.shiftIsPressed = False
         self.backspaceIsPressed = False
+        self.keyHolder = ""
+        self.passHolder = ""
         
     def isLetter(self,character):
         if (character == pygame.K_a) | (character == pygame.K_b) \
@@ -118,20 +119,14 @@ class GGlauncher():
                 if (event.type == pygame.KEYDOWN) & (self.canTypeLoginName == True) & (self.countLoginLetters <=15):
                     
                     #Numbers from 0-9 & Letters from a-z
-                    """if (event.key == pygame.K_0) | (event.key == pygame.K_1) | (event.key == pygame.K_2) \
-                    | (event.key == pygame.K_3) | (event.key == pygame.K_4) | (event.key == pygame.K_5) \
-                    | (event.key == pygame.K_6) | (event.key == pygame.K_7) | (event.key == pygame.K_8) \
-                    | (event.key == pygame.K_9) | (event.key == pygame.K_a) | (event.key == pygame.K_b) \
-                    | (event.key == pygame.K_c) | (event.key == pygame.K_d) | (event.key == pygame.K_e) \
-                    | (event.key == pygame.K_f) | (event.key == pygame.K_g) | (event.key == pygame.K_h) \
-                    | (event.key == pygame.K_i) | (event.key == pygame.K_j) | (event.key == pygame.K_k) \
-                    | (event.key == pygame.K_l) | (event.key == pygame.K_m) | (event.key == pygame.K_n) \
-                    | (event.key == pygame.K_o) | (event.key == pygame.K_p) | (event.key == pygame.K_q) \
-                    | (event.key == pygame.K_r) | (event.key == pygame.K_s) | (event.key == pygame.K_t) \
-                    | (event.key == pygame.K_u) | (event.key == pygame.K_v) | (event.key == pygame.K_w) \
-                    | (event.key == pygame.K_x) | (event.key == pygame.K_y) | (event.key == pygame.K_z):"""
-                    
-                    if (self.isLetter(event.key) == True) | (self.isDigit(event.key) == True):
+                    if (self.isLetter(event.key) == True):
+                        self.keyHolder = pygame.key.name(event.key)
+                        if (self.shiftIsPressed == True):
+                            self.keyHolder = self.keyHolder.capitalize()
+                        self.loginName += self.keyHolder
+                        print(self.loginName)
+                        self.countLoginLetters += 1
+                    elif (self.isDigit(event.key) == True):
                         keyHolder = pygame.key.name(event.key)
                         self.loginName += keyHolder
                         print(self.loginName)
@@ -139,24 +134,23 @@ class GGlauncher():
                 
                 #Password-Entering        
                 if (event.type == pygame.KEYDOWN) & (self.canTypePassword == True) & (self.countPassLetters <= 15):
-                    
+        
                     #Numbers from 0-9 & Letters from a-z
-                    if (event.key == pygame.K_0) | (event.key == pygame.K_1) | (event.key == pygame.K_2) \
-                    | (event.key == pygame.K_3) | (event.key == pygame.K_4) | (event.key == pygame.K_5) \
-                    | (event.key == pygame.K_6) | (event.key == pygame.K_7) | (event.key == pygame.K_8) \
-                    | (event.key == pygame.K_9) | (event.key == pygame.K_a) | (event.key == pygame.K_b) \
-                    | (event.key == pygame.K_c) | (event.key == pygame.K_d) | (event.key == pygame.K_e) \
-                    | (event.key == pygame.K_f) | (event.key == pygame.K_g) | (event.key == pygame.K_h) \
-                    | (event.key == pygame.K_i) | (event.key == pygame.K_j) | (event.key == pygame.K_k) \
-                    | (event.key == pygame.K_l) | (event.key == pygame.K_m) | (event.key == pygame.K_n) \
-                    | (event.key == pygame.K_o) | (event.key == pygame.K_p) | (event.key == pygame.K_q) \
-                    | (event.key == pygame.K_r) | (event.key == pygame.K_s) | (event.key == pygame.K_t) \
-                    | (event.key == pygame.K_u) | (event.key == pygame.K_v) | (event.key == pygame.K_w) \
-                    | (event.key == pygame.K_x) | (event.key == pygame.K_y) | (event.key == pygame.K_z):
-                        self.password += pygame.key.name(event.key)
-                        print(self.password)
+                    if (self.isLetter(event.key) == True):
+                        self.passHolder = pygame.key.name(event.key)
+                        if (self.shiftIsPressed == True):
+                            self.passHolder = self.passHolder.capitalize()
+                        self.password += self.passHolder
                         self.passStars = (self.countPassLetters+1)*"*"
+                        print(self.password)
                         self.countPassLetters += 1
+                    elif (self.isDigit(event.key) == True):
+                        self.password += pygame.key.name(event.key)
+                        self.passStars = (self.countPassLetters+1)*"*"
+                        print(self.password)
+                        self.countPassLetters += 1
+            
+            
             
             #Username-Deletion    
             if (self.canTypeLoginName == True) & (self.countLoginLetters > 0) & (self.backspaceIsPressed == True):
