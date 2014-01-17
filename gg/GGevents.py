@@ -156,21 +156,6 @@ class Events(object):
                             objects.x = data['x']
                             objects.y = data['y']
 
-            elif event.type == pygame.VIDEORESIZE:
-                self.ss.oxygen = event.w
-
-                if(event.w > 640):
-                    self.render.size = self.render.width, self.render.height = (event.w, int(event.w / 16 * 9))
-                    self.render.screen = pygame.display. \
-                    set_mode(self.render.size,
-                            pygame.RESIZABLE)
-
-                else:
-                    self.render.size = (640, 360)
-                    self.render.screen = pygame.display. \
-                    set_mode(self.render.size,
-                            pygame.RESIZABLE)
-
             if self.uevents.lmsbtn == True:
 
                 if event.type == pygame.MOUSEMOTION:
