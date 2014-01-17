@@ -27,6 +27,8 @@ class Render(object):
         glMatrixMode(GL_PROJECTION)
         gluPerspective(60, 1.0 * self.width / self.height, 0.1, 1000.0)
         glMatrixMode(GL_MODELVIEW)
+        glLoadIdentity()
+        gluLookAt(0, -10, 10, 0, 0, 0, 0, 1, 0)
 
 #        self.screen.set_colorkey((255, 0, 255))
         pygame.display.set_caption('GG')
@@ -41,7 +43,15 @@ class Render(object):
 
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
 
-        #print(fps)
+        # print(fps)
+
+
+        glTranslatef(0, 0, 0)
+        [glBegin(GL_TRIANGLES),
+            glColor(255, 0, 0), glVertex3f(-4, 4, 0),
+            glColor(0, 255, 0), glVertex3f(4, 4, 0),
+            glColor(0, 0, 255), glVertex3f(0, -4, 0),
+        glEnd()]
 
         pygame.display.flip()
 
