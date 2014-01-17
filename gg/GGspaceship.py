@@ -38,7 +38,7 @@ class SpaceShip(object):
         self.velocity_x = (self.speed * self.scale_x)
         self.velocity_y = (self.speed * self.scale_y)
 
-        print(self.x, self.y)
+        #print(self.x, self.y)
 
         if self.uevent is not None:
 

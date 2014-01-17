@@ -12,6 +12,7 @@ from gg.GGgrid import SpaceGrid
 from gg.GGplayer import Player
 from gg.GGrender import Render
 from gg.GGspaceship import SpaceShip
+import time
 
 
 class GGcore(object):
@@ -36,11 +37,23 @@ class GGcore(object):
 
     def gameLoop(self):
 
+        self.test = 0
+        self.test2 = 0
         while self.events.running:
 
             self.events.eventLoop()
             self.clock.tick()
 
+
+            self.test += 1
+            self.test1 = self.test2
+            self.test2 = int(time.time())
+            if self.test2 > self.test1:
+                print("ding")
+                self.fps = self.test
+                self.test = 0
+                print(self.fps)
+
             self.render.render(str(self.ss.oxygen),
-                               str(int(self.clock.get_fps())),
+                               self.fps,
                                self.sg, self.player)

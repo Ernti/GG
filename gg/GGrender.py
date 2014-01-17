@@ -17,7 +17,7 @@ class Render(object):
 
         self.ggci = ggci
 
-        self.size = self.width, self.height = 1920, 1080
+        self.size = self.width, self.height = 1280, 720
         self.black = 0.0, 0.0, 0.0, 1.0
 
         self.screen = pygame.display.set_mode(self.size, pygame.OPENGL, 16)
@@ -41,7 +41,7 @@ class Render(object):
 
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
 
-        print(fps)
+        #print(fps)
 
         pygame.display.flip()
 

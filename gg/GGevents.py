@@ -125,7 +125,7 @@ class Events(object):
 
             elif event.type == 25:
 
-                print('tick')
+                #print('tick')
 
                 for objects in self.ggci.objectlist.objectlist:
 
