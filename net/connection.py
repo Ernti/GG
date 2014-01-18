@@ -29,14 +29,15 @@ class Network(object):
             self.sock.connect(('localhost', 4455))
             self.sock.send(json.dumps(self.userdict).encode())
             data = self.sock.recv(1024)
-            if data.decode() == "connected":
+            data_json = json.loads(data.decode())
+            if data_json['type'] == 'connected':
 
                 self.connected = True
                 print("connected")
                 self.conthread = ConnectionThread(self.sock)
                 self.conthread.start()
 
-            elif data.decode() == "loginerror":
+            elif data_json['type'] == 'loginerror':
 
                 print("Wrong Username or Password!")
 
