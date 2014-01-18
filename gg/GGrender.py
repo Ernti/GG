@@ -20,7 +20,7 @@ class Render(object):
         self.size = self.width, self.height = 1280, 720
         self.black = 0.0, 0.0, 0.0, 1.0
 
-        self.screen = pygame.display.set_mode(self.size, pygame.OPENGL, 16)
+        self.screen = pygame.display.set_mode(self.size, pygame.OPENGL | pygame.DOUBLEBUF, 16)
 
         glClearColor(0.0, 0.0, 0.0, 1.0)
 
@@ -28,7 +28,13 @@ class Render(object):
         gluPerspective(60, 1.0 * self.width / self.height, 0.1, 1000.0)
         glMatrixMode(GL_MODELVIEW)
         glLoadIdentity()
-        gluLookAt(0, -10, 10, 0, 0, 0, 0, 1, 0)
+        gluLookAt(0, 0, 10, 0, 0, 0, 0, 1, 0)
+
+        g_vertex_buffer_data = {
+                                - 1.0, -1.0, 0.0,
+                                1.0, -1.0, 0.0,
+                                0.0, 1.0, 0.0,
+                                }
 
 #        self.screen.set_colorkey((255, 0, 255))
         pygame.display.set_caption('GG')
@@ -45,13 +51,11 @@ class Render(object):
 
         # print(fps)
 
+        # glTranslatef(0, 0, 0)
 
-        glTranslatef(0, 0, 0)
-        [glBegin(GL_TRIANGLES),
-            glColor(255, 0, 0), glVertex3f(-4, 4, 0),
-            glColor(0, 255, 0), glVertex3f(4, 4, 0),
-            glColor(0, 0, 255), glVertex3f(0, -4, 0),
-        glEnd()]
+        for objects in self.ggci.objectlist.objectlist:
+
+            objects.render()
 
         pygame.display.flip()
 

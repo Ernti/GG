@@ -6,6 +6,8 @@ Created on 8 Dec 2013
 import math
 import os.path
 
+from OpenGL.GL import *
+from OpenGL.GLU import *
 import pygame.image
 
 
@@ -23,8 +25,10 @@ class SpaceShip(object):
         self.x = x
         self.y = y
         self.angle = 0
-        self.speed = 1
+        self.speed = 0.01
 
+        self.scale_x = math.cos(math.radians(self.angle))
+        self.scale_y = math.sin(math.radians(self.angle))
 
     def eventtest(self, uevent):
 
@@ -38,13 +42,13 @@ class SpaceShip(object):
         self.velocity_x = (self.speed * self.scale_x)
         self.velocity_y = (self.speed * self.scale_y)
 
-        #print(self.x, self.y)
+        # print(self.x, self.y)
 
         if self.uevent is not None:
 
             if self.uevent.w == True:
 
-                print('test')
+                # print('test')
 
                 self.x = self.x + self.velocity_x
                 self.y = self.y + self.velocity_y
@@ -57,7 +61,7 @@ class SpaceShip(object):
 
                 # self.x -= 10
 
-                self.angle -= 1
+                self.angle += 1
 
                 # self.rect = self.rect.move(-1, 0)
 
@@ -71,7 +75,7 @@ class SpaceShip(object):
 
                 # self.x += 10
 
-                self.angle += 1
+                self.angle -= 1
 
                 # self.rect = self.rect.move(1, 0)
 #            pygame.event.post(pygame.event.Event(26, {'type': 'playermoved',
@@ -79,12 +83,30 @@ class SpaceShip(object):
 #                                                 'x': self.x,
 #                                                 'y': self.y}))
 
-    def render(self, background, player):
+    def render(self):
 
         # self.img = pygame.transform.rotozoom(self.img, 0, 1)
         # objects.ssrect = objects.ssimg.get_rect()
-        self.rect.x = self.x + player.x
-        self.rect.y = self.y + player.y
+        # self.rect.x = self.x + player.x
+        # self.rect.y = self.y + player.y
 
-        self.img.set_colorkey((255, 0, 255))
-        background.blit(self.img, self.rect)
+        # self.img.set_colorkey((255, 0, 255))
+        # background.blit(self.img, self.rect)
+
+        [glBegin(GL_TRIANGLES),
+        glColor(255, 0, 0), glVertex3f(self.x
+                                       + (math.cos(math.radians(
+                                          self.angle)) * 1), self.y
+                                       + (math.sin(math.radians(
+                                          self.angle)) * 1), 0),
+        glColor(0, 255, 0), glVertex3f(self.x
+                                       + (math.cos(math.radians(
+                                          self.angle + 120)) * 1), self.y
+                                       + (math.sin(math.radians(
+                                          self.angle + 120)) * 1), 0),
+        glColor(0, 0, 255), glVertex3f(self.x
+                                       + (math.cos(math.radians(
+                                          self.angle + 240)) * 1), self.y
+                                       + (math.sin(math.radians(
+                                          self.angle + 240)) * 1), 0),
+        glEnd()]
