@@ -95,22 +95,22 @@ class SpaceShip(object):
         # background.blit(self.img, self.rect)
 
         [glBegin(GL_TRIANGLES),
-        glColor(255, 0, 0), glVertex3f(self.x + (self.ggci.player.x / 100)
+        glColor(255, 0, 0), glVertex3f(self.x + self.ggci.player.x
                                        + (math.cos(math.radians(
                                           self.angle)) * 1),
-                                       self.y + (self.ggci.player.y / 100)
+                                       self.y + self.ggci.player.y
                                        + (math.sin(math.radians(
                                           self.angle)) * 1), 0 - self.ggci.player.z),
-        glColor(0, 255, 0), glVertex3f(self.x + (self.ggci.player.x / 100)
+        glColor(0, 255, 0), glVertex3f(self.x + self.ggci.player.x
                                        + (math.cos(math.radians(
                                           self.angle + 120)) * 1),
-                                       self.y + (self.ggci.player.y / 100)
+                                       self.y + self.ggci.player.y
                                        + (math.sin(math.radians(
                                           self.angle + 120)) * 1), 0 - self.ggci.player.z),
-        glColor(0, 0, 255), glVertex3f(self.x + (self.ggci.player.x / 100)
+        glColor(0, 0, 255), glVertex3f(self.x + self.ggci.player.x
                                        + (math.cos(math.radians(
                                           self.angle + 240)) * 1),
-                                       self.y + (self.ggci.player.y / 100)
+                                       self.y + self.ggci.player.y
                                        + (math.sin(math.radians(
                                           self.angle + 240)) * 1), 0 - self.ggci.player.z),
         glEnd()]

@@ -164,7 +164,11 @@ class Events(object):
 
                 if event.type == pygame.MOUSEMOTION:
 
-                    self.player.x += event.rel[0]
-                    self.player.y -= event.rel[1]
+                    self.player.x += ((event.rel[0] / 100)
+                                      + ((self.player.z / 10)
+                                         * (event.rel[0] / 100)))
+                    self.player.y -= ((event.rel[1] / 100)
+                                      + ((self.player.z / 10)
+                                         * (event.rel[1] / 100)))
 
                     print(event.rel)

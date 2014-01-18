@@ -25,7 +25,7 @@ class Render(object):
         glClearColor(0.0, 0.0, 0.0, 1.0)
 
         glMatrixMode(GL_PROJECTION)
-        gluPerspective(60, 1.0 * self.width / self.height, 0.1, 1000.0)
+        gluPerspective(45, 1.0 * self.width / self.height, 0.1, 1000.0)
         glMatrixMode(GL_MODELVIEW)
         glLoadIdentity()
         gluLookAt(0, 0, 10, 0, 0, 0, 0, 1, 0)
