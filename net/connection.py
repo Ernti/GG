@@ -71,7 +71,7 @@ class ConnectionThread(Thread):
             try:
                 data = self.sock.recv(1024)
                 data_json = json.loads(data.decode())
-                if data.decode() == "shutdown":
+                if data_json['type'] == 'shutdown':
                     pygame.event.post(pygame.event.Event(pygame.USEREVENT,
                                                          {'type': 'QUIT'}))
                     stop_requested = True
