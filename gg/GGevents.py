@@ -25,12 +25,12 @@ class UserEvents(object):
 
 class Events(object):
 
-    def __init__(self, ggci, ss, sg, render, player):
+    def __init__(self, ggci, ss, sg, render):
 
         self.ggci = ggci
         self.uevents = UserEvents()
         self.ss = ss
-        self.player = player
+        self.player = self.ggci.player
         self.sg = sg
         self.render = render
         self.running = True
@@ -125,7 +125,7 @@ class Events(object):
 
             elif event.type == 25:
 
-                #print('tick')
+                # print('tick')
 
                 for objects in self.ggci.objectlist.objectlist:
 
@@ -161,6 +161,6 @@ class Events(object):
                 if event.type == pygame.MOUSEMOTION:
 
                     self.player.x += event.rel[0]
-                    self.player.y += event.rel[1]
+                    self.player.y -= event.rel[1]
 
                     print(event.rel)

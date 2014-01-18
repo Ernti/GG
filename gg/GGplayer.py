@@ -9,5 +9,5 @@ class Player(object):
 
     def __init__(self):
 
-        self.x = 640
-        self.y = 360
+        self.x = 0
+        self.y = 0

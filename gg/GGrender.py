@@ -45,7 +45,7 @@ class Render(object):
 #        self.fullscreen = False
 #        self.fsres = (1920, 1080)
 
-    def render(self, oxygen, fps, sg, player):
+    def render(self, oxygen, fps, sg):
 
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
 

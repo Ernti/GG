@@ -13,10 +13,11 @@ import pygame.image
 
 class SpaceShip(object):
 
-    def __init__(self, ssid, x, y):
+    def __init__(self, ssid, x, y, ggci):
 
         ssimgpath = os.path.join(".", "gg", "data", "gfx", "ss1.bmp")
 
+        self.ggci = ggci
         self.id = ssid
         self.oxygen = 100
         self.hull = 0
@@ -94,19 +95,22 @@ class SpaceShip(object):
         # background.blit(self.img, self.rect)
 
         [glBegin(GL_TRIANGLES),
-        glColor(255, 0, 0), glVertex3f(self.x
+        glColor(255, 0, 0), glVertex3f(self.x + (self.ggci.player.x / 100)
                                        + (math.cos(math.radians(
-                                          self.angle)) * 1), self.y
+                                          self.angle)) * 1),
+                                       self.y + (self.ggci.player.y / 100)
                                        + (math.sin(math.radians(
                                           self.angle)) * 1), 0),
-        glColor(0, 255, 0), glVertex3f(self.x
+        glColor(0, 255, 0), glVertex3f(self.x + (self.ggci.player.x / 100)
                                        + (math.cos(math.radians(
-                                          self.angle + 120)) * 1), self.y
+                                          self.angle + 120)) * 1),
+                                       self.y + (self.ggci.player.y / 100)
                                        + (math.sin(math.radians(
                                           self.angle + 120)) * 1), 0),
-        glColor(0, 0, 255), glVertex3f(self.x
+        glColor(0, 0, 255), glVertex3f(self.x + (self.ggci.player.x / 100)
                                        + (math.cos(math.radians(
-                                          self.angle + 240)) * 1), self.y
+                                          self.angle + 240)) * 1),
+                                       self.y + (self.ggci.player.y / 100)
                                        + (math.sin(math.radians(
                                           self.angle + 240)) * 1), 0),
         glEnd()]
