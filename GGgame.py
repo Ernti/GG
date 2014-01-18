@@ -20,6 +20,7 @@ net.connect()
 if net.connected == True:
 
     game = GGcore()
+    net.sendthread.start()
     game.gameLoop()
 
 net.close()

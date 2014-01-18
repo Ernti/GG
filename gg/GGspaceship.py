@@ -31,6 +31,9 @@ class SpaceShip(object):
         self.scale_x = math.cos(math.radians(self.angle))
         self.scale_y = math.sin(math.radians(self.angle))
 
+        self.now = pygame.time.get_ticks()
+        self.after = pygame.time.get_ticks()
+
     def eventtest(self, uevent):
 
         self.uevent = uevent
@@ -54,10 +57,16 @@ class SpaceShip(object):
                 self.x = self.x + self.velocity_x
                 self.y = self.y + self.velocity_y
 
-                pygame.event.post(pygame.event.Event(26, {'type': 'playermoved',
-                                                          'soid': self.id,
-                                                          'x': self.x,
-                                                          'y': self.y}))
+                self.now = pygame.time.get_ticks()
+                # print(self.now)
+
+                if self.after < (self.now - 100):
+
+                    pygame.event.post(pygame.event.Event(26, {'type': 'playermoved',
+                                                              'soid': self.id,
+                                                              'x': self.x,
+                                                              'y': self.y}))
+                    self.after = pygame.time.get_ticks()
 
                 # self.y -= 10
 

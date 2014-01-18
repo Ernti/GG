@@ -34,8 +34,9 @@ class Network(object):
 
                 self.connected = True
                 print("connected")
-                self.conthread = ConnectionThread(self.sock)
-                self.conthread.start()
+                self.recthread = ReceiverThread(self.sock)
+                self.sendthread = SenderThread(self.sock)
+                self.recthread.start()
 
             elif data_json['type'] == 'loginerror':
 
@@ -53,11 +54,12 @@ class Network(object):
 
         print("stopping...")
         if self.connected == True:
-            self.conthread._stop()
+            self.recthread._stop()
+            self.sendthread._stop()
         self.sock.close()
 
 
-class ConnectionThread(Thread):
+class ReceiverThread(Thread):
 
     def __init__(self, socket):
 
@@ -70,6 +72,7 @@ class ConnectionThread(Thread):
         while not stop_requested:
             try:
                 data = self.sock.recv(1024)
+                print(data.decode())
                 data_json = json.loads(data.decode())
                 if data_json['type'] == 'shutdown':
                     pygame.event.post(pygame.event.Event(pygame.USEREVENT,
@@ -88,9 +91,32 @@ class ConnectionThread(Thread):
                     pygame.event.post(pygame.event.Event(pygame.USEREVENT,
                                                          data_json))
 
-                for event in pygame.event.get(26):
+            except socket.error:
+
+                print("Connection Lost!")
+                pygame.event.post(pygame.event.Event(pygame.USEREVENT,
+                                                    {'type': 'QUIT'}))
+                stop_requested = True
+
+
+class SenderThread(Thread):
+
+    def __init__(self, socket):
+
+        Thread.__init__(self)
+        self.sock = socket
+        global stop_requested
+
+    def run(self):
+        global stop_requested
+        while not stop_requested:
+            try:
+                # print("1")
+                for event in pygame.event.get([26, 27]):
+                    print("2")
 
                     if event.type == 26:
+                        print("3")
 
                         self.sock.send(json.dumps(event.dict).encode())
 
