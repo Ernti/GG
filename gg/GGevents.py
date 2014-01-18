@@ -56,10 +56,14 @@ class Events(object):
 
                 if event.dict['button'] == 5:
                     self.uevents.swdwn = True
+                    if self.ggci.player.z > 0:
+                        self.ggci.player.z -= 1
                     print('true')
 
                 if event.dict['button'] == 4:
                     self.uevents.swup = True
+                    if self.ggci.player.z < 50:
+                        self.ggci.player.z += 1
                     print('true')
 
             elif event.type == pygame.MOUSEBUTTONUP:
