@@ -54,6 +54,11 @@ class SpaceShip(object):
                 self.x = self.x + self.velocity_x
                 self.y = self.y + self.velocity_y
 
+                pygame.event.post(pygame.event.Event(26, {'type': 'playermoved',
+                                                          'soid': self.id,
+                                                          'x': self.x,
+                                                          'y': self.y}))
+
                 # self.y -= 10
 
                 # self.rect = self.rect.move(0, -1)
