@@ -15,14 +15,10 @@ class SpaceShip(object):
 
     def __init__(self, ssid, x, y, ggci):
 
-        ssimgpath = os.path.join(".", "gg", "data", "gfx", "ss1.bmp")
-
         self.ggci = ggci
         self.id = ssid
         self.oxygen = 100
         self.hull = 0
-        self.img = pygame.image.load(ssimgpath).convert()
-        self.rect = self.img.get_rect()
         self.x = x
         self.y = y
         self.angle = 0
@@ -33,70 +29,6 @@ class SpaceShip(object):
 
         self.now = pygame.time.get_ticks()
         self.after = pygame.time.get_ticks()
-
-    def eventtest(self, uevent):
-
-        self.uevent = uevent
-
-    def move(self):
-
-        self.scale_x = math.cos(math.radians(self.angle))
-        self.scale_y = math.sin(math.radians(self.angle))
-
-        self.velocity_x = (self.speed * self.scale_x)
-        self.velocity_y = (self.speed * self.scale_y)
-
-        # print(self.x, self.y)
-
-        if self.uevent is not None:
-
-            if self.uevent.w == True:
-
-                # print('test')
-
-                self.x = self.x + self.velocity_x
-                self.y = self.y + self.velocity_y
-
-                self.now = pygame.time.get_ticks()
-                # print(self.now)
-
-                if self.after < (self.now - 100):
-
-                    pygame.event.post(pygame.event.Event(26, {'type': 'playermoved',
-                                                              'soid': self.id,
-                                                              'x': self.x,
-                                                              'y': self.y}))
-                    self.after = pygame.time.get_ticks()
-
-                # self.y -= 10
-
-                # self.rect = self.rect.move(0, -1)
-
-            if self.uevent.a == True:
-
-                # self.x -= 10
-
-                self.angle += 1
-
-                # self.rect = self.rect.move(-1, 0)
-
-#            if self.uevent.s == True:
-#
-#                #self.y += 10
-#
-#                # self.rect = self.rect.move(0, 1)
-
-            if self.uevent.d == True:
-
-                # self.x += 10
-
-                self.angle -= 1
-
-                # self.rect = self.rect.move(1, 0)
-#            pygame.event.post(pygame.event.Event(26, {'type': 'playermoved',
-#                                                 'soid': self.id,
-#                                                 'x': self.x,
-#                                                 'y': self.y}))
 
     def render(self):
 

@@ -12,4 +12,4 @@ class GGCI(object):
     def __init__(self):
 
         self.objectlist = ObjectList()
-        self.player = Player()
+        self.player = Player(self)

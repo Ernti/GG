@@ -72,6 +72,12 @@ class Events(object):
                     self.uevents.lmsbtn = False
                     print('lmsbtn False')
 
+                if event.dict['button'] == 3:
+                    self.ggci.player.target = pygame.mouse.get_pos()
+                    print(pygame.mouse.get_pos())
+                    print('Rmsbtn True')
+                    print((self.ggci.player.x, self.ggci.player.y))
+
                 if event.dict['button'] == 5:
                     self.uevents.swdwn = False
                     print('False')
@@ -129,11 +135,15 @@ class Events(object):
 
             elif event.type == 25:
 
+                self.ggci.player.move()
+
+                # TODO: Tickrelated Stuff
+
                 # print('tick')
 
-                for objects in self.ggci.objectlist.objectlist:
+                # for objects in self.ggci.objectlist.objectlist:
 
-                        objects.move()
+                #        objects.move()
 
             elif event.type == pygame.USEREVENT:
 

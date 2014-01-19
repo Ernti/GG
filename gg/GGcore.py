@@ -22,16 +22,17 @@ class GGcore(object):
         self.ggci = GGCI()
         self.render = Render(self.ggci)
         self.ss = SpaceShip(-1, 0, 0, self.ggci)
+        self.ggci.player.playership = self.ss
         self.sg = SpaceGrid(0, 0)
         self.ggci.objectlist.addObject(self.ss)
         self.events = Events(self.ggci, self.ss, self.sg, self.render)
         self.clock = pygame.time.Clock()
 
-        self.ss.eventtest(self.events.uevents)
+        self.ggci.player.eventtest(self.events.uevents)
 
         GAMETICK = 25
         pygame.event.Event(GAMETICK)
-        pygame.time.set_timer(GAMETICK, 10)
+        pygame.time.set_timer(GAMETICK, 100)
 
     def gameLoop(self):
 
