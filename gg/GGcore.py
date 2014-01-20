@@ -50,10 +50,9 @@ class GGcore(object):
             self.test1 = self.test2
             self.test2 = int(time.time())
             if self.test2 > self.test1:
-                print("ding")
+                # print("ding")
                 self.fps = self.test
                 self.test = 0
                 print(self.fps)
 
-            self.render.render(str(self.ss.oxygen),
-                               self.fps, self.sg)
+            self.render.render()

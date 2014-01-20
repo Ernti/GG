@@ -20,7 +20,7 @@ class Render(object):
         self.size = self.width, self.height = 1280, 720
         self.black = 0.0, 0.0, 0.0, 1.0
 
-        self.screen = pygame.display.set_mode(self.size, pygame.OPENGL | pygame.DOUBLEBUF, 16)
+        self.screen = pygame.display.set_mode(self.size, pygame.OPENGL | pygame.DOUBLEBUF, 24)
 
         glClearColor(0.0, 0.0, 0.0, 1.0)
 
@@ -45,7 +45,7 @@ class Render(object):
 #        self.fullscreen = False
 #        self.fsres = (1920, 1080)
 
-    def render(self, oxygen, fps, sg):
+    def render(self):
 
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
 

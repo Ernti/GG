@@ -122,6 +122,7 @@ class SenderThread(Thread):
                         # print("3")
 
                         self.sock.send(json.dumps(event.dict).encode())
+                pygame.time.wait(10)
 
             except socket.error:
 
