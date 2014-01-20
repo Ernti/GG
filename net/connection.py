@@ -20,6 +20,7 @@ class Network(object):
 
         self.userdict = {'username': 'testname', 'password': 'iminspace'}
         self.connected = False
+        global stop_requested
 
     def connect(self):
 
@@ -54,8 +55,10 @@ class Network(object):
 
         print("stopping...")
         if self.connected == True:
+            stop_requested = True
             self.recthread._stop()
             self.sendthread._stop()
+
         self.sock.close()
 
 
@@ -112,11 +115,11 @@ class SenderThread(Thread):
         while not stop_requested:
             try:
                 # print("1")
-                for event in pygame.event.get([26, 27]):
-                    print("2")
+                for event in pygame.event.get(26):
+                    # print("2")
 
                     if event.type == 26:
-                        print("3")
+                        # print("3")
 
                         self.sock.send(json.dumps(event.dict).encode())
 

@@ -180,5 +180,3 @@ class Events(object):
                     self.player.y -= ((event.rel[1] / 100)
                                       + ((self.player.z / 10)
                                          * (event.rel[1] / 100)))
-
-                    print(event.rel)
