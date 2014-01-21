@@ -3,13 +3,15 @@ Created on 8 Dec 2013
 
 @author: tore
 '''
+
+
 import math
+
+from OpenGL.GL import glBegin, GL_TRIANGLES, glColor, glVertex3f, glEnd
 import pygame
 
-from OpenGL.GL import *
+
 # from OpenGL.GLU import *
-
-
 class SpaceShip(object):
 
     def __init__(self, ssid, x, y, ggci):
@@ -24,7 +26,7 @@ class SpaceShip(object):
         self.lasty = y
         self.angle = 0
         self.speed = 0
-        self.mass = 100
+        self.mass = 1000
         self.turntime = 10
         self.acceleration = 0.0001
 

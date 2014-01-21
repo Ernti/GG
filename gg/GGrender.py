@@ -5,8 +5,10 @@ Created on 9 Dec 2013
 '''
 
 import pygame
-from OpenGL.GL import *
-from OpenGL.GLU import *
+from OpenGL.GL import glClear, glClearColor, glMatrixMode, GL_PROJECTION, \
+                         GL_MODELVIEW, glLoadIdentity, GL_COLOR_BUFFER_BIT, \
+                         GL_DEPTH_BUFFER_BIT
+from OpenGL.GLU import gluPerspective, gluLookAt
 
 
 class Render(object):
