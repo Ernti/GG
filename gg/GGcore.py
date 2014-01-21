@@ -45,7 +45,6 @@ class GGcore(object):
 
             self.ggci.player.move()
 
-
             self.test += 1
             self.test1 = self.test2
             self.test2 = int(time.time())

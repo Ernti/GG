@@ -4,11 +4,10 @@ Created on 8 Dec 2013
 @author: tore
 '''
 import math
-import os.path
+import pygame
 
 from OpenGL.GL import *
-from OpenGL.GLU import *
-import pygame.image
+# from OpenGL.GLU import *
 
 
 class SpaceShip(object):
@@ -32,17 +31,8 @@ class SpaceShip(object):
 
         self.nowtick = pygame.time.get_ticks()
         self.lasttick = self.nowtick
-        # self.after = pygame.time.get_ticks()
 
     def render(self):
-
-        # self.img = pygame.transform.rotozoom(self.img, 0, 1)
-        # objects.ssrect = objects.ssimg.get_rect()
-        # self.rect.x = self.x + player.x
-        # self.rect.y = self.y + player.y
-
-        # self.img.set_colorkey((255, 0, 255))
-        # background.blit(self.img, self.rect)
 
         self.nowtick = pygame.time.get_ticks()
 
@@ -59,38 +49,22 @@ class SpaceShip(object):
                                           self.angle)) * 1),
                                        self.y + self.ggci.player.y
                                        + (math.sin(math.radians(
-                                          self.angle)) * 1), 0 - self.ggci.player.z),
+                                          self.angle)) * 1),
+                                       0 - self.ggci.player.z),
+
         glColor(0, 255, 0), glVertex3f(self.x + self.ggci.player.x
                                        + (math.cos(math.radians(
                                           self.angle + 120)) * 1),
                                        self.y + self.ggci.player.y
                                        + (math.sin(math.radians(
-                                          self.angle + 120)) * 1), 0 - self.ggci.player.z),
+                                          self.angle + 120)) * 1),
+                                       0 - self.ggci.player.z),
+
         glColor(0, 0, 255), glVertex3f(self.x + self.ggci.player.x
                                        + (math.cos(math.radians(
                                           self.angle + 240)) * 1),
                                        self.y + self.ggci.player.y
                                        + (math.sin(math.radians(
-                                          self.angle + 240)) * 1), 0 - self.ggci.player.z),
+                                          self.angle + 240)) * 1),
+                                       0 - self.ggci.player.z),
         glEnd()]
-
-#        [glBegin(GL_TRIANGLES),
-#        glColor(255, 0, 0), glVertex3f(self.x + self.ggci.player.x
-#                                       + (math.cos(math.radians(
-#                                          self.angle)) * 1),
-#                                       self.y + self.ggci.player.y
-#                                       + (math.sin(math.radians(
-#                                          self.angle)) * 1), 0 - self.ggci.player.z),
-#        glColor(0, 255, 0), glVertex3f(self.x + self.ggci.player.x
-#                                       + (math.cos(math.radians(
-#                                          self.angle + 120)) * 1),
-#                                       self.y + self.ggci.player.y
-#                                       + (math.sin(math.radians(
-#                                          self.angle + 120)) * 1), 0 - self.ggci.player.z),
-#        glColor(0, 0, 255), glVertex3f(self.x + self.ggci.player.x
-#                                       + (math.cos(math.radians(
-#                                          self.angle + 240)) * 1),
-#                                       self.y + self.ggci.player.y
-#                                       + (math.sin(math.radians(
-#                                          self.angle + 240)) * 1), 0 - self.ggci.player.z),
-#        glEnd()]

@@ -37,9 +37,11 @@ class Events(object):
 
     def eventLoop(self):
 
-        for event in pygame.event.get([pygame.QUIT, pygame.KEYDOWN,
-                                       pygame.KEYUP, pygame.USEREVENT,
-                                       25, pygame.MOUSEBUTTONDOWN,
+        for event in pygame.event.get([pygame.QUIT,
+                                       pygame.KEYDOWN,
+                                       pygame.KEYUP,
+                                       pygame.USEREVENT,
+                                       pygame.MOUSEBUTTONDOWN,
                                        pygame.MOUSEBUTTONUP,
                                        pygame.MOUSEMOTION,
                                        pygame.VIDEORESIZE]):
@@ -132,18 +134,6 @@ class Events(object):
 
                 elif event.key == pygame.K_d:
                     self.uevents.d = False
-
-            elif event.type == 25:
-
-                self.ggci.player.move()
-
-                # TODO: Tickrelated Stuff
-
-                # print('tick')
-
-                # for objects in self.ggci.objectlist.objectlist:
-
-                #        objects.move()
 
             elif event.type == pygame.USEREVENT:
 
