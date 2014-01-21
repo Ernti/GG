@@ -37,15 +37,13 @@ class Player(object):
 
     def move(self):
 
-
-
         # if self.playership.target != (self.playership.x, self.playership.y):
 
         # print(self.x, self.y)
 
-        self.nowtick = pygame.time.get_ticks()
-
         if self.uevent is not None:
+
+            self.nowtick = pygame.time.get_ticks()
 
             if self.uevent.w == True:
 
@@ -63,10 +61,12 @@ class Player(object):
 
                 if self.after < (self.nowtick - 100):
 
-                    pygame.event.post(pygame.event.Event(26, {'type': 'playermoved',
-                                                              'soid': self.playership.id,
-                                                              'x': self.playership.x,
-                                                              'y': self.playership.y}))
+                    pygame.event.post(pygame.event.Event(
+                                        26, {'type': 'playermoved',
+                                        'soid': self.playership.id,
+                                        'x': self.playership.x,
+                                        'y': self.playership.y}))
+
                     self.after = pygame.time.get_ticks()
 
                 # self.y -= 10
@@ -81,11 +81,14 @@ class Player(object):
 
                 # self.x -= 10
 
-                self.playership.angle += 1
+                self.playership.angle += (self.playership.turntime
+                                          * ((self.nowtick - self.lasttick)
+                                             / 100))
 
-                self.playership.scale_x = math.cos(math.radians(self.playership.angle))
-                self.playership.scale_y = math.sin(math.radians(self.playership.angle))
-
+                self.playership.scale_x = math.cos(math.radians(
+                                                    self.playership.angle))
+                self.playership.scale_y = math.sin(math.radians(
+                                                    self.playership.angle))
 
                 # self.rect = self.rect.move(-1, 0)
 
@@ -99,10 +102,14 @@ class Player(object):
 
                 # self.x += 10
 
-                self.playership.angle -= 1
+                self.playership.angle -= (self.playership.turntime
+                                          * ((self.nowtick - self.lasttick)
+                                             / 100))
 
-                self.playership.scale_x = math.cos(math.radians(self.playership.angle))
-                self.playership.scale_y = math.sin(math.radians(self.playership.angle))
+                self.playership.scale_x = math.cos(math.radians(
+                                                    self.playership.angle))
+                self.playership.scale_y = math.sin(math.radians(
+                                                    self.playership.angle))
 
                 # self.rect = self.rect.move(1, 0)
 #            pygame.event.post(pygame.event.Event(26, {'type': 'playermoved',
@@ -110,4 +117,4 @@ class Player(object):
 #                                                 'x': self.x,
 #                                                 'y': self.y}))
 
-        self.lasttick = self.nowtick
+            self.lasttick = self.nowtick
