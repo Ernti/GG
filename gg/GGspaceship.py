@@ -23,8 +23,10 @@ class SpaceShip(object):
         self.lastx = x
         self.lasty = y
         self.angle = 0
-        self.speed = 0.3
+        self.speed = 0
+        self.mass = 100
         self.turntime = 10
+        self.acceleration = 0.0001
 
         self.scale_x = math.cos(math.radians(self.angle))
         self.scale_y = math.sin(math.radians(self.angle))
@@ -35,6 +37,9 @@ class SpaceShip(object):
     def render(self):
 
         self.nowtick = pygame.time.get_ticks()
+
+        self.velocity_x = (self.speed * self.scale_x)
+        self.velocity_y = (self.speed * self.scale_y)
 
         self.x = self.x + (self.velocity_x * ((self.nowtick
                                                - self.lasttick) / 100))

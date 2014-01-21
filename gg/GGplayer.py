@@ -47,17 +47,16 @@ class Player(object):
 
             if self.uevent.w == True:
 
-                self.playership.velocity_x = (self.playership.speed
-                                      * self.playership.scale_x)
-                self.playership.velocity_y = (self.playership.speed
-                                      * self.playership.scale_y)
+                self.playership.speed = (self.playership.acceleration
+                                         * (self.nowtick - self.lasttick)) \
+                                            + self.playership.speed
 
-                # print('test')
+                # self.playership.velocity_x = (() * self.playership.scale_x)
 
-                # self.playership.x = self.playership.x + (self.playership.velocity_x * ((self.nowtick - self.lasttick) / 100))
-                # self.playership.y = self.playership.y + (self.playership.velocity_y * ((self.nowtick - self.lasttick) / 100))
-
-                # print(self.now)
+                # self.playership.velocity_x = (self.playership.speed
+                #                      * self.playership.scale_x)
+                # self.playership.velocity_y = (self.playership.speed
+                #                      * self.playership.scale_y)
 
                 if self.after < (self.nowtick - 100):
 
@@ -72,10 +71,17 @@ class Player(object):
                 # self.y -= 10
 
                 # self.rect = self.rect.move(0, -1)
-            else:
+            if self.uevent.s == True:
 
-                self.playership.velocity_x = 0
-                self.playership.velocity_y = 0
+                if self.playership.speed > 0:
+
+                    self.playership.speed = (self.playership.speed
+                                             - (self.playership.acceleration
+                                                * (self.nowtick - self.lasttick)))
+
+                else:
+
+                    self.playership.speed = 0
 
             if self.uevent.a == True:
 
@@ -89,14 +95,6 @@ class Player(object):
                                                     self.playership.angle))
                 self.playership.scale_y = math.sin(math.radians(
                                                     self.playership.angle))
-
-                # self.rect = self.rect.move(-1, 0)
-
-#            if self.uevent.s == True:
-#
-#                #self.y += 10
-#
-#                # self.rect = self.rect.move(0, 1)
 
             if self.uevent.d == True:
 
