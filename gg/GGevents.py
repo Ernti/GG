@@ -159,6 +159,10 @@ class Events(object):
 
                             objects.x = data['x']
                             objects.y = data['y']
+                            objects.scale_x = data['scale_x']
+                            objects.scale_y = data['scale_y']
+                            objects.speed = data['speed']
+                            objects.angle = data['r']
 
             if self.uevents.lmsbtn == True:
 

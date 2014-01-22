@@ -37,57 +37,21 @@ class Player(object):
 
     def move(self):
 
-        # if self.playership.target != (self.playership.x, self.playership.y):
-
-        # print(self.x, self.y)
-
         if self.uevent is not None:
 
             self.nowtick = pygame.time.get_ticks()
 
             if self.uevent.w == True:
 
-                self.playership.acceleration = ((self.playership.thrust / (self.playership.mass ** 1.08)) * 0.85 ** (self.playership.speed * 100))
+                self.speedUp()
 
-                if self.playership.acceleration < 0.001:
-
-                    self.playership.acceleration = 0
-
-                self.playership.speed = (self.playership.acceleration
-                                         * ((self.nowtick - self.lasttick) / 100)) + self.playership.speed
-
-                print(self.playership.speed * 100)
-
-                # self.playership.velocity_x = (() * self.playership.scale_x)
-
-                # self.playership.velocity_x = (self.playership.speed
-                #                      * self.playership.scale_x)
-                # self.playership.velocity_y = (self.playership.speed
-                #                      * self.playership.scale_y)
-
-                # self.y -= 10
-
-                # self.rect = self.rect.move(0, -1)
             if self.uevent.s == True:
 
-                if self.playership.speed > 0:
-
-                    self.playership.acceleration = ((self.playership.thrust / (self.playership.mass ** 1.08)) * 0.85 ** (self.playership.speed * 100))
-
-                    self.playership.speed = (self.playership.speed
-                                             - (self.playership.acceleration
-                                             * ((self.nowtick - self.lasttick)
-                                                / 100)))
-
-                else:
-
-                    self.playership.speed = 0
-
-                print(self.playership.speed * 100)
+                self.slowDown()
 
             if self.uevent.a == True:
 
-                # self.x -= 10
+                self.playership.turntime = (self.playership.thrust / (self.playership.mass ** 1.08) * 100)
 
                 self.playership.angle += (self.playership.turntime
                                           * ((self.nowtick - self.lasttick)
@@ -100,7 +64,7 @@ class Player(object):
 
             if self.uevent.d == True:
 
-                # self.x += 10
+                self.playership.turntime = (self.playership.thrust / (self.playership.mass ** 1.08) * 100)
 
                 self.playership.angle -= (self.playership.turntime
                                           * ((self.nowtick - self.lasttick)
@@ -110,12 +74,6 @@ class Player(object):
                                                     self.playership.angle))
                 self.playership.scale_y = math.sin(math.radians(
                                                     self.playership.angle))
-
-                # self.rect = self.rect.move(1, 0)
-#            pygame.event.post(pygame.event.Event(26, {'type': 'playermoved',
-#                                                 'soid': self.id,
-#                                                 'x': self.x,
-#                                                 'y': self.y}))
 
             self.lasttick = self.nowtick
 
@@ -133,3 +91,36 @@ class Player(object):
                                     'scale_y': self.playership.scale_y}))
 
                 self.after = pygame.time.get_ticks()
+
+    def speedUp(self):
+
+        self.playership.acceleration = ((self.playership.thrust
+                                         / (self.playership.mass ** 1.08))
+                                        * 0.85 ** (self.playership.speed
+                                                   * 100))
+
+        if self.playership.acceleration < 0.001:
+
+            self.playership.acceleration = 0
+
+        self.playership.speed = ((self.playership.acceleration
+                                  * ((self.nowtick - self.lasttick) / 100))
+                                  + self.playership.speed)
+
+    def slowDown(self):
+
+        if self.playership.speed > 0:
+
+            self.playership.acceleration = ((self.playership.thrust
+                                             / (self.playership.mass ** 1.08))
+                                            * 0.85 ** (self.playership.speed
+                                                      * 100))
+
+            self.playership.speed = (self.playership.speed
+                                     - (self.playership.acceleration
+                                        * ((self.nowtick - self.lasttick)
+                                           / 100)))
+
+        else:
+
+            self.playership.speed = 0
