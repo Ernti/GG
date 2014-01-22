@@ -26,9 +26,10 @@ class SpaceShip(object):
         self.lasty = y
         self.angle = 0
         self.speed = 0
-        self.mass = 1000
+        self.mass = 10000
         self.turntime = 10
-        self.acceleration = 0.0001
+        self.acceleration = 0
+        self.thrust = 100
 
         self.scale_x = math.cos(math.radians(self.angle))
         self.scale_y = math.sin(math.radians(self.angle))

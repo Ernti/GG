@@ -47,9 +47,16 @@ class Player(object):
 
             if self.uevent.w == True:
 
+                self.playership.acceleration = ((self.playership.thrust / (self.playership.mass ** 1.08)) * 0.85 ** (self.playership.speed * 100))
+
+                if self.playership.acceleration < 0.001:
+
+                    self.playership.acceleration = 0
+
                 self.playership.speed = (self.playership.acceleration
-                                         * (self.nowtick - self.lasttick)) \
-                                            + self.playership.speed
+                                         * ((self.nowtick - self.lasttick) / 100)) + self.playership.speed
+
+                print(self.playership.speed * 100)
 
                 # self.playership.velocity_x = (() * self.playership.scale_x)
 
@@ -75,13 +82,18 @@ class Player(object):
 
                 if self.playership.speed > 0:
 
+                    self.playership.acceleration = ((self.playership.thrust / (self.playership.mass ** 1.08)) * 0.85 ** (self.playership.speed * 100))
+
                     self.playership.speed = (self.playership.speed
                                              - (self.playership.acceleration
-                                                * (self.nowtick - self.lasttick)))
+                                             * ((self.nowtick - self.lasttick)
+                                                / 100)))
 
                 else:
 
                     self.playership.speed = 0
+
+                print(self.playership.speed * 100)
 
             if self.uevent.a == True:
 
