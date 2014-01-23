@@ -4,6 +4,8 @@ Created on 11 Dec 2013
 @author: tore
 '''
 
+import time
+
 import pygame
 
 from gg.GGcoreinterface import GGCI
@@ -11,7 +13,6 @@ from gg.GGevents import Events
 from gg.GGgrid import SpaceGrid
 from gg.GGrender import Render
 from gg.GGspaceship import SpaceShip
-import time
 
 
 class GGcore(object):
@@ -52,6 +53,7 @@ class GGcore(object):
                 # print("ding")
                 self.fps = self.test
                 self.test = 0
-                print(self.fps)
+                print(self.fps, " fps")
+                print(int(self.ggci.player.playership.speed * 360), " km/h")
 
             self.render.render()

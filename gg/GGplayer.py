@@ -35,6 +35,10 @@ class Player(object):
         self.playership.velocity_y = (self.playership.speed
                                       * self.playership.scale_y)
 
+        maxspeed = math.log((0.001 * self.playership.mass ** 1.08)
+                            / self.playership.thrust, 0.85)
+        print(maxspeed)
+
     def move(self):
 
         if self.uevent is not None:

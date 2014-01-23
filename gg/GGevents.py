@@ -4,6 +4,8 @@ Created on 9 Dec 2013
 @author: tore
 '''
 
+import math
+
 import pygame.event
 
 from gg.GGspaceship import SpaceShip
@@ -120,6 +122,30 @@ class Events(object):
 
                 elif event.key == pygame.K_d:
                     self.uevents.d = True
+
+                elif event.key == pygame.K_m:
+                    self.ggci.player.playership.mass += 1
+                    maxspeed = math.log((0.001 * self.ggci.player.playership.mass ** 1.08)
+                            / self.ggci.player.playership.thrust, 0.85)
+                    print(self.ggci.player.playership.mass, self.ggci.player.playership.thrust, maxspeed)
+
+                elif event.key == pygame.K_n:
+                    self.ggci.player.playership.mass -= 1
+                    maxspeed = math.log((0.001 * self.ggci.player.playership.mass ** 1.08)
+                            / self.ggci.player.playership.thrust, 0.85)
+                    print(self.ggci.player.playership.mass, self.ggci.player.playership.thrust, maxspeed)
+
+                elif event.key == pygame.K_k:
+                    self.ggci.player.playership.thrust += 1
+                    maxspeed = math.log((0.001 * self.ggci.player.playership.mass ** 1.08)
+                            / self.ggci.player.playership.thrust, 0.85)
+                    print(self.ggci.player.playership.mass, self.ggci.player.playership.thrust, maxspeed)
+
+                elif event.key == pygame.K_j:
+                    self.ggci.player.playership.thrust -= 1
+                    maxspeed = math.log((0.001 * self.ggci.player.playership.mass ** 1.08)
+                            / self.ggci.player.playership.thrust, 0.85)
+                    print(self.ggci.player.playership.mass, self.ggci.player.playership.thrust, maxspeed)
 
             elif event.type == pygame.KEYUP:
 
