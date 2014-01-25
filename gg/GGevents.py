@@ -77,8 +77,24 @@ class Events(object):
                     print('lmsbtn False')
 
                 if event.dict['button'] == 3:
-                    self.ggci.player.target = pygame.mouse.get_pos()
-                    print(pygame.mouse.get_pos())
+                    target = pygame.mouse.get_pos()
+
+                    self.ggci.player.target = (self.player.x + (((target[0]
+                                            - self.ggci.ggdata.screenwidth / 2)
+                                            / self.ggci.ggdata.screenwidth * 2)
+                                            * ((math.tan(math.radians(45 / 2))
+                                            * (self.ggci.ggdata.screenwidth
+                                            / self.ggci.ggdata.screenheight))
+                                            * (10 + self.ggci.player.z))),
+
+                                            (self.player.y + (-(target[1]
+                                            - self.ggci.ggdata.screenheight / 2)
+                                            / self.ggci.ggdata.screenheight * 2)
+                                            * (math.tan(math.radians(45 / 2))
+                                            * (10 + self.ggci.player.z))))
+
+                    print(self.ggci.player.target)
+
                     print('Rmsbtn True')
                     print((self.ggci.player.x, self.ggci.player.y))
 

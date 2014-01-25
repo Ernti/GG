@@ -29,7 +29,7 @@ class SpaceShip(object):
         self.mass = 1000
         self.turntime = 1
         self.acceleration = 0
-        self.thrust = 10
+        self.thrust = 100
 
         self.scale_x = math.cos(math.radians(self.angle))
         self.scale_y = math.sin(math.radians(self.angle))
@@ -45,9 +45,9 @@ class SpaceShip(object):
         self.velocity_y = (self.speed * self.scale_y)
 
         self.x = self.x + (self.velocity_x * ((self.nowtick
-                                               - self.lasttick) / 100))
+                                               - self.lasttick) / 1000))
         self.y = self.y + (self.velocity_y * ((self.nowtick
-                                               - self.lasttick) / 100))
+                                               - self.lasttick) / 1000))
 
         self.lasttick = self.nowtick
 

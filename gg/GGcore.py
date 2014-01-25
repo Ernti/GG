@@ -21,11 +21,11 @@ class GGcore(object):
 
         pygame.init()
         self.ggci = GGCI()
-        self.render = Render(self.ggci)
         self.ss = SpaceShip(-1, 0, 0, self.ggci)
         self.ggci.player.playership = self.ss
         self.sg = SpaceGrid(0, 0)
         self.ggci.objectlist.addObject(self.ss)
+        self.render = Render(self.ggci)
         self.events = Events(self.ggci, self.ss, self.sg, self.render)
         self.clock = pygame.time.Clock()
 
@@ -44,7 +44,9 @@ class GGcore(object):
             self.events.eventLoop()
             self.clock.tick()
 
-            self.ggci.player.move()
+            if self.ggci.player.target is not None:
+
+                self.ggci.player.move()
 
             self.test += 1
             self.test1 = self.test2
@@ -54,6 +56,6 @@ class GGcore(object):
                 self.fps = self.test
                 self.test = 0
                 print(self.fps, " fps")
-                print(int(self.ggci.player.playership.speed * 360), " km/h")
+                print(int(self.ggci.player.playership.speed * 3.6), " km/h")
 
             self.render.render()
