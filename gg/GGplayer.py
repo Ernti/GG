@@ -36,13 +36,38 @@ class Player(object):
         self.playership.velocity_y = (self.playership.speed
                                       * self.playership.scale_y)
 
-        maxspeed = math.log((0.001 * self.playership.mass ** 1.08)
-                            / self.playership.thrust, 0.85)
+        maxspeed = (((self.playership.thrust / (self.playership.mass ** 1.08)
+                      * 100) * (self.playership.mass ** 1.08)
+                     / self.playership.thrust / 6)) * 3.6
+
         print(maxspeed)
 
     def move(self):
 
         self.nowtick = pygame.time.get_ticks()
+
+        if self.uevent.lock == True:
+
+            self.x = -self.playership.x
+            self.y = -self.playership.y
+
+        if self.uevent.rmsbtn == True:
+
+            self.uevent.target = pygame.mouse.get_pos()
+
+            self.ggci.player.target = (-self.x + (((self.uevent.target[0]
+                                    - self.ggci.ggdata.screenwidth / 2)
+                                    / self.ggci.ggdata.screenwidth * 2)
+                                    * ((math.tan(math.radians(45 / 2))
+                                    * (self.ggci.ggdata.screenwidth
+                                       / self.ggci.ggdata.screenheight))
+                                       * (10 + self.z))),
+
+                                    (-self.y + (-(self.uevent.target[1]
+                                    - self.ggci.ggdata.screenheight / 2)
+                                    / self.ggci.ggdata.screenheight * 2)
+                                    * (math.tan(math.radians(45 / 2))
+                                       * (10 + self.z))))
 
         if (self.playership.x, self.playership.y) != self.target:
 
@@ -71,10 +96,6 @@ class Player(object):
 
             self.speedUp()
 
-        else:
-
-            self.slowDown()
-
         self.lasttick = self.nowtick
 
         if self.playership.speed > 0:
@@ -101,16 +122,16 @@ class Player(object):
         self.velocity_y = (self.playership.speed * self.playership.scale_y)
 
         stopx = (self.velocity_x * (self.playership.mass ** 1.08)
-                / self.playership.thrust / 60)
+                / self.playership.thrust / 6)
         stopy = (self.velocity_y * (self.playership.mass ** 1.08)
-                / self.playership.thrust / 60)
+                / self.playership.thrust / 6)
 
         if (abs(self.target[0] - self.playership.x) >= 0.01 + abs(stopx)
             or abs(self.target[1] - self.playership.y) >= 0.01 + abs(stopy)):
 
             if self.playership.speed < ((self.playership.acceleration
                                          * (self.playership.mass ** 1.08)
-                                         / self.playership.thrust / 60)):
+                                         / self.playership.thrust / 6)):
 
                 self.playership.speed += (self.playership.acceleration
                                           * ((self.nowtick - self.lasttick)
@@ -120,7 +141,7 @@ class Player(object):
 
                 self.playership.speed = ((self.playership.acceleration
                                           * (self.playership.mass ** 1.08)
-                                          / self.playership.thrust / 60))
+                                          / self.playership.thrust / 6))
 
         else:
 

@@ -15,12 +15,10 @@ class UserEvents(object):
 
     def __init__(self):
 
-        self.w = False
-        self.a = False
-        self.s = False
-        self.d = False
         self.lmsbtn = False
         self.rmsbtn = False
+        self.target = None
+        self.lock = False
         self.swdwn = False
         self.swup = False
 
@@ -58,6 +56,11 @@ class Events(object):
                     self.uevents.lmsbtn = True
                     print('lmsbtn True')
 
+                if event.dict['button'] == 3:
+
+                    self.uevents.rmsbtn = True
+                    print('Rmsbtn True')
+
                 if event.dict['button'] == 5:
                     self.uevents.swdwn = True
                     if self.ggci.player.z > 0:
@@ -77,26 +80,8 @@ class Events(object):
                     print('lmsbtn False')
 
                 if event.dict['button'] == 3:
-                    target = pygame.mouse.get_pos()
 
-                    self.ggci.player.target = (-self.player.x + (((target[0]
-                                            - self.ggci.ggdata.screenwidth / 2)
-                                            / self.ggci.ggdata.screenwidth * 2)
-                                            * ((math.tan(math.radians(45 / 2))
-                                            * (self.ggci.ggdata.screenwidth
-                                            / self.ggci.ggdata.screenheight))
-                                            * (10 + self.ggci.player.z))),
-
-                                            (-self.player.y + (-(target[1]
-                                            - self.ggci.ggdata.screenheight / 2)
-                                            / self.ggci.ggdata.screenheight * 2)
-                                            * (math.tan(math.radians(45 / 2))
-                                            * (10 + self.ggci.player.z))))
-
-                    print(self.ggci.player.target)
-
-                    print('Rmsbtn True')
-                    print((self.ggci.player.x, self.ggci.player.y))
+                    self.uevents.rmsbtn = False
 
                 if event.dict['button'] == 5:
                     self.uevents.swdwn = False
@@ -127,17 +112,13 @@ class Events(object):
                                 pygame.HWSURFACE |
                                 pygame.DOUBLEBUF)
 
-                elif event.key == pygame.K_w:
-                    self.uevents.w = True
+                elif event.key == pygame.K_SPACE:
+                    if self.uevents.lock == True:
 
-                elif event.key == pygame.K_a:
-                    self.uevents.a = True
+                        self.uevents.lock = False
+                    else:
 
-                elif event.key == pygame.K_s:
-                    self.uevents.s = True
-
-                elif event.key == pygame.K_d:
-                    self.uevents.d = True
+                        self.uevents.lock = True
 
                 elif event.key == pygame.K_m:
                     self.ggci.player.playership.mass += 1

@@ -44,9 +44,7 @@ class GGcore(object):
             self.events.eventLoop()
             self.clock.tick()
 
-            if self.ggci.player.target is not None:
-
-                self.ggci.player.move()
+            self.ggci.player.move()
 
             self.test += 1
             self.test1 = self.test2
