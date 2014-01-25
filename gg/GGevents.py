@@ -79,7 +79,7 @@ class Events(object):
                 if event.dict['button'] == 3:
                     target = pygame.mouse.get_pos()
 
-                    self.ggci.player.target = (self.player.x + (((target[0]
+                    self.ggci.player.target = (-self.player.x + (((target[0]
                                             - self.ggci.ggdata.screenwidth / 2)
                                             / self.ggci.ggdata.screenwidth * 2)
                                             * ((math.tan(math.radians(45 / 2))
@@ -87,7 +87,7 @@ class Events(object):
                                             / self.ggci.ggdata.screenheight))
                                             * (10 + self.ggci.player.z))),
 
-                                            (self.player.y + (-(target[1]
+                                            (-self.player.y + (-(target[1]
                                             - self.ggci.ggdata.screenheight / 2)
                                             / self.ggci.ggdata.screenheight * 2)
                                             * (math.tan(math.radians(45 / 2))

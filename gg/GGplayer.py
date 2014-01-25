@@ -100,12 +100,13 @@ class Player(object):
         self.velocity_x = (self.playership.speed * self.playership.scale_x)
         self.velocity_y = (self.playership.speed * self.playership.scale_y)
 
-        if (abs(self.target[0]) - abs(self.playership.x) >= abs((self.velocity_x
-                            * (self.playership.mass ** 1.08)
-                              / self.playership.thrust / 60))
-            or abs(self.target[1]) - abs(self.playership.y) >= abs((self.velocity_y
-                            * (self.playership.mass ** 1.08)
-                              / self.playership.thrust / 60))):
+        stopx = (self.velocity_x * (self.playership.mass ** 1.08)
+                / self.playership.thrust / 60)
+        stopy = (self.velocity_y * (self.playership.mass ** 1.08)
+                / self.playership.thrust / 60)
+
+        if (abs(self.target[0] - self.playership.x) >= 0.01 + abs(stopx)
+            or abs(self.target[1] - self.playership.y) >= 0.01 + abs(stopy)):
 
             if self.playership.speed < ((self.playership.acceleration
                                          * (self.playership.mass ** 1.08)
@@ -148,28 +149,18 @@ class Player(object):
         self.playership.turntime = (self.playership.thrust
                                     / (self.playership.mass ** 1.08) * 1000)
 
-        if  self.targetangle - self.playership.angle < -1 or self.targetangle - self.playership.angle > 1:
+        if  (abs(self.targetangle - self.playership.angle)
+             > (self.playership.turntime * ((self.nowtick - self.lasttick)
+                                            / 1000))):
 
             self.slowDown()
-            if self.playership.angle + (self.playership.turntime
-                                  * ((self.nowtick - self.lasttick)
-                                     / 1000)) < self.targetangle:
-
-                self.playership.angle += (self.playership.turntime
-                                  * ((self.nowtick - self.lasttick)
-                                     / 1000))
-
-            else:
-
-                self.playership.angle = self.targetangle
+            self.playership.angle += (self.playership.turntime
+                                      * ((self.nowtick - self.lasttick)
+                                         / 1000))
 
             if self.playership.angle > 180:
 
                 self.playership.angle -= 360
-
-        else:
-
-            self.playership.angle = self.targetangle
 
         self.playership.scale_x = math.cos(math.radians(self.playership.angle))
         self.playership.scale_y = math.sin(math.radians(self.playership.angle))
@@ -180,28 +171,19 @@ class Player(object):
                                         / (self.playership.mass ** 1.08)
                                         * 1000)
 
-        if  self.targetangle - self.playership.angle < -1 or self.targetangle - self.playership.angle > 1:
+        if  (abs(self.targetangle - self.playership.angle)
+             > (self.playership.turntime * ((self.nowtick - self.lasttick)
+                                            / 1000))):
 
             self.slowDown()
-            if self.playership.angle - (self.playership.turntime
-                                  * ((self.nowtick - self.lasttick)
-                                     / 1000)) > self.targetangle:
 
-                self.playership.angle -= (self.playership.turntime
-                                  * ((self.nowtick - self.lasttick)
-                                     / 1000))
-
-            else:
-
-                self.playership.angle = self.targetangle
+            self.playership.angle -= (self.playership.turntime
+                                      * ((self.nowtick - self.lasttick)
+                                         / 1000))
 
             if self.playership.angle < -180:
 
                 self.playership.angle += 360
-
-        else:
-
-            self.playership.angle = self.targetangle
 
         self.playership.scale_x = math.cos(math.radians(self.playership.angle))
         self.playership.scale_y = math.sin(math.radians(self.playership.angle))
