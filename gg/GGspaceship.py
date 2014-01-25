@@ -11,7 +11,6 @@ from OpenGL.GL import glBegin, GL_TRIANGLES, glColor, glVertex3f, glEnd
 import pygame
 
 
-# from OpenGL.GLU import *
 class SpaceShip(object):
 
     def __init__(self, ssid, x, y, ggci):

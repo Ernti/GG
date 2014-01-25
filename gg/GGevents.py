@@ -25,13 +25,12 @@ class UserEvents(object):
 
 class Events(object):
 
-    def __init__(self, ggci, ss, sg, render):
+    def __init__(self, ggci, render):
 
         self.ggci = ggci
         self.uevents = UserEvents()
-        self.ss = ss
         self.player = self.ggci.player
-        self.sg = sg
+        self.ss = self.player.playership
         self.render = render
         self.running = True
 
@@ -63,14 +62,14 @@ class Events(object):
 
                 if event.dict['button'] == 5:
                     self.uevents.swdwn = True
-                    if self.ggci.player.z > 0:
-                        self.ggci.player.z -= 1
+                    if self.player.z > 0:
+                        self.player.z -= 1
                     print('true')
 
                 if event.dict['button'] == 4:
                     self.uevents.swup = True
-                    if self.ggci.player.z < 50:
-                        self.ggci.player.z += 1
+                    if self.player.z < 50:
+                        self.player.z += 1
                     print('true')
 
             elif event.type == pygame.MOUSEBUTTONUP:
@@ -121,28 +120,36 @@ class Events(object):
                         self.uevents.lock = True
 
                 elif event.key == pygame.K_m:
-                    self.ggci.player.playership.mass += 1
-                    maxspeed = math.log((0.001 * self.ggci.player.playership.mass ** 1.08)
-                            / self.ggci.player.playership.thrust, 0.85)
-                    print(self.ggci.player.playership.mass, self.ggci.player.playership.thrust, maxspeed)
+                    self.player.playership.mass += 1
+                    maxspeed = math.log((0.001 * self.player.playership.mass
+                                         ** 1.08)
+                            / self.player.playership.thrust, 0.85)
+                    print(self.player.playership.mass,
+                          self.player.playership.thrust, maxspeed)
 
                 elif event.key == pygame.K_n:
-                    self.ggci.player.playership.mass -= 1
-                    maxspeed = math.log((0.001 * self.ggci.player.playership.mass ** 1.08)
-                            / self.ggci.player.playership.thrust, 0.85)
-                    print(self.ggci.player.playership.mass, self.ggci.player.playership.thrust, maxspeed)
+                    self.player.playership.mass -= 1
+                    maxspeed = math.log((0.001 * self.player.playership.mass
+                                         ** 1.08)
+                            / self.player.playership.thrust, 0.85)
+                    print(self.player.playership.mass,
+                          self.player.playership.thrust, maxspeed)
 
                 elif event.key == pygame.K_k:
-                    self.ggci.player.playership.thrust += 1
-                    maxspeed = math.log((0.001 * self.ggci.player.playership.mass ** 1.08)
-                            / self.ggci.player.playership.thrust, 0.85)
-                    print(self.ggci.player.playership.mass, self.ggci.player.playership.thrust, maxspeed)
+                    self.player.playership.thrust += 1
+                    maxspeed = math.log((0.001 * self.player.playership.mass
+                                         ** 1.08)
+                            / self.player.playership.thrust, 0.85)
+                    print(self.player.playership.mass,
+                          self.player.playership.thrust, maxspeed)
 
                 elif event.key == pygame.K_j:
-                    self.ggci.player.playership.thrust -= 1
-                    maxspeed = math.log((0.001 * self.ggci.player.playership.mass ** 1.08)
-                            / self.ggci.player.playership.thrust, 0.85)
-                    print(self.ggci.player.playership.mass, self.ggci.player.playership.thrust, maxspeed)
+                    self.player.playership.thrust -= 1
+                    maxspeed = math.log((0.001 * self.player.playership.mass
+                                         ** 1.08)
+                            / self.player.playership.thrust, 0.85)
+                    print(self.player.playership.mass,
+                          self.player.playership.thrust, maxspeed)
 
             elif event.type == pygame.KEYUP:
 
@@ -190,6 +197,10 @@ class Events(object):
             if self.uevents.lmsbtn == True:
 
                 if event.type == pygame.MOUSEMOTION:
+
+                    if self.uevents.lock == True:
+
+                        self.uevents.lock = False
 
                     self.player.x += ((event.rel[0] / 100)
                                       + ((self.player.z / 10)

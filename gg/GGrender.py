@@ -20,7 +20,10 @@ class Render(object):
         self.black = 0.0, 0.0, 0.0, 1.0
 
         self.screen = pygame.display.set_mode(self.ggci.ggdata.screensize,
-                                              pygame.DOUBLEBUF | pygame.OPENGL | pygame.HWPALETTE | pygame.HWSURFACE,
+                                              pygame.DOUBLEBUF |
+                                              pygame.OPENGL |
+                                              pygame.HWPALETTE |
+                                              pygame.HWSURFACE,
                                               24)
 
         glClearColor(0.0, 0.0, 0.0, 1.0)
@@ -32,14 +35,7 @@ class Render(object):
         glLoadIdentity()
         gluLookAt(0, 0, 10, 0, 0, 0, 0, 1, 0)
 
-#        self.screen.set_colorkey((255, 0, 255))
         pygame.display.set_caption('GG')
-#
-#        fontpath = os.path.join(".", "gg", "data", "fonts", "arial.ttf")
-#        self.font = pygame.font.Font(fontpath, 36)
-#
-#        self.fullscreen = False
-#        self.fsres = (1920, 1080)
 
     def render(self):
 

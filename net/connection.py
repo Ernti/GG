@@ -114,12 +114,10 @@ class SenderThread(Thread):
         global stop_requested
         while not stop_requested:
             try:
-                # print("1")
+
                 for event in pygame.event.get(26):
-                    # print("2")
 
                     if event.type == 26:
-                        # print("3")
 
                         self.sock.send(json.dumps(event.dict).encode())
                 pygame.time.wait(10)
