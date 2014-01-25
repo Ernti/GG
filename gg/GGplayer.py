@@ -183,6 +183,10 @@ class Player(object):
 
                 self.playership.angle -= 360
 
+        else:
+
+            self.playership.angle = self.targetangle
+
         self.playership.scale_x = math.cos(math.radians(self.playership.angle))
         self.playership.scale_y = math.sin(math.radians(self.playership.angle))
 
@@ -205,6 +209,10 @@ class Player(object):
             if self.playership.angle < -180:
 
                 self.playership.angle += 360
+
+        else:
+
+            self.playership.angle = self.targetangle
 
         self.playership.scale_x = math.cos(math.radians(self.playership.angle))
         self.playership.scale_y = math.sin(math.radians(self.playership.angle))
