@@ -126,8 +126,8 @@ class Player(object):
         stopy = (self.velocity_y * (self.playership.mass ** 1.08)
                 / self.playership.thrust / 6)
 
-        if (abs(self.target[0] - self.playership.x) >= 0.01 + abs(stopx)
-            or abs(self.target[1] - self.playership.y) >= 0.01 + abs(stopy)):
+        if (abs(self.target[0] - self.playership.x) >= 0.1 + abs(stopx)
+            or abs(self.target[1] - self.playership.y) >= 0.1 + abs(stopy)):
 
             if self.playership.speed < ((self.playership.acceleration
                                          * (self.playership.mass ** 1.08)
