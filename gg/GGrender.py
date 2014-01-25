@@ -20,7 +20,7 @@ class Render(object):
         self.black = 0.0, 0.0, 0.0, 1.0
 
         self.screen = pygame.display.set_mode(self.ggci.ggdata.screensize,
-                                              pygame.OPENGL | pygame.DOUBLEBUF,
+                                              pygame.DOUBLEBUF | pygame.OPENGL | pygame.HWPALETTE | pygame.HWSURFACE,
                                               24)
 
         glClearColor(0.0, 0.0, 0.0, 1.0)
