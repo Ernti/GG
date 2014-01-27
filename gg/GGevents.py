@@ -68,7 +68,7 @@ class Events(object):
 
                 if event.dict['button'] == 4:
                     self.uevents.swup = True
-                    if self.player.z < 50:
+                    if self.player.z < 100:
                         self.player.z += 1
                     print('true')
 
@@ -172,20 +172,23 @@ class Events(object):
 
                     self.running = False
 
-                elif data['type'] == 'newspaceobject':
-
-                    if data['spaceobjecttype'] == 'ss':
-
-                        spaceship = SpaceShip(data['soid'],
-                                              data['x'],
-                                              data['y'])
-                        self.ggci.objectlist.addObject(spaceship)
-
-                elif data['type'] == 'spaceobjectmoved':
+                elif data['type'] == 'removespaceobject':
 
                     for objects in self.ggci.objectlist.objectlist:
 
                         if objects.id == data['soid']:
+
+                            self.ggci.objectlist.removeObject(objects)
+
+                elif data['type'] == 'spaceobjectmoved':
+
+                    exists = False
+
+                    for objects in self.ggci.objectlist.objectlist:
+
+                        if objects.id == data['soid']:
+
+                            exists = True
 
                             objects.x = data['x']
                             objects.y = data['y']
@@ -193,6 +196,19 @@ class Events(object):
                             objects.scale_y = data['scale_y']
                             objects.speed = data['speed']
                             objects.angle = data['r']
+
+                    if exists == False:
+
+                        spaceship = SpaceShip(data['soid'],
+                                              data['x'],
+                                              data['y'], self.ggci)
+                        spaceship.scale_x = data['scale_x']
+                        spaceship.scale_y = data['scale_y']
+                        spaceship.speed = data['speed']
+                        spaceship.angle = data['r']
+                        self.ggci.objectlist.addObject(spaceship)
+
+
 
             if self.uevents.lmsbtn == True:
 

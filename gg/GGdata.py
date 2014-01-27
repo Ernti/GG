@@ -9,4 +9,4 @@ class GGData:  # General Game Data
 
     def __init__(self):
 
-        self.screensize = self.screenwidth, self.screenheight = 1280, 720
+        self.screensize = self.screenwidth, self.screenheight = 640, 360

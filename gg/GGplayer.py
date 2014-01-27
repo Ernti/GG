@@ -113,6 +113,22 @@ class Player(object):
 
                 self.after = pygame.time.get_ticks()
 
+        else:
+
+            if self.after < (self.nowtick - 1000):
+
+                pygame.event.post(pygame.event.Event(
+                                    26, {'type': 'playermoved',
+                                    'soid': self.playership.id,
+                                    'x': self.playership.x,
+                                    'y': self.playership.y,
+                                    'speed': self.playership.speed,
+                                    'r': self.playership.angle,
+                                    'scale_x': self.playership.scale_x,
+                                    'scale_y': self.playership.scale_y}))
+
+                self.after = pygame.time.get_ticks()
+
     def speedUp(self):
 
         self.playership.acceleration = (self.playership.thrust

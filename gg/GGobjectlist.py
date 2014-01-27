@@ -13,3 +13,7 @@ class ObjectList(object):
     def addObject(self, listobject):
 
         self.objectlist.append(listobject)
+
+    def removeObject(self, listobject):
+
+        self.objectlist.remove(listobject)
