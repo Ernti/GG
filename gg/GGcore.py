@@ -52,6 +52,6 @@ class GGcore(object):
                 self.fps = self.test
                 self.test = 0
                 print(self.fps, " fps")
-                print(int(self.ggci.player.playership.speed * 3.6), " km/h")
+                self.ggci.speed = int(self.ggci.player.playership.speed * 3.6)
 
             self.render.render()

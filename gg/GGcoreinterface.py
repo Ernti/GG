@@ -15,3 +15,4 @@ class GGCI(object):
         self.ggdata = GGData()
         self.objectlist = ObjectList()
         self.player = Player(self)
+        self.speed = 0
