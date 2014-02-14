@@ -80,10 +80,17 @@ class Render(object):
         self.textView()
         glPushMatrix()
         self.print(str(self.ggci.speed) + " km/h", self.char2, self.ggci.ggdata.screenwidth - 200, 10)
-        for line in self.ggci.chat:
-            self.print(self.ggci.chat[self.ggci.chat.index(line)],
-                       self.char, 10,
-                       20 * len(self.ggci.chat) - 20 * self.ggci.chat.index(line))
+        line = 0
+        while line < 5:
+            if line < len(self.ggci.chat.chat):
+                self.print(self.ggci.chat.chat[(len(self.ggci.chat.chat) - line) - 1], self.char,
+                           10, 20 * (line + 1))
+            line += 1
+
+        #for line in self.ggci.chat.chat:
+        #    if len(self.ggci.chat.chat) - self.ggci.chat.chat.index(line) < 5:
+        #        self.print(line, self.char, 10,
+        #                    20 * len(self.ggci.chat.chat) - 20 * self.ggci.chat.chat.index(line))
         glPopMatrix()
 
         pygame.display.flip()

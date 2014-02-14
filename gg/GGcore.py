@@ -28,7 +28,6 @@ class GGcore(object):
         self.ggci.objectlist.addObject(self.ss)
         self.render = Render(self.ggci)
         self.events = Events(self.ggci, self.render)
-        self.chat = ChatWindow(self.ggci)
         self.clock = pygame.time.Clock()
 
         self.ggci.player.eventtest(self.events.uevents)

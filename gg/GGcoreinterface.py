@@ -4,6 +4,7 @@ Created on 17 Dec 2013
 @author: tore
 '''
 import os.path
+from gg.GGchat import ChatWindow
 from gg.GGdata import GGData
 from gg.GGobjectlist import ObjectList
 from gg.GGobjloader import *
@@ -18,6 +19,6 @@ class GGCI(object):
         self.objectlist = ObjectList()
         self.player = Player(self)
         self.speed = 0
-        self.chat = []
+        self.chat = ChatWindow(self)
 
         # self.obj = OBJ(os.path.join(".", "gg", "data", "objects", "ship.obj"), swapyz=False)

@@ -93,7 +93,10 @@ class Events(object):
             elif event.type == pygame.KEYDOWN:
 
                 if event.key == pygame.K_RETURN:
-                    self.ggci.chat.append("test")
+                    self.ggci.chat.addLine("test")
+
+                elif event.key == pygame.K_KP_ENTER:
+                    self.ggci.chat.addLine("test2")
 
                 elif event.key == pygame.K_o:
                     self.ss.oxygen = self.ss.oxygen - 1
