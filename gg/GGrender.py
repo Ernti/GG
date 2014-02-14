@@ -81,11 +81,14 @@ class Render(object):
         glPushMatrix()
         self.print(str(self.ggci.speed) + " km/h", self.char2, self.ggci.ggdata.screenwidth - 200, 10)
         line = 0
-        while line < 5:
+        while line < self.ggci.ggdata.chatlength:
             if line < len(self.ggci.chat.chat):
                 self.print(self.ggci.chat.chat[(len(self.ggci.chat.chat) - line) - 1], self.char,
                            10, 20 * (line + 1))
             line += 1
+
+        #if self.ggci.chat.input is True:
+        #   self.print(self.ggci.chat.inputstring, self.char, 10, 20)
 
         #for line in self.ggci.chat.chat:
         #    if len(self.ggci.chat.chat) - self.ggci.chat.chat.index(line) < 5:
