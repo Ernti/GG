@@ -6,6 +6,7 @@ Created on 9 Dec 2013
 
 import json
 import socket
+import re
 from threading import Thread
 
 import pygame.event
@@ -51,7 +52,7 @@ class Network(object):
 
 
             self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-            self.sock.connect((self.hostaddresse, self.hostport))
+            self.sock.connect((self.hostaddresse, int(self.hostport)))
             self.sock.send(json.dumps(self.userdict).encode())
             data = self.sock.recv(1024)
             data_json = json.loads(data.decode())
@@ -99,29 +100,32 @@ class ReceiverThread(Thread):
         while not stop_requested:
             try:
                 data = self.sock.recv(1024)
-                print(data.decode())
-                data_json = json.loads(data.decode())
-                if data_json['type'] == 'shutdown':
-                    pygame.event.post(pygame.event.Event(pygame.USEREVENT,
-                                                         {'type': 'QUIT'}))
-                    stop_requested = True
+                #print(data.decode())
 
-                    print(data.decode())
+                for match_group in re.finditer("\{([^{}]+)\}", data.decode()):
 
-                elif data_json['type'] == 'removespaceobject':
+                    data_json = json.loads('{' + match_group.group(1) + '}')
+                    if data_json['type'] == 'shutdown':
+                        pygame.event.post(pygame.event.Event(pygame.USEREVENT,
+                                                            {'type': 'QUIT'}))
+                        stop_requested = True
 
-                    pygame.event.post(pygame.event.Event(pygame.USEREVENT,
-                                                         data_json))
+                        print(data.decode())
 
-                elif data_json['type'] == 'spaceobjectmoved':
+                    elif data_json['type'] == 'removespaceobject':
 
-                    pygame.event.post(pygame.event.Event(pygame.USEREVENT,
-                                                         data_json))
+                        pygame.event.post(pygame.event.Event(pygame.USEREVENT,
+                                                            data_json))
 
-                elif data_json['type'] == 'sendchatmessage':
+                    elif data_json['type'] == 'spaceobjectmoved':
 
-                    pygame.event.post(pygame.event.Event(pygame.USEREVENT,
-                                                         data_json))
+                        pygame.event.post(pygame.event.Event(pygame.USEREVENT,
+                                                            data_json))
+
+                    elif data_json['type'] == 'sendchatmessage':
+
+                        pygame.event.post(pygame.event.Event(pygame.USEREVENT,
+                                                            data_json))
 
             except socket.error:
 
