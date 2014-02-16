@@ -18,6 +18,8 @@ class Network(object):
 
     def __init__(self):
 
+        self.hostaddresse = ''
+        self.hostport = ''
         self.userdict = {'username': 'testname', 'password': 'iminspace'}
         self.connected = False
         global stop_requested
@@ -26,8 +28,30 @@ class Network(object):
 
         try:
 
+            hostfile = open('host', 'r')
+            for line in hostfile:
+                linearry = list(line)
+                if linearry[0] == '#':
+                    continue
+
+                else:
+                    port = False
+                    for char in linearry:
+                        if char == ":":
+                            print("port")
+                            port = True
+                            continue
+                        else:
+                            if port == False:
+                                self.hostaddresse += char
+                                print(self.hostaddresse)
+                            else:
+                                self.hostport += char
+                                print(self.hostport)
+
+
             self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-            self.sock.connect(('localhost', 4455))
+            self.sock.connect((self.hostaddresse, self.hostport))
             self.sock.send(json.dumps(self.userdict).encode())
             data = self.sock.recv(1024)
             data_json = json.loads(data.decode())
