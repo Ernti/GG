@@ -75,3 +75,5 @@ class SpaceShip(object):
                                           self.angle + 240)) * 1),
                                        0 - self.ggci.player.z),
         glEnd()]
+
+

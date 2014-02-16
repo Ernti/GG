@@ -9,6 +9,6 @@ class GGData:  # General Game Data the User should be able to change.
 
     def __init__(self):
 
-        self.screensize = self.screenwidth, self.screenheight = 640, 360
+        self.screensize = self.screenwidth, self.screenheight = 1280, 720
 
         self.chatlength = 5

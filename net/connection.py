@@ -94,6 +94,11 @@ class ReceiverThread(Thread):
                     pygame.event.post(pygame.event.Event(pygame.USEREVENT,
                                                          data_json))
 
+                elif data_json['type'] == 'sendchatmessage':
+
+                    pygame.event.post(pygame.event.Event(pygame.USEREVENT,
+                                                         data_json))
+
             except socket.error:
 
                 print("Connection Lost!")

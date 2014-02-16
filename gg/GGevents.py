@@ -60,13 +60,13 @@ class Events(object):
                     self.uevents.rmsbtn = True
                     print('Rmsbtn True')
 
-                if event.dict['button'] == 5:
+                if event.dict['button'] == 4:
                     self.uevents.swdwn = True
                     if self.player.z > 0:
                         self.player.z -= 1
                     print('true')
 
-                if event.dict['button'] == 4:
+                if event.dict['button'] == 5:
                     self.uevents.swup = True
                     if self.player.z < 100:
                         self.player.z += 1
@@ -82,11 +82,11 @@ class Events(object):
 
                     self.uevents.rmsbtn = False
 
-                if event.dict['button'] == 5:
+                if event.dict['button'] == 4:
                     self.uevents.swdwn = False
                     print('False')
 
-                if event.dict['button'] == 4:
+                if event.dict['button'] == 5:
                     self.uevents.swup = False
                     print('False')
 
@@ -178,7 +178,7 @@ class Events(object):
 
                     self.running = False
 
-                elif data['type'] == 'removespaceobject':
+                if data['type'] == 'removespaceobject':
 
                     for objects in self.ggci.objectlist.objectlist:
 
@@ -186,7 +186,7 @@ class Events(object):
 
                             self.ggci.objectlist.removeObject(objects)
 
-                elif data['type'] == 'spaceobjectmoved':
+                if data['type'] == 'spaceobjectmoved':
 
                     exists = False
 
@@ -214,7 +214,9 @@ class Events(object):
                         spaceship.angle = data['r']
                         self.ggci.objectlist.addObject(spaceship)
 
+                if data['type'] == 'sendchatmessage':
 
+                    self.ggci.chat.chat.append(data['message'])
 
             if self.uevents.lmsbtn == True:
 
