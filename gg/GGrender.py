@@ -47,9 +47,9 @@ class Render(object):
         self.resize(self.ggci.ggdata.screenwidth, self.ggci.ggdata.screenheight)
         glPushMatrix()
 
-        for object in self.ggci.objectlist.objectlist:
+        for objects in self.ggci.objectlist.objectlist:
 
-            object.render()
+            objects.render()
 
         # glCallList(self.ggci.obj.gl_list)
 
@@ -58,19 +58,19 @@ class Render(object):
         self.ggci.textrender.textView()
         glPushMatrix()
 
-        for object in self.ggci.objectlist.objectlist:
+        for objects in self.ggci.objectlist.objectlist:
 
-            if object.id is not -1:
+            if objects.id is not -1:
 
-                object.renderNameplate()
+                objects.renderNameplate()
 
         self.ggci.textrender.print(str(self.ggci.speed) + " km/h", self.ggci.textrender.char2,
-                                   self.ggci.ggdata.screenwidth - 200, 10)
+                                   self.ggci.ggdata.screenwidth - 200, 10, "left")
         line = 0
         while line < self.ggci.ggdata.chatlength:
             if line < len(self.ggci.chat.chat):
                 self.ggci.textrender.print(self.ggci.chat.chat[(len(self.ggci.chat.chat) - line) - 1],
-                                           self.ggci.textrender.char, 10, 20 * (line + 1))
+                                           self.ggci.textrender.char, 10, 20 * (line + 1), "left")
             line += 1
 
         #if self.ggci.chat.input is True:

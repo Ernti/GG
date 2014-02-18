@@ -19,7 +19,6 @@ class Player(object):
         self.z = 10
 
         self.target = (0, 0)
-        self.targetangle = 0
 
         self.nowtick = pygame.time.get_ticks()
         self.lasttick = self.nowtick
@@ -28,13 +27,13 @@ class Player(object):
     def eventtest(self, uevent):
 
         self.uevent = uevent
-        self.playership.scale_x = math.cos(math.radians(self.playership.angle))
-        self.playership.scale_y = math.sin(math.radians(self.playership.angle))
+        #self.playership.scale_x = math.cos(math.radians(self.playership.angle))
+        #self.playership.scale_y = math.sin(math.radians(self.playership.angle))
 
-        self.playership.velocity_x = (self.playership.speed
-                                      * self.playership.scale_x)
-        self.playership.velocity_y = (self.playership.speed
-                                      * self.playership.scale_y)
+        #self.playership.velocity_x = (self.playership.speed
+        #                              * self.playership.scale_x)
+        #self.playership.velocity_y = (self.playership.speed
+        #                              * self.playership.scale_y)
 
         maxspeed = (((self.playership.thrust / (self.playership.mass ** 1.08)
                       * 100) * (self.playership.mass ** 1.08)
@@ -55,7 +54,7 @@ class Player(object):
 
             self.uevent.target = pygame.mouse.get_pos()
 
-            self.ggci.player.target = (self.x + (((self.uevent.target[0]
+            self.playership.target = (self.x + (((self.uevent.target[0]
                                     - self.ggci.ggdata.screenwidth / 2)
                                     / self.ggci.ggdata.screenwidth * 2)
                                     * ((math.tan(math.radians(45 / 2))
@@ -69,37 +68,10 @@ class Player(object):
                                     * (math.tan(math.radians(45 / 2))
                                        * (10 + self.z))))
 
-        if (self.playership.x, self.playership.y) != self.target:
-
-            self.targetangle = math.degrees(math.atan2((self.target[1]
-                                                        - self.playership.y),
-                                                       (self.target[0]
-                                                        - self.playership.x)))
-
-            if self.targetangle - self.playership.angle > 180:
-
-                self.turnRight()
-
-            elif self.targetangle - self.playership.angle < (-180):
-
-                self.turnLeft()
-
-            elif (self.targetangle - self.playership.angle > 0
-                  and self.targetangle - self.playership.angle < 180):
-
-                self.turnLeft()
-
-            elif (self.targetangle - self.playership.angle < 0
-                  and self.targetangle - self.playership.angle > (-180)):
-
-                self.turnRight()
-
-            self.speedUp()
-
-        self.lasttick = self.nowtick
+        self.playership.move()
 
         if self.playership.speed > 0:
-            if self.after < (self.nowtick - 50):
+            if self.after < (self.nowtick - 10):
 
                 pygame.event.post(pygame.event.Event(
                                     26, {'type': 'playermoved',
@@ -109,7 +81,10 @@ class Player(object):
                                     'speed': self.playership.speed,
                                     'r': self.playership.angle,
                                     'scale_x': self.playership.scale_x,
-                                    'scale_y': self.playership.scale_y}))
+                                    'scale_y': self.playership.scale_y,
+                                    'target': self.playership.target,
+                                    'mass': self.playership.mass,
+                                    'thrust': self.playership.thrust}))
 
                 self.after = pygame.time.get_ticks()
 
@@ -125,110 +100,9 @@ class Player(object):
                                     'speed': self.playership.speed,
                                     'r': self.playership.angle,
                                     'scale_x': self.playership.scale_x,
-                                    'scale_y': self.playership.scale_y}))
+                                    'scale_y': self.playership.scale_y,
+                                    'target': self.playership.target,
+                                    'mass': self.playership.mass,
+                                    'thrust': self.playership.thrust}))
 
                 self.after = pygame.time.get_ticks()
-
-    def speedUp(self):
-
-        self.playership.acceleration = (self.playership.thrust
-                                        / (self.playership.mass ** 1.08) * 100)
-
-        self.velocity_x = (self.playership.speed * self.playership.scale_x)
-        self.velocity_y = (self.playership.speed * self.playership.scale_y)
-
-        stopx = (self.velocity_x * (self.playership.mass ** 1.08)
-                / self.playership.thrust / 6)
-        stopy = (self.velocity_y * (self.playership.mass ** 1.08)
-                / self.playership.thrust / 6)
-
-        if (abs(self.target[0] - self.playership.x) >= 0.1 + abs(stopx)
-            or abs(self.target[1] - self.playership.y) >= 0.1 + abs(stopy)):
-
-            if self.playership.speed < ((self.playership.acceleration
-                                         * (self.playership.mass ** 1.08)
-                                         / self.playership.thrust / 6)):
-
-                self.playership.speed += (self.playership.acceleration
-                                          * ((self.nowtick - self.lasttick)
-                                             / 1000))
-
-            else:
-
-                self.playership.speed = ((self.playership.acceleration
-                                          * (self.playership.mass ** 1.08)
-                                          / self.playership.thrust / 6))
-
-        else:
-
-            self.slowDown()
-
-    def slowDown(self):
-
-        self.playership.acceleration = (self.playership.thrust
-                                        / (self.playership.mass ** 1.08)
-                                        * 100)
-
-        if (self.playership.speed - (self.playership.acceleration
-                                        * ((self.nowtick - self.lasttick)
-                                           / 1000))) > 0.01:
-
-            self.playership.speed -= (self.playership.acceleration
-                                        * ((self.nowtick - self.lasttick)
-                                           / 1000))
-
-        else:
-
-            self.playership.speed = 0
-
-    def turnLeft(self):
-
-        self.playership.turntime = (self.playership.thrust
-                                    / (self.playership.mass ** 1.08) * 1000)
-
-        if  (abs(self.targetangle - self.playership.angle)
-             > (self.playership.turntime * ((self.nowtick - self.lasttick)
-                                            / 1000))):
-
-            self.slowDown()
-            self.playership.angle += (self.playership.turntime
-                                      * ((self.nowtick - self.lasttick)
-                                         / 1000))
-
-            if self.playership.angle > 180:
-
-                self.playership.angle -= 360
-
-        else:
-
-            self.playership.angle = self.targetangle
-
-        self.playership.scale_x = math.cos(math.radians(self.playership.angle))
-        self.playership.scale_y = math.sin(math.radians(self.playership.angle))
-
-    def turnRight(self):
-
-        self.playership.turntime = (self.playership.thrust
-                                        / (self.playership.mass ** 1.08)
-                                        * 1000)
-
-        if  (abs(self.targetangle - self.playership.angle)
-             > (self.playership.turntime * ((self.nowtick - self.lasttick)
-                                            / 1000))):
-
-            self.slowDown()
-
-            self.playership.angle -= (self.playership.turntime
-                                      * ((self.nowtick - self.lasttick)
-                                         / 1000))
-
-            if self.playership.angle < -180:
-
-                self.playership.angle += 360
-
-        else:
-
-            self.playership.angle = self.targetangle
-
-        self.playership.scale_x = math.cos(math.radians(self.playership.angle))
-        self.playership.scale_y = math.sin(math.radians(self.playership.angle))

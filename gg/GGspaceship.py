@@ -21,9 +21,11 @@ class SpaceShip(object):
         self.hull = 0
         self.x = x
         self.y = y
+        self.target = (self.x, self.y)
         self.lastx = x
         self.lasty = y
         self.angle = 0
+        self.targetangle = 0
         self.speed = 0
         self.mass = 1000
         self.turntime = 1
@@ -33,22 +35,135 @@ class SpaceShip(object):
         self.scale_x = math.cos(math.radians(self.angle))
         self.scale_y = math.sin(math.radians(self.angle))
 
+        self.velocity_x = (self.speed * self.scale_x)
+        self.velocity_y = (self.speed * self.scale_y)
+
         self.nowtick = pygame.time.get_ticks()
         self.lasttick = self.nowtick
+        self.render_nowtick = pygame.time.get_ticks()
+        self.render_lasttick = self.render_nowtick
 
-    def render(self):
+    def move(self):
 
         self.nowtick = pygame.time.get_ticks()
+
+        if (self.x, self.y) != self.target:
+
+            self.targetangle = math.degrees(math.atan2((self.target[1] - self.y),
+                                                       (self.target[0] - self.x)))
+
+            if self.targetangle - self.angle > 180:
+
+                self.turnRight()
+
+            elif self.targetangle - self.angle < (-180):
+
+                self.turnLeft()
+
+            elif (self.targetangle - self.angle > 0
+                  and self.targetangle - self.angle < 180):
+
+                self.turnLeft()
+
+            elif (self.targetangle - self.angle < 0
+                  and self.targetangle - self.angle > (-180)):
+
+                self.turnRight()
+
+            self.speedUp()
+
+        self.lasttick = self.nowtick
+
+    def speedUp(self):
+
+        self.acceleration = (self.thrust / (self.mass ** 1.08) * 100)
 
         self.velocity_x = (self.speed * self.scale_x)
         self.velocity_y = (self.speed * self.scale_y)
 
-        self.x = self.x + (self.velocity_x * ((self.nowtick
-                                               - self.lasttick) / 1000))
-        self.y = self.y + (self.velocity_y * ((self.nowtick
-                                               - self.lasttick) / 1000))
+        stopx = (self.velocity_x * (self.mass ** 1.08) / self.thrust / 6)
+        stopy = (self.velocity_y * (self.mass ** 1.08) / self.thrust / 6)
 
-        self.lasttick = self.nowtick
+        if (abs(self.target[0] - self.x) >= 0.1 + abs(stopx) or abs(self.target[1] - self.y) >= 0.1 + abs(stopy)):
+
+            if self.speed < ((self.acceleration * (self.mass ** 1.08) / self.thrust / 6)):
+
+                self.speed += (self.acceleration * ((self.nowtick - self.lasttick) / 1000))
+
+            else:
+
+                self.speed = ((self.acceleration * (self.mass ** 1.08) / self.thrust / 6))
+
+        else:
+
+            self.slowDown()
+
+    def slowDown(self):
+
+        self.acceleration = (self.thrust / (self.mass ** 1.08) * 100)
+
+        if (self.speed - (self.acceleration * ((self.nowtick - self.lasttick) / 1000))) > 0.01:
+
+            self.speed -= (self.acceleration * ((self.nowtick - self.lasttick) / 1000))
+
+        else:
+
+            self.speed = 0
+
+    def turnLeft(self):
+
+        self.turntime = (self.thrust / (self.mass ** 1.08) * 1000)
+
+        if abs(self.targetangle - self.angle) > (self.turntime * ((self.nowtick - self.lasttick) / 1000)):
+
+            self.slowDown()
+            self.angle += (self.turntime * ((self.nowtick - self.lasttick) / 1000))
+
+            if self.angle > 180:
+
+                self.angle -= 360
+
+        else:
+
+            self.angle = self.targetangle
+
+        self.scale_x = math.cos(math.radians(self.angle))
+        self.scale_y = math.sin(math.radians(self.angle))
+
+    def turnRight(self):
+
+        self.turntime = (self.thrust / (self.mass ** 1.08) * 1000)
+
+        if (abs(self.targetangle - self.angle) > (self.turntime * ((self.nowtick - self.lasttick) / 1000))):
+
+            self.slowDown()
+
+            self.angle -= (self.turntime * ((self.nowtick - self.lasttick) / 1000))
+
+            if self.angle < -180:
+
+                self.angle += 360
+
+        else:
+
+            self.angle = self.targetangle
+
+        self.scale_x = math.cos(math.radians(self.angle))
+        self.scale_y = math.sin(math.radians(self.angle))
+
+    def render(self):
+
+        self.render_nowtick = pygame.time.get_ticks()
+
+        self.velocity_x = (self.speed * self.scale_x)
+        self.velocity_y = (self.speed * self.scale_y)
+
+        self.x = self.x + (self.velocity_x * ((self.render_nowtick
+                                               - self.render_lasttick) / 1000))
+        self.y = self.y + (self.velocity_y * ((self.render_nowtick
+                                               - self.render_lasttick) / 1000))
+
+        self.render_lasttick = self.render_nowtick
 
         [glBegin(GL_TRIANGLES),
         glColor(255, 0, 0), glVertex3f(self.x + self.ggci.player.x
@@ -83,10 +198,10 @@ class SpaceShip(object):
                   / ((math.tan(math.radians(45 / 2)) * (self.ggci.ggdata.screenwidth / self.ggci.ggdata.screenheight)) * (10 + self.ggci.player.z))
                   * self.ggci.ggdata.screenwidth / 2) + self.ggci.ggdata.screenwidth / 2)
 
-        texty = (((self.y + self.ggci.player.y)
+        texty = (((self.y + self.ggci.player.y + 1)
                   / (math.tan(math.radians(45 / 2)) * (10 + self.ggci.player.z))
                   * self.ggci.ggdata.screenheight / 2) + self.ggci.ggdata.screenheight / 2)
 
-        self.ggci.textrender.print(self.id, self.ggci.textrender.char, textx, texty)
+        self.ggci.textrender.print(self.id, self.ggci.textrender.char, textx, texty, "center")
 
 

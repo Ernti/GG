@@ -39,19 +39,43 @@ class TextRender(object):
         self.lh2 = self.char2[ord('0')][2]
         self.angle2 = 0.0
 
-    def print(self, s, char, x, y):
+    def print(self, s, char, x, y, align):
         s = str(s)
-        #x = int(x)
-        #y = int(y)
         i = 0
         lx = 0
         length = len(s)
-        while i < length:
-            glRasterPos2f(x + lx, y)
-            ch = char[ord(s[i])]
-            glDrawPixels(ch[1], ch[2], GL_RGBA, GL_UNSIGNED_BYTE, ch[0])
-            lx += ch[1]
-            i += 1
+
+        if align == "center":
+            while i < length:
+                ch = char[ord(s[i])]
+                lx += ch[1]
+                i += 1
+
+            lx = -lx / 2
+            i = 0
+
+            while i < length:
+                glRasterPos2f(x + lx, y)
+                ch = char[ord(s[i])]
+                glDrawPixels(ch[1], ch[2], GL_RGBA, GL_UNSIGNED_BYTE, ch[0])
+                lx += ch[1]
+                i += 1
+
+        elif align == "left":
+            while i < length:
+                glRasterPos2f(x + lx, y)
+                ch = char[ord(s[i])]
+                glDrawPixels(ch[1], ch[2], GL_RGBA, GL_UNSIGNED_BYTE, ch[0])
+                lx += ch[1]
+                i += 1
+
+        elif align == "right":
+            while i < length:
+                glRasterPos2f(x - lx, y)
+                ch = char[ord(s[i])]
+                glDrawPixels(ch[1], ch[2], GL_RGBA, GL_UNSIGNED_BYTE, ch[0])
+                lx -= ch[1]
+                i += 1
 
     def textView(self):
         glViewport(0, 0, self.ggci.ggdata.screenwidth, self.ggci.ggdata.screenheight)

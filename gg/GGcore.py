@@ -46,6 +46,9 @@ class GGcore(object):
             self.clock.tick()
 
             self.ggci.player.move()
+            for objects in self.ggci.objectlist.objectlist:
+                if objects.id is not -1:
+                    objects.move()
 
             self.test += 1
             self.test1 = self.test2
