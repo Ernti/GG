@@ -87,6 +87,6 @@ class SpaceShip(object):
                   / (math.tan(math.radians(45 / 2)) * (10 + self.ggci.player.z))
                   * self.ggci.ggdata.screenheight / 2) + self.ggci.ggdata.screenheight / 2)
 
-        self.ggci.textrender.print("Test", self.ggci.textrender.char, textx, texty)
+        self.ggci.textrender.print(self.id, self.ggci.textrender.char, textx, texty)
 
 

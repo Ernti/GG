@@ -47,9 +47,9 @@ class Render(object):
         self.resize(self.ggci.ggdata.screenwidth, self.ggci.ggdata.screenheight)
         glPushMatrix()
 
-        for objects in self.ggci.objectlist.objectlist:
+        for object in self.ggci.objectlist.objectlist:
 
-            objects.render()
+            object.render()
 
         # glCallList(self.ggci.obj.gl_list)
 
@@ -58,9 +58,11 @@ class Render(object):
         self.ggci.textrender.textView()
         glPushMatrix()
 
-        for objects in self.ggci.objectlist.objectlist:
+        for object in self.ggci.objectlist.objectlist:
 
-            objects.renderNameplate()
+            if object.id is not -1:
+
+                object.renderNameplate()
 
         self.ggci.textrender.print(str(self.ggci.speed) + " km/h", self.ggci.textrender.char2,
                                    self.ggci.ggdata.screenwidth - 200, 10)
