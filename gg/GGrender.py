@@ -39,28 +39,6 @@ class Render(object):
 
         pygame.display.set_caption('GG')
 
-        pygame.font.init()
-
-        if not pygame.font.get_init():
-            print('Could not render font.')
-            sys.exit(0)
-        self.font = pygame.font.Font(os.path.join(".", "gg", "data", "fonts", "arial.ttf"), 18)
-        self.char = []
-        for c in range(256):
-            self.char.append(self.createCharacter(chr(c)))
-        self.char = tuple(self.char)
-        self.lw = self.char[ord('0')][1]
-        self.lh = self.char[ord('0')][2]
-        self.angle = 0.0
-        self.font = pygame.font.Font(os.path.join(".", "gg", "data", "fonts", "arial.ttf"), 50)
-        self.char2 = []
-        for c in range(256):
-            self.char2.append(self.createCharacter(chr(c)))
-        self.char2 = tuple(self.char2)
-        self.lw2 = self.char2[ord('0')][1]
-        self.lh2 = self.char2[ord('0')][2]
-        self.angle2 = 0.0
-
     def render(self):
 
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
@@ -77,14 +55,20 @@ class Render(object):
 
         glPopMatrix()
 
-        self.textView()
+        self.ggci.textrender.textView()
         glPushMatrix()
-        self.print(str(self.ggci.speed) + " km/h", self.char2, self.ggci.ggdata.screenwidth - 200, 10)
+
+        for objects in self.ggci.objectlist.objectlist:
+
+            objects.renderNameplate()
+
+        self.ggci.textrender.print(str(self.ggci.speed) + " km/h", self.ggci.textrender.char2,
+                                   self.ggci.ggdata.screenwidth - 200, 10)
         line = 0
         while line < self.ggci.ggdata.chatlength:
             if line < len(self.ggci.chat.chat):
-                self.print(self.ggci.chat.chat[(len(self.ggci.chat.chat) - line) - 1], self.char,
-                           10, 20 * (line + 1))
+                self.ggci.textrender.print(self.ggci.chat.chat[(len(self.ggci.chat.chat) - line) - 1],
+                                           self.ggci.textrender.char, 10, 20 * (line + 1))
             line += 1
 
         #if self.ggci.chat.input is True:
@@ -98,18 +82,6 @@ class Render(object):
 
         pygame.display.flip()
 
-    def print(self, s, char, x, y):
-        s = str(s)
-        i = 0
-        lx = 0
-        length = len(s)
-        while i < length:
-            glRasterPos2i(x + lx, y)
-            ch = char[ord(s[i])]
-            glDrawPixels(ch[1], ch[2], GL_RGBA, GL_UNSIGNED_BYTE, ch[0])
-            lx += ch[1]
-            i += 1
-
     def resize(self, w, h):
         if h == 0: h = 1
         glViewport(0, 0, w, h)
@@ -121,23 +93,3 @@ class Render(object):
         glLoadIdentity()
 
         gluLookAt(0, 0, 10, 0, 0, 0, 0, 1, 0)
-
-    def textView(self):
-        glViewport(0, 0, self.ggci.ggdata.screenwidth, self.ggci.ggdata.screenheight)
-        glMatrixMode(GL_PROJECTION)
-        glLoadIdentity()
-        glOrtho(0.0, self.ggci.ggdata.screenwidth - 1.0, 0.0, self.ggci.ggdata.screenheight - 1.0, -1.0, 1.0)
-        glMatrixMode(GL_MODELVIEW)
-        glLoadIdentity()
-
-    def createCharacter(self, s):
-        try:
-            letter_render = self.font.render(s, 1, (255, 255, 255), (0, 0, 0))
-            letter = pygame.image.tostring(letter_render, 'RGBA', 1)
-            letter_w, letter_h = letter_render.get_size()
-
-        except:
-            letter = None
-            letter_w = 0
-            letter_h = 0
-        return letter, letter_w, letter_h

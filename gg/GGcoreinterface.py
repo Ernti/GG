@@ -7,8 +7,8 @@ import os.path
 from gg.GGchat import ChatWindow
 from gg.GGdata import GGData
 from gg.GGobjectlist import ObjectList
-from gg.GGobjloader import *
 from gg.GGplayer import Player
+from gg.GGtextrender import TextRender
 
 
 class GGCI(object):
@@ -20,5 +20,6 @@ class GGCI(object):
         self.player = Player(self)
         self.speed = 0
         self.chat = ChatWindow(self)
+        self.textrender = TextRender(self)
 
         # self.obj = OBJ(os.path.join(".", "gg", "data", "objects", "ship.obj"), swapyz=False)

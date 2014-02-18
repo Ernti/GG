@@ -55,7 +55,7 @@ class Player(object):
 
             self.uevent.target = pygame.mouse.get_pos()
 
-            self.ggci.player.target = (-self.x + (((self.uevent.target[0]
+            self.ggci.player.target = (self.x + (((self.uevent.target[0]
                                     - self.ggci.ggdata.screenwidth / 2)
                                     / self.ggci.ggdata.screenwidth * 2)
                                     * ((math.tan(math.radians(45 / 2))
@@ -99,7 +99,7 @@ class Player(object):
         self.lasttick = self.nowtick
 
         if self.playership.speed > 0:
-            if self.after < (self.nowtick - 30):
+            if self.after < (self.nowtick - 50):
 
                 pygame.event.post(pygame.event.Event(
                                     26, {'type': 'playermoved',
