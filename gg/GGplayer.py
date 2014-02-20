@@ -54,7 +54,7 @@ class Player(object):
 
             self.uevent.target = pygame.mouse.get_pos()
 
-            self.playership.target = (self.x + (((self.uevent.target[0]
+            self.playership.target = (-self.x + (((self.uevent.target[0]
                                     - self.ggci.ggdata.screenwidth / 2)
                                     / self.ggci.ggdata.screenwidth * 2)
                                     * ((math.tan(math.radians(45 / 2))
