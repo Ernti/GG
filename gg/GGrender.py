@@ -3,6 +3,8 @@ Created on 9 Dec 2013
 
 @author: tore
 '''
+
+import math
 import ctypes
 import os.path
 from OpenGL.constants import GL_UNSIGNED_BYTE
@@ -34,6 +36,8 @@ class Render(object):
         #glEnable(GL_COLOR_MATERIAL)
         #glEnable(GL_DEPTH_TEST)
         #glShadeModel(GL_SMOOTH)
+        glEnable(GL_POINT_SMOOTH)
+        glPointSize(3.0)
 
         glClearColor(0.0, 0.0, 0.0, 1.0)
 
@@ -52,6 +56,37 @@ class Render(object):
             objects.render()
 
         # glCallList(self.ggci.obj.gl_list)
+
+        r=1.0
+        angle=0
+        glBegin(GL_POLYGON)
+        while angle < 2 * math.pi:
+            glColor3f(0, 0, 0)
+            glVertex3f(6 + r * math.cos(angle), 3 + r * math.sin(angle), 0)
+            angle += 0.1
+        glEnd()
+
+        r=1.0
+        angle=0
+        glBegin(GL_LINE_LOOP)
+        while angle < 2 * math.pi:
+            glColor3f(0.5, 0.5, 0.5)
+            glVertex3f(6 + r * math.cos(angle), 3 + r * math.sin(angle), 0)
+            angle += 0.1
+        glEnd()
+
+        for objects in self.ggci.objectlist.objectlist:
+
+            if objects.id is -1:
+                glBegin(GL_POINTS)
+                glColor(0, 1, 0)
+                glVertex3f(6 + (objects.x - self.ggci.player.playership.x)/100, 3 + (objects.y - self.ggci.player.playership.y)/100, 0)
+                glEnd()
+            elif  math.sqrt(((objects.x - self.ggci.player.playership.x)/100)**2 + ((objects.y - self.ggci.player.playership.y)/100) ** 2) < 1:
+                glBegin(GL_POINTS)
+                glColor(1, 0, 0)
+                glVertex3f(6 + (objects.x - self.ggci.player.playership.x)/100, 3 + (objects.y - self.ggci.player.playership.y)/100, 0)
+                glEnd()
 
         glPopMatrix()
 

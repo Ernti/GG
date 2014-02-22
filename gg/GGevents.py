@@ -194,14 +194,18 @@ class Events(object):
 
                         if objects.id == data['soid']:
 
+                            # TODO: Lag Optimization
+
                             exists = True
 
-                            objects.x = data['x']
-                            objects.y = data['y']
-                            objects.scale_x = data['scale_x']
-                            objects.scale_y = data['scale_y']
-                            objects.speed = data['speed']
-                            objects.angle = data['r']
+                            if data['x'] > objects.x + 1 or data['x'] < objects.x - 1:
+                                objects.x = data['x']
+                            if data['y'] > objects.y + 1 or data['y'] < objects.y - 1:
+                                objects.y = data['y']
+                            #objects.scale_x = data['scale_x']
+                            #objects.scale_y = data['scale_y']
+                            #objects.speed = data['speed']
+                            #objects.angle = data['r']
                             objects.target = data['target']
 
                     if exists == False:

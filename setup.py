@@ -2,7 +2,7 @@ import sys
 from cx_Freeze import setup, Executable
 
 # Dependencies are automatically detected, but it might need fine tuning.
-build_exe_options = {"packages": ["os"],"includes": ["OpenGL.platform.win32", "OpenGL.arrays.ctypesarrays", "OpenGL.arrays.numpymodule", "OpenGL.arrays.lists", "OpenGL.arrays.numbers"], "excludes": ["tkinter"], "include_files": ["gg\data"]}
+build_exe_options = {"packages": ["os", "OpenGL", "OpenGL.platform"],"includes": ["re"], "excludes": ["tkinter"], "include_files": ["gg\data", "host"]}
 
 # GUI applications require a different base on Windows (the default is for a
 # console application).
