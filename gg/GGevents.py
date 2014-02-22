@@ -203,21 +203,15 @@ class Events(object):
                             objects.speed = data['speed']
                             objects.angle = data['r']
                             objects.target = data['target']
-                            objects.mass = data['mass']
-                            objects.thrust = data['thrust']
 
                     if exists == False:
 
-                        spaceship = SpaceShip(data['soid'],
-                                              data['x'],
-                                              data['y'], self.ggci)
+                        spaceship = SpaceShip(data, self.ggci)
                         spaceship.scale_x = data['scale_x']
                         spaceship.scale_y = data['scale_y']
                         spaceship.speed = data['speed']
                         spaceship.angle = data['r']
                         spaceship.target = data['target']
-                        spaceship.mass = data['mass']
-                        spaceship.thrust = data['thrust']
                         self.ggci.objectlist.addObject(spaceship)
 
                 if data['type'] == 'sendchatmessage':

@@ -83,8 +83,9 @@ class Player(object):
                                     'scale_x': self.playership.scale_x,
                                     'scale_y': self.playership.scale_y,
                                     'target': self.playership.target,
-                                    'mass': self.playership.mass,
-                                    'thrust': self.playership.thrust}))
+                                    'engine': {'type': self.playership.engine.type,
+                                               'thrust': self.playership.engine.thrust,
+                                               'mass': self.playership.engine.mass}}))
 
                 self.after = pygame.time.get_ticks()
 
@@ -102,7 +103,8 @@ class Player(object):
                                     'scale_x': self.playership.scale_x,
                                     'scale_y': self.playership.scale_y,
                                     'target': self.playership.target,
-                                    'mass': self.playership.mass,
-                                    'thrust': self.playership.thrust}))
+                                    'engine': {'type': self.playership.engine.type,
+                                               'thrust': self.playership.engine.thrust,
+                                               'mass': self.playership.engine.mass}}))
 
                 self.after = pygame.time.get_ticks()

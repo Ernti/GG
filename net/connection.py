@@ -102,9 +102,9 @@ class ReceiverThread(Thread):
                 data = self.sock.recv(1024)
                 #print(data.decode())
 
-                for match_group in re.finditer("\{([^{}]+)\}", data.decode()):
+                for match_group in re.finditer("\(([^()]+)\)", data.decode()):
 
-                    data_json = json.loads('{' + match_group.group(1) + '}')
+                    data_json = json.loads(match_group.group(1))
                     if data_json['type'] == 'shutdown':
                         pygame.event.post(pygame.event.Event(pygame.USEREVENT,
                                                             {'type': 'QUIT'}))
@@ -152,7 +152,7 @@ class SenderThread(Thread):
 
                     if event.type == 26:
 
-                        self.sock.send(json.dumps(event.dict).encode())
+                        self.sock.send(('(' + json.dumps(event.dict) + ')').encode())
                 pygame.time.wait(10)
 
             except socket.error:

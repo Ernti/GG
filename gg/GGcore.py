@@ -23,7 +23,8 @@ class GGcore(object):
 
         pygame.init()
         self.ggci = GGCI()
-        self.ss = SpaceShip(-1, 0, 0, self.ggci)
+        self.ss = SpaceShip({'soid': -1, 'x': 0, 'y': 0,
+                             'engine': {'type': "Electromotor", 'thrust': 1000, 'mass': 1000}}, self.ggci)
         self.ggci.player.playership = self.ss
         self.ggci.objectlist.addObject(self.ss)
         self.render = Render(self.ggci)
