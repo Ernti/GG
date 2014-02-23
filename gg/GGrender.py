@@ -47,6 +47,10 @@ class Render(object):
 
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
 
+        #-----------------------------------
+        #----------SPACE RENDERING----------
+        #-----------------------------------
+
         glLoadIdentity()
         self.resize(self.ggci.ggdata.screenwidth, self.ggci.ggdata.screenheight)
         glPushMatrix()
@@ -57,38 +61,11 @@ class Render(object):
 
         # glCallList(self.ggci.obj.gl_list)
 
-        r=1.0
-        angle=0
-        glBegin(GL_POLYGON)
-        while angle < 2 * math.pi:
-            glColor3f(0, 0, 0)
-            glVertex3f(6 + r * math.cos(angle), 3 + r * math.sin(angle), 0)
-            angle += 0.1
-        glEnd()
-
-        r=1.0
-        angle=0
-        glBegin(GL_LINE_LOOP)
-        while angle < 2 * math.pi:
-            glColor3f(0.5, 0.5, 0.5)
-            glVertex3f(6 + r * math.cos(angle), 3 + r * math.sin(angle), 0)
-            angle += 0.1
-        glEnd()
-
-        for objects in self.ggci.objectlist.objectlist:
-
-            if objects.id is -1:
-                glBegin(GL_POINTS)
-                glColor(0, 1, 0)
-                glVertex3f(6 + (objects.x - self.ggci.player.playership.x)/100, 3 + (objects.y - self.ggci.player.playership.y)/100, 0)
-                glEnd()
-            elif  math.sqrt(((objects.x - self.ggci.player.playership.x)/100)**2 + ((objects.y - self.ggci.player.playership.y)/100) ** 2) < 1:
-                glBegin(GL_POINTS)
-                glColor(1, 0, 0)
-                glVertex3f(6 + (objects.x - self.ggci.player.playership.x)/100, 3 + (objects.y - self.ggci.player.playership.y)/100, 0)
-                glEnd()
-
         glPopMatrix()
+
+        #----------------------------------
+        #----------TEXT RENDERING----------
+        #----------------------------------
 
         self.ggci.textrender.textView()
         glPushMatrix()
@@ -115,6 +92,17 @@ class Render(object):
         #    if len(self.ggci.chat.chat) - self.ggci.chat.chat.index(line) < 5:
         #        self.print(line, self.char, 10,
         #                    20 * len(self.ggci.chat.chat) - 20 * self.ggci.chat.chat.index(line))
+        glPopMatrix()
+
+        #--------------------------------
+        #----------UI RENDERING----------
+        #--------------------------------
+
+        self.resize(self.ggci.ggdata.screenwidth, self.ggci.ggdata.screenheight)
+        glPushMatrix()
+
+        self.ggci.radar.render()
+
         glPopMatrix()
 
         pygame.display.flip()

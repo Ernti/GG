@@ -35,6 +35,8 @@ class SpaceShip(object):
 
         self.engine = Engine(data['engine'], self)
 
+        self.radarrange = 250
+
         self.mass = self.engine.mass
         self.thrust = self.engine.thrust
 
