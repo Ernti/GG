@@ -10,6 +10,7 @@ import math
 from OpenGL.GL import glBegin, GL_TRIANGLES, glColor, glVertex3f, glEnd
 import pygame
 from gg.GGspaceshipengine import Engine
+from gg.GGspaceshipweapon import Weapon
 
 
 class SpaceShip(object):
@@ -18,6 +19,7 @@ class SpaceShip(object):
 
         self.ggci = ggci
         self.id = data['soid']
+        self.type = "ss"
 
         self.oxygen = 100
         self.hull = 0
@@ -34,6 +36,7 @@ class SpaceShip(object):
         self.acceleration = 0
 
         self.engine = Engine(data['engine'], self)
+        self.weapon = Weapon("Machine Gun", self.ggci)
 
         self.radarrange = 250
 
@@ -171,8 +174,6 @@ class SpaceShip(object):
         self.y = self.y + (self.velocity_y * ((self.render_nowtick
                                                - self.render_lasttick) / 1000))
 
-        self.render_lasttick = self.render_nowtick
-
         self.engine.render()
 
         [glBegin(GL_TRIANGLES),
@@ -200,6 +201,8 @@ class SpaceShip(object):
                                           self.angle + 240)) * 1),
                                        0 - self.ggci.player.z),
         glEnd()]
+
+        self.render_lasttick = self.render_nowtick
 
     def renderNameplate(self):
 

@@ -72,7 +72,7 @@ class Render(object):
 
         for objects in self.ggci.objectlist.objectlist:
 
-            if objects.id is not -1:
+            if objects.id is not -1 and objects.type is "ss":
 
                 objects.renderNameplate()
 
@@ -101,6 +101,7 @@ class Render(object):
         self.resize(self.ggci.ggdata.screenwidth, self.ggci.ggdata.screenheight)
         glPushMatrix()
 
+        self.ggci.status.render()
         self.ggci.radar.render()
 
         glPopMatrix()

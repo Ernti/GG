@@ -125,6 +125,11 @@ class Events(object):
 
                         self.uevents.lock = True
 
+                elif event.key == pygame.K_q:
+
+                    self.ggci.player.playership.weapon.shoot((self.player.playership.x, self.player.playership.y),
+                                                             self.player.playership.angle)
+
                 elif event.key == pygame.K_m:
                     self.player.playership.mass += 1
                     maxspeed = math.log((0.001 * self.player.playership.mass

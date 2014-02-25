@@ -25,7 +25,7 @@ class TextRender(object):
         self.font = pygame.font.Font(os.path.join(".", "gg", "data", "fonts", "arial.ttf"), 18)
         self.char = []
         for c in range(256):
-            self.char.append(self.createCharacter(chr(c)))
+            self.char.append(self.createCharacter(chr(c), (255, 255, 255), (0, 0, 0)))
         self.char = tuple(self.char)
         self.lw = self.char[ord('0')][1]
         self.lh = self.char[ord('0')][2]
@@ -33,11 +33,19 @@ class TextRender(object):
         self.font = pygame.font.Font(os.path.join(".", "gg", "data", "fonts", "arial.ttf"), 50)
         self.char2 = []
         for c in range(256):
-            self.char2.append(self.createCharacter(chr(c)))
+            self.char2.append(self.createCharacter(chr(c), (255, 255, 255), (0, 0, 0)))
         self.char2 = tuple(self.char2)
         self.lw2 = self.char2[ord('0')][1]
         self.lh2 = self.char2[ord('0')][2]
         self.angle2 = 0.0
+        self.font = pygame.font.Font(os.path.join(".", "gg", "data", "fonts", "arial.ttf"), 12)
+        self.statchar = []
+        for c in range(256):
+            self.statchar.append(self.createCharacter(chr(c), (255, 255, 255), (127, 127, 127)))
+        self.statchar = tuple(self.statchar)
+        self.statlw = self.statchar[ord('0')][1]
+        self.statlh = self.statchar[ord('0')][2]
+        self.statangle = 0.0
 
     def print(self, s, char, x, y, align):
         s = str(s)
@@ -85,9 +93,9 @@ class TextRender(object):
         glMatrixMode(GL_MODELVIEW)
         glLoadIdentity()
 
-    def createCharacter(self, s):
+    def createCharacter(self, s, fc, bg):
         try:
-            letter_render = self.font.render(s, 1, (255, 255, 255), (0, 0, 0))
+            letter_render = self.font.render(s, 1, fc, bg)
             letter = pygame.image.tostring(letter_render, 'RGBA', 1)
             letter_w, letter_h = letter_render.get_size()
 
