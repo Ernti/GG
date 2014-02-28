@@ -23,6 +23,8 @@ class UserEvents(object):
         self.swdwn = False
         self.swup = False
 
+        self.clickedwindow = None
+
 
 class Events(object):
 
@@ -53,6 +55,12 @@ class Events(object):
             elif event.type == pygame.MOUSEBUTTONDOWN:
 
                 if event.dict['button'] == 1:
+                    print(event.dict['pos'])
+                    for window in self.ggci.objectlist.windowlist:
+                        print(window.pos, ((window.posx + window.width),(window.posy + window.height)))
+                        if event.dict['pos'] > window.pos and event.dict['pos'] < ((window.posx + window.width),(window.posy + window.height)):
+                            self.uevents.clickedwindow = window
+                            print(window)
                     self.uevents.lmsbtn = True
                     print('lmsbtn True')
 
@@ -76,6 +84,8 @@ class Events(object):
             elif event.type == pygame.MOUSEBUTTONUP:
 
                 if event.dict['button'] == 1:
+                    if self.uevents.clickedwindow is not None:
+                        self.uevents.clickedwindow = None
                     self.uevents.lmsbtn = False
                     print('lmsbtn False')
 
@@ -243,13 +253,20 @@ class Events(object):
 
                 if event.type == pygame.MOUSEMOTION:
 
-                    if self.uevents.lock == True:
+                    if self.uevents.clickedwindow == None:
 
-                        self.uevents.lock = False
+                        if self.uevents.lock == True:
 
-                    self.player.x += ((event.rel[0] / 100)
-                                      + ((self.player.z / 10)
-                                         * (event.rel[0] / 100)))
-                    self.player.y -= ((event.rel[1] / 100)
-                                      + ((self.player.z / 10)
-                                         * (event.rel[1] / 100)))
+                            self.uevents.lock = False
+
+                        self.player.x += ((event.rel[0] / 100)
+                                        + ((self.player.z / 10)
+                                            * (event.rel[0] / 100)))
+                        self.player.y -= ((event.rel[1] / 100)
+                                        + ((self.player.z / 10)
+                                            * (event.rel[1] / 100)))
+
+                    else:
+
+                        self.uevents.clickedwindow.posx += event.rel[0]
+                        self.uevents.clickedwindow.posy += event.rel[1]

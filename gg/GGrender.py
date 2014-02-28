@@ -13,6 +13,7 @@ import pygame
 from OpenGL.GL import *
 from OpenGL.GLU import gluPerspective, gluLookAt
 import sys
+from gg.GGwindow import Window
 
 
 class Render(object):
@@ -36,12 +37,20 @@ class Render(object):
         #glEnable(GL_COLOR_MATERIAL)
         #glEnable(GL_DEPTH_TEST)
         #glShadeModel(GL_SMOOTH)
-        glEnable(GL_POINT_SMOOTH)
+        glEnable(GL_BLEND)
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
+        glEnable(GL_LINE_SMOOTH)
         glPointSize(3.0)
+        glLineWidth(3.0)
 
         glClearColor(0.0, 0.0, 0.0, 1.0)
 
         pygame.display.set_caption('GG')
+
+        self.window = Window("Status", 10, 10, 200, 400, self.ggci)
+        self.window.text.append("test")
+        self.window.text.append("test2")
+        self.window.text.append("test3")
 
     def render(self):
 
@@ -92,16 +101,18 @@ class Render(object):
         #    if len(self.ggci.chat.chat) - self.ggci.chat.chat.index(line) < 5:
         #        self.print(line, self.char, 10,
         #                    20 * len(self.ggci.chat.chat) - 20 * self.ggci.chat.chat.index(line))
-        glPopMatrix()
+
+        self.window.render()
+
+        #glPopMatrix()
 
         #--------------------------------
         #----------UI RENDERING----------
         #--------------------------------
 
-        self.resize(self.ggci.ggdata.screenwidth, self.ggci.ggdata.screenheight)
-        glPushMatrix()
+        #self.resize(self.ggci.ggdata.screenwidth, self.ggci.ggdata.screenheight)
+        #glPushMatrix()
 
-        self.ggci.status.render()
         self.ggci.radar.render()
 
         glPopMatrix()

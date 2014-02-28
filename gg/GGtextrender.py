@@ -41,7 +41,7 @@ class TextRender(object):
         self.font = pygame.font.Font(os.path.join(".", "gg", "data", "fonts", "arial.ttf"), 12)
         self.statchar = []
         for c in range(256):
-            self.statchar.append(self.createCharacter(chr(c), (255, 255, 255), (127, 127, 127)))
+            self.statchar.append(self.createCharacter(chr(c), (0, 0, 0), (127, 127, 127)))
         self.statchar = tuple(self.statchar)
         self.statlw = self.statchar[ord('0')][1]
         self.statlh = self.statchar[ord('0')][2]

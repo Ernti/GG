@@ -9,6 +9,7 @@ class ObjectList(object):
 
     def __init__(self):
         self.objectlist = []
+        self.windowlist = []
 
     def addObject(self, listobject):
 
@@ -17,3 +18,11 @@ class ObjectList(object):
     def removeObject(self, listobject):
 
         self.objectlist.remove(listobject)
+
+    def addWindow(self, listobject):
+
+        self.windowlist.append(listobject)
+
+    def removeWindow(self, listobject):
+
+        self.windowlist.remove(listobject)
