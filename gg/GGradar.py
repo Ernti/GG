@@ -50,16 +50,18 @@ class Radar(object):
 
         for objects in self.ggci.objectlist.objectlist:
 
-            if objects.id is -1:
-                glBegin(GL_POINTS)
-                glColor(0, 1, 0)
-                glVertex3f(6 + (objects.x - self.ggci.player.playership.x) / self.ggci.player.playership.radarrange,
-                           3 + (objects.y - self.ggci.player.playership.y) / self.ggci.player.playership.radarrange, 0)
-                glEnd()
-            elif  math.sqrt(((objects.x - self.ggci.player.playership.x) / self.ggci.player.playership.radarrange)**2
-                    + ((objects.y - self.ggci.player.playership.y) / self.ggci.player.playership.radarrange) ** 2) < 1:
-                glBegin(GL_POINTS)
-                glColor(1, 0, 0)
-                glVertex3f(6 + (objects.x - self.ggci.player.playership.x) / self.ggci.player.playership.radarrange,
-                           3 + (objects.y - self.ggci.player.playership.y) / self.ggci.player.playership.radarrange, 0)
-                glEnd()
+            if objects.type is "ss":
+
+                if objects.id is -1:
+                    glBegin(GL_POINTS)
+                    glColor(0, 1, 0)
+                    glVertex3f(6 + (objects.x - self.ggci.player.playership.x) / self.ggci.player.playership.radarrange,
+                            3 + (objects.y - self.ggci.player.playership.y) / self.ggci.player.playership.radarrange, 0)
+                    glEnd()
+                elif  math.sqrt(((objects.x - self.ggci.player.playership.x) / self.ggci.player.playership.radarrange)**2
+                        + ((objects.y - self.ggci.player.playership.y) / self.ggci.player.playership.radarrange) ** 2) < 1:
+                    glBegin(GL_POINTS)
+                    glColor(1, 0, 0)
+                    glVertex3f(6 + (objects.x - self.ggci.player.playership.x) / self.ggci.player.playership.radarrange,
+                            3 + (objects.y - self.ggci.player.playership.y) / self.ggci.player.playership.radarrange, 0)
+                    glEnd()

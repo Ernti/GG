@@ -7,6 +7,7 @@ Created on 9 Dec 2013
 import math
 
 import pygame.event
+from gg.GGbullet import Bullet
 
 from gg.GGspaceship import SpaceShip
 
@@ -127,8 +128,12 @@ class Events(object):
 
                 elif event.key == pygame.K_q:
 
-                    self.ggci.player.playership.weapon.shoot((self.player.playership.x, self.player.playership.y),
-                                                             self.player.playership.angle)
+                    pygame.event.post(pygame.event.Event(
+                                            26, {'type': 'playershot',
+                                            'x': self.player.playership.x,
+                                            'y': self.player.playership.y,
+                                            'speed': 10,
+                                            'r': self.player.playership.angle}))
 
                 elif event.key == pygame.K_m:
                     self.player.playership.mass += 1
@@ -226,6 +231,13 @@ class Events(object):
                 if data['type'] == 'sendchatmessage':
 
                     self.ggci.chat.chat.append(data['message'])
+
+                if data['type'] == 'playershot':
+
+                    for objects in self.ggci.objectlist.objectlist:
+
+                        if objects.id == data['soid'] and objects.type == "ss":
+                            objects.weapon.shoot(data)
 
             if self.uevents.lmsbtn == True:
 
