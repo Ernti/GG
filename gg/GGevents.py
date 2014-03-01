@@ -57,8 +57,8 @@ class Events(object):
                 if event.dict['button'] == 1:
                     print(event.dict['pos'])
                     for window in self.ggci.objectlist.windowlist:
-                        print(window.pos, ((window.posx + window.width),(window.posy + window.height)))
-                        if event.dict['pos'] > window.pos and event.dict['pos'] < ((window.posx + window.width),(window.posy + window.height)):
+                        print((window.posx, window.posy), ((window.posx + window.width), (window.posy + window.height)))
+                        if event.dict['pos'] > (window.posx, window.posy) and event.dict['pos'] < ((window.posx + window.width),(window.posy + window.height)):
                             self.uevents.clickedwindow = window
                             print(window)
                     self.uevents.lmsbtn = True
@@ -108,6 +108,18 @@ class Events(object):
 
                 elif event.key == pygame.K_KP_ENTER:
                     self.ggci.chat.addLine("test2")
+
+                elif event.key == pygame.K_ESCAPE:
+                    if self.ggci.menuwindow.visible is False:
+                        self.ggci.menuwindow.show()
+                    else:
+                        self.ggci.menuwindow.hide()
+
+                elif event.key == pygame.K_s:
+                    if self.ggci.statuswindow.visible is False:
+                        self.ggci.statuswindow.show()
+                    else:
+                        self.ggci.statuswindow.hide()
 
                 elif event.key == pygame.K_o:
                     self.ss.oxygen = self.ss.oxygen - 1
@@ -184,9 +196,6 @@ class Events(object):
 
                 elif event.key == pygame.K_a:
                     self.uevents.a = False
-
-                elif event.key == pygame.K_s:
-                    self.uevents.s = False
 
                 elif event.key == pygame.K_d:
                     self.uevents.d = False

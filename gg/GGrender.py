@@ -4,16 +4,9 @@ Created on 9 Dec 2013
 @author: tore
 '''
 
-import math
-import ctypes
-import os.path
-from OpenGL.constants import GL_UNSIGNED_BYTE
-
 import pygame
 from OpenGL.GL import *
 from OpenGL.GLU import gluPerspective, gluLookAt
-import sys
-from gg.GGwindow import Window
 
 
 class Render(object):
@@ -46,11 +39,6 @@ class Render(object):
         glClearColor(0.0, 0.0, 0.0, 1.0)
 
         pygame.display.set_caption('GG')
-
-        self.window = Window("Status", 10, 10, 200, 400, self.ggci)
-        self.window.text.append("test")
-        self.window.text.append("test2")
-        self.window.text.append("test3")
 
     def render(self):
 
@@ -102,8 +90,6 @@ class Render(object):
         #        self.print(line, self.char, 10,
         #                    20 * len(self.ggci.chat.chat) - 20 * self.ggci.chat.chat.index(line))
 
-        self.window.render()
-
         #glPopMatrix()
 
         #--------------------------------
@@ -114,6 +100,10 @@ class Render(object):
         #glPushMatrix()
 
         self.ggci.radar.render()
+
+        for window in self.ggci.objectlist.windowlist:
+
+            window.render()
 
         glPopMatrix()
 
