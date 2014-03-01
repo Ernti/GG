@@ -52,6 +52,10 @@ class Events(object):
 
                 self.running = False
 
+            #-----------------------------------------
+            #-----------MOUSEBUTTON-PRESSED-----------
+            #-----------------------------------------
+
             elif event.type == pygame.MOUSEBUTTONDOWN:
 
                 if event.dict['button'] == 1:
@@ -94,6 +98,10 @@ class Events(object):
                         self.player.z += 1
                     print('true')
 
+            #----------------------------------------
+            #----------MOUSEBUTTON-RELEASED----------
+            #----------------------------------------
+
             elif event.type == pygame.MOUSEBUTTONUP:
 
                 if event.dict['button'] == 1:
@@ -113,6 +121,10 @@ class Events(object):
                 if event.dict['button'] == 5:
                     self.uevents.swup = False
                     print('False')
+
+            #-----------------------------------------
+            #---------------KEY-PRESSED---------------
+            #-----------------------------------------
 
             elif event.type == pygame.KEYDOWN:
 
@@ -202,6 +214,10 @@ class Events(object):
                     print(self.player.playership.mass,
                           self.player.playership.thrust, maxspeed)
 
+            #----------------------------------------
+            #--------------KEY-RELEASED--------------
+            #----------------------------------------
+
             elif event.type == pygame.KEYUP:
 
                 if event.key == pygame.K_w:
@@ -212,6 +228,10 @@ class Events(object):
 
                 elif event.key == pygame.K_d:
                     self.uevents.d = False
+
+            #----------------------------------------
+            #---------------NETWORKING---------------
+            #----------------------------------------
 
             elif event.type == pygame.USEREVENT:
 
@@ -271,6 +291,10 @@ class Events(object):
                         if objects.id == data['soid'] and objects.type == "ss":
                             objects.weapon.shoot(data)
 
+            #----------------------------------------
+            #-----------MOTION-CALCULATION-----------
+            #----------------------------------------
+
             if self.uevents.lmsbtn == True:
 
                 if event.type == pygame.MOUSEMOTION:
@@ -282,11 +306,11 @@ class Events(object):
                             self.uevents.lock = False
 
                         self.player.x += ((event.rel[0] / 100)
-                                        + ((self.player.z / 10)
-                                            * (event.rel[0] / 100)))
+                                          + ((self.player.z / 10)
+                                             * (event.rel[0] / 100)))
                         self.player.y -= ((event.rel[1] / 100)
-                                        + ((self.player.z / 10)
-                                            * (event.rel[1] / 100)))
+                                          + ((self.player.z / 10)
+                                             * (event.rel[1] / 100)))
 
                     else:
 
