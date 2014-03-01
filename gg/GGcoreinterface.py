@@ -4,6 +4,8 @@ Created on 17 Dec 2013
 @author: tore
 '''
 import os.path
+import pygame
+from gg.GGbuttonhandler import Buttonhandler
 from gg.GGchat import ChatWindow
 from gg.GGdata import GGData
 from gg.GGobjectlist import ObjectList
@@ -11,6 +13,7 @@ from gg.GGplayer import Player
 from gg.GGradar import Radar
 from gg.GGtextrender import TextRender
 from gg.GGwindow import Window
+from gg.GGwindowbutton import Windowbutton
 
 
 class GGCI(object):
@@ -25,8 +28,12 @@ class GGCI(object):
         self.textrender = TextRender(self)
         self.radar = Radar(self)
 
+        self.buttonhandler = Buttonhandler()
+
         self.menuwindow = Window("Menu", self.ggdata.screenwidth / 2 - 50,
                                  self.ggdata.screenheight / 2 - 100, 100, 200, self)
+        self.menuwindow.buttons.append(Windowbutton(self.menuwindow, "Exit", 10, 170, 80, 20, {'action': 'quit'}))
+
         self.statuswindow = Window("Status", 10, 10, 200, 400, self)
         self.statuswindow.text.append("test")
         self.statuswindow.text.append("test2")

@@ -17,12 +17,15 @@ class Radar(object):
 
     def render(self):
 
+        glLineWidth(3.0)
+
         self.r = 100.0
         self.angle = 0
         glBegin(GL_POLYGON)
         while self.angle < 2 * math.pi:
             glColor3f(0, 0, 0)
-            glVertex2f(self.ggci.ggdata.screenwidth - 110 + self.r * math.cos(self.angle), self.ggci.ggdata.screenheight - 110 + self.r * math.sin(self.angle))
+            glVertex2f(self.ggci.ggdata.screenwidth - 110 + self.r * math.cos(self.angle),
+                       self.ggci.ggdata.screenheight - 110 + self.r * math.sin(self.angle))
             self.angle += 0.1
         glEnd()
 
@@ -31,19 +34,23 @@ class Radar(object):
         glBegin(GL_LINE_LOOP)
         while self.angle < 2 * math.pi:
             glColor3f(0.5, 0.5, 0.5)
-            glVertex2f(self.ggci.ggdata.screenwidth - 110 + self.r * math.cos(self.angle), self.ggci.ggdata.screenheight - 110 + self.r * math.sin(self.angle))
+            glVertex2f(self.ggci.ggdata.screenwidth - 110 + self.r * math.cos(self.angle),
+                       self.ggci.ggdata.screenheight - 110 + self.r * math.sin(self.angle))
             self.angle += 0.1
         glEnd()
+
+        glLineWidth(1.5)
 
         i = 1
         while i < self.ggci.player.playership.radarrange / 25:
 
-            self.r = 100 - (i / (self.ggci.player.playership.radarrange / 25))
+            self.r = 100 - (i * 100 / (self.ggci.player.playership.radarrange / 25))
             self.angle = 0
             glBegin(GL_LINE_LOOP)
             while self.angle < 2 * math.pi:
                 glColor3f(0.1, 0.1, 0.1)
-                glVertex2f(self.ggci.ggdata.screenwidth - 110 + self.r * math.cos(self.angle), self.ggci.ggdata.screenheight - 110 + self.r * math.sin(self.angle))
+                glVertex2f(self.ggci.ggdata.screenwidth - 110 + self.r * math.cos(self.angle),
+                           self.ggci.ggdata.screenheight - 110 + self.r * math.sin(self.angle))
                 self.angle += 0.1
             glEnd()
             i += 1
@@ -57,10 +64,15 @@ class Radar(object):
                     glColor(0, 1, 0)
                     glVertex2f(self.ggci.ggdata.screenwidth - 110, self.ggci.ggdata.screenheight - 110)
                     glEnd()
-                elif  math.sqrt(((objects.x - self.ggci.player.playership.x) / self.ggci.player.playership.radarrange)**2
-                        + ((objects.y - self.ggci.player.playership.y) / self.ggci.player.playership.radarrange) ** 2) < 1:
+                elif math.sqrt(((objects.x - self.ggci.player.playership.x)
+                                    / self.ggci.player.playership.radarrange)**2
+                        + ((objects.y - self.ggci.player.playership.y)
+                               / self.ggci.player.playership.radarrange) ** 2) < 1:
+
                     glBegin(GL_POINTS)
                     glColor(1, 0, 0)
-                    glVertex2f(self.ggci.ggdata.screenwidth - 110 + ((objects.x - self.ggci.player.playership.x) / self.ggci.player.playership.radarrange)*100,
-                            self.ggci.ggdata.screenheight - 110 + ((objects.y - self.ggci.player.playership.y) / self.ggci.player.playership.radarrange)*100)
+                    glVertex2f(self.ggci.ggdata.screenwidth - 110 + ((objects.x - self.ggci.player.playership.x)
+                                                                     / self.ggci.player.playership.radarrange)*100,
+                               self.ggci.ggdata.screenheight - 110 + ((objects.y - self.ggci.player.playership.y)
+                                                                      / self.ggci.player.playership.radarrange)*100)
                     glEnd()

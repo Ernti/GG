@@ -58,7 +58,20 @@ class Events(object):
                     print(event.dict['pos'])
                     for window in self.ggci.objectlist.windowlist:
                         print((window.posx, window.posy), ((window.posx + window.width), (window.posy + window.height)))
-                        if event.dict['pos'] > (window.posx, window.posy) and event.dict['pos'] < ((window.posx + window.width),(window.posy + window.height)):
+                        if ((event.dict['pos'][0] > window.posx
+                             and event.dict['pos'][1] > window.posy)
+                            and (event.dict['pos'][0] < (window.posx + window.width)
+                                 and event.dict['pos'][1] < (window.posy + window.height))):
+
+                            for button in window.buttons:
+
+                                if ((event.dict['pos'][0] > (window.posx + button.posx)
+                                     and event.dict['pos'][1] > (window.posy + button.posy))
+                                    and (event.dict['pos'][0] < (window.posx + button.posx + button.width)
+                                         and event.dict['pos'][1] < (window.posy + button.posy + button.height))):
+
+                                    button.action()
+
                             self.uevents.clickedwindow = window
                             print(window)
                     self.uevents.lmsbtn = True
