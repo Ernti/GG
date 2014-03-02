@@ -6,6 +6,7 @@ Created on 11.12.2013
 import pygame
 import sys
 import os
+from gg.GGtextinput import GGtextinput
 
 pygame.init()
 
@@ -37,29 +38,8 @@ class GGlauncher():
         self.backspaceIsPressed = False
         self.keyHolder = ""
         self.passHolder = ""
+        self.textinput = GGtextinput()
         
-    def isLetter(self,character):
-        if (character == pygame.K_a) | (character == pygame.K_b) \
-        | (character == pygame.K_c) | (character == pygame.K_d) | (character == pygame.K_e) \
-        | (character == pygame.K_f) | (character == pygame.K_g) | (character == pygame.K_h) \
-        | (character == pygame.K_i) | (character == pygame.K_j) | (character == pygame.K_k) \
-        | (character == pygame.K_l) | (character == pygame.K_m) | (character == pygame.K_n) \
-        | (character == pygame.K_o) | (character == pygame.K_p) | (character == pygame.K_q) \
-        | (character == pygame.K_r) | (character == pygame.K_s) | (character == pygame.K_t) \
-        | (character == pygame.K_u) | (character == pygame.K_v) | (character == pygame.K_w) \
-        | (character == pygame.K_x) | (character == pygame.K_y) | (character == pygame.K_z): 
-            return True
-        else:
-            return False
-        
-    def isDigit(self,character):
-        if (character == pygame.K_0) | (character == pygame.K_1) | (character == pygame.K_2) \
-        | (character == pygame.K_3) | (character == pygame.K_4) | (character == pygame.K_5) \
-        | (character == pygame.K_6) | (character == pygame.K_7) | (character == pygame.K_8) \
-        | (character == pygame.K_9):
-            return True
-        else:
-            return False
         
     def launcherLoop(self):
         launcherUp = True
@@ -115,28 +95,32 @@ class GGlauncher():
                     if (event.key == pygame.K_BACKSPACE):
                         self.backspaceIsPressed = False
                     
-                #Username-Entering        
+                #Username-Input        
                 if (event.type == pygame.KEYDOWN) & (self.canTypeLoginName == True) & (self.countLoginLetters <=15):
                     
                     #Numbers from 0-9 & Letters from a-z
-                    if (self.isLetter(event.key) == True):
+                    if (self.textinput.isLetter(event.key) == True):
                         self.keyHolder = pygame.key.name(event.key)
                         if (self.shiftIsPressed == True):
                             self.keyHolder = self.keyHolder.capitalize()
                         self.loginName += self.keyHolder
                         print(self.loginName)
                         self.countLoginLetters += 1
-                    elif (self.isDigit(event.key) == True):
-                        keyHolder = pygame.key.name(event.key)
-                        self.loginName += keyHolder
+                    elif (self.textinput.isDigit(event.key) == True):
+                       # if (self.shiftIsPressed == True):
+                       #     special = self.textinput.isSpecial(event.key)
+                       #     self.keyholder = pygame.key.name(special)
+                       # else:
+                        self.keyHolder = pygame.key.name(event.key)
+                        self.loginName += self.keyHolder
                         print(self.loginName)
                         self.countLoginLetters += 1
                 
-                #Password-Entering        
+                #Password-Input        
                 if (event.type == pygame.KEYDOWN) & (self.canTypePassword == True) & (self.countPassLetters <= 15):
         
                     #Numbers from 0-9 & Letters from a-z
-                    if (self.isLetter(event.key) == True):
+                    if (self.textinput.isLetter(event.key) == True):
                         self.passHolder = pygame.key.name(event.key)
                         if (self.shiftIsPressed == True):
                             self.passHolder = self.passHolder.capitalize()
@@ -144,7 +128,7 @@ class GGlauncher():
                         self.passStars = (self.countPassLetters+1)*"*"
                         print(self.password)
                         self.countPassLetters += 1
-                    elif (self.isDigit(event.key) == True):
+                    elif (self.textinput.isDigit(event.key) == True):
                         self.password += pygame.key.name(event.key)
                         self.passStars = (self.countPassLetters+1)*"*"
                         print(self.password)
