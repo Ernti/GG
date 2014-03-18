@@ -6,8 +6,9 @@ Created on 8 Dec 2013
 
 
 import math
+import numpy
 
-from OpenGL.GL import glBegin, GL_TRIANGLES, glColor, glVertex3f, glEnd
+from OpenGL.GL import GL_POLYGON, glVertexPointerf, glDrawElementsui, GL_VERTEX_ARRAY, glEnableClientState, glColor
 import pygame
 from gg.GGspaceshipengine import Engine
 from gg.GGspaceshipweapon import Weapon
@@ -54,6 +55,14 @@ class SpaceShip(object):
         self.render_nowtick = pygame.time.get_ticks()
         self.render_lasttick = self.render_nowtick
 
+        self.vertex = numpy.array([numpy.array([3, 0, 0], 'f').reshape(1, 3),
+                                   numpy.array([-1, -2, 0], 'f').reshape(1, 3),
+                                   numpy.array([-0.5, 0, 0], 'f').reshape(1, 3),
+                                   numpy.array([-1, 2, 0], 'f').reshape(1, 3)])
+
+        self.indices = numpy.arange(0, len(self.vertex), None, 'i')
+        print(len(self.vertex))
+
     def move(self):
 
         self.nowtick = pygame.time.get_ticks()
@@ -82,6 +91,10 @@ class SpaceShip(object):
                 self.turnRight()
 
             self.speedUp()
+
+        else:
+
+            self.target = (self.x, self.y)
 
         self.lasttick = self.nowtick
 
@@ -174,33 +187,29 @@ class SpaceShip(object):
         self.y = self.y + (self.velocity_y * ((self.render_nowtick
                                                - self.render_lasttick) / 1000))
 
+        glColor(0.2, 0.2, 0.2)
+
         self.engine.render()
 
-        [glBegin(GL_TRIANGLES),
-        glColor(0.4, 0.4, 0.4), glVertex3f(self.x + self.ggci.player.x
-                                       + (math.cos(math.radians(
-                                          self.angle)) * 1),
-                                       self.y + self.ggci.player.y
-                                       + (math.sin(math.radians(
-                                          self.angle)) * 1),
-                                       0 - self.ggci.player.z),
+        vertex = []
 
-        glColor(0.4, 0.4, 0.4), glVertex3f(self.x + self.ggci.player.x
-                                       + (math.cos(math.radians(
-                                          self.angle + 120)) * 1),
-                                       self.y + self.ggci.player.y
-                                       + (math.sin(math.radians(
-                                          self.angle + 120)) * 1),
-                                       0 - self.ggci.player.z),
+        for vert, verts in enumerate(self.vertex):
 
-        glColor(0.4, 0.4, 0.4), glVertex3f(self.x + self.ggci.player.x
-                                       + (math.cos(math.radians(
-                                          self.angle + 240)) * 1),
-                                       self.y + self.ggci.player.y
-                                       + (math.sin(math.radians(
-                                          self.angle + 240)) * 1),
-                                       0 - self.ggci.player.z),
-        glEnd()]
+            vx = numpy.dot(self.vertex[vert], numpy.array([math.cos(math.radians(self.angle)),
+                                                                    math.sin(math.radians(self.angle)), 0,
+                                                                    -math.sin(math.radians(self.angle)),
+                                                                    math.cos(math.radians(self.angle)), 0,
+                                                                    0, 0, 1], 'f').reshape(3, 3))
+
+            vx = vx + numpy.array([self.x + self.ggci.player.x, self.y + self.ggci.player.y, 0 - self.ggci.player.z], 'f').reshape(1, 3)
+
+            vertex.append(vx)
+
+        vertex = numpy.array(vertex, 'f').reshape(len(self.vertex), 3)
+
+        glEnableClientState(GL_VERTEX_ARRAY)
+        glVertexPointerf(vertex)
+        glDrawElementsui(GL_POLYGON, self.indices)
 
         self.render_lasttick = self.render_nowtick
 

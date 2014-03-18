@@ -43,7 +43,6 @@ class GGcore(object):
         self.test2 = 0
         while self.events.running:
 
-            self.events.eventLoop()
             self.clock.tick()
 
             self.ggci.player.move()
@@ -61,3 +60,4 @@ class GGcore(object):
                 self.ggci.speed = int(self.ggci.player.playership.speed * 3.6)
 
             self.render.render()
+            self.events.eventLoop()

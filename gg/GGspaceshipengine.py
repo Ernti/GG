@@ -5,8 +5,9 @@ Created on 20 Feb 2014
 '''
 
 
-from OpenGL.GL import glBegin, GL_TRIANGLES, glColor, glVertex3f, glEnd
+from OpenGL.GL import GL_TRIANGLES, GL_POLYGON, glVertexPointerf, glDrawElementsui, GL_VERTEX_ARRAY, glEnableClientState
 import math
+import numpy
 
 
 class Engine(object):
@@ -18,26 +19,31 @@ class Engine(object):
         self.thrust = data['thrust']
         self.mass = data['mass']
 
+        self.vertex = numpy.array([numpy.array([0, 0.3, 0], 'f').reshape(1, 3),
+                                   numpy.array([0, -0.3, 0], 'f').reshape(1, 3),
+                                   numpy.array([-1.5, -0.5, 0], 'f').reshape(1, 3),
+                                   numpy.array([-1.5, 0.5, 0], 'f').reshape(1, 3)])
+
+        self.indices = numpy.arange(0, len(self.vertex), None, 'i')
+
     def render(self):
 
-        [glBegin(GL_TRIANGLES),
-        glColor(0.3, 0.3, 0.3), glVertex3f(self.ss.x + self.ss.ggci.player.x,
-                                       self.ss.y + self.ss.ggci.player.y,
-                                       0 - self.ss.ggci.player.z),
+        vertex = []
 
-        glColor(0.3, 0.3, 0.3), glVertex3f(self.ss.x + self.ss.ggci.player.x
-                                       + (math.cos(math.radians(
-                                          self.ss.angle + 160))),
-                                       self.ss.y + self.ss.ggci.player.y
-                                       + (math.sin(math.radians(
-                                          self.ss.angle + 160))),
-                                       0 - self.ss.ggci.player.z),
+        for vert, verts in enumerate(self.vertex):
 
-        glColor(0.3, 0.3, 0.3), glVertex3f(self.ss.x + self.ss.ggci.player.x
-                                       + (math.cos(math.radians(
-                                          self.ss.angle + 200))),
-                                       self.ss.y + self.ss.ggci.player.y
-                                       + (math.sin(math.radians(
-                                          self.ss.angle + 200))),
-                                       0 - self.ss.ggci.player.z),
-        glEnd()]
+            vx = numpy.dot(self.vertex[vert], numpy.array([math.cos(math.radians(self.ss.angle)),
+                                                                    math.sin(math.radians(self.ss.angle)), 0,
+                                                                    -math.sin(math.radians(self.ss.angle)),
+                                                                    math.cos(math.radians(self.ss.angle)), 0,
+                                                                    0, 0, 1], 'f').reshape(3, 3))
+
+            vx = vx + numpy.array([self.ss.x + self.ss.ggci.player.x, self.ss.y + self.ss.ggci.player.y, 0 - self.ss.ggci.player.z], 'f').reshape(1, 3)
+
+            vertex.append(vx)
+
+        vertex = numpy.array(vertex, 'f').reshape(len(self.vertex), 3)
+
+        glEnableClientState(GL_VERTEX_ARRAY)
+        glVertexPointerf(vertex)
+        glDrawElementsui(GL_POLYGON, self.indices)

@@ -3,12 +3,12 @@ Created on 17 Feb 2014
 
 @author: tore
 '''
+
 import os
 import pygame
 import sys
 
 from OpenGL.GL import *
-from OpenGL.GLU import gluPerspective, gluLookAt
 
 
 class TextRender(object):

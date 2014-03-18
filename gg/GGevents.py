@@ -267,7 +267,7 @@ class Events(object):
                             #objects.scale_x = data['scale_x']
                             #objects.scale_y = data['scale_y']
                             #objects.speed = data['speed']
-                            #objects.angle = data['r']
+                            objects.angle = data['r']
                             objects.target = data['target']
 
                     if exists == False:
