@@ -22,7 +22,8 @@ class TextRender(object):
         if not pygame.font.get_init():
             print('Could not render font.')
             sys.exit(0)
-        self.font = pygame.font.Font(os.path.join(".", "gg", "data", "fonts", "arial.ttf"), 18)
+        self.font = pygame.font.Font(os.path.join(".", "gg", "data", "fonts", "arial.ttf"),
+                                     int(self.ggci.ggdata.screenheight / 40))
         self.char = []
         for c in range(256):
             self.char.append(self.createCharacter(chr(c), (255, 255, 255), (0, 0, 0)))
@@ -30,7 +31,8 @@ class TextRender(object):
         self.lw = self.char[ord('0')][1]
         self.lh = self.char[ord('0')][2]
         self.angle = 0.0
-        self.font = pygame.font.Font(os.path.join(".", "gg", "data", "fonts", "arial.ttf"), 50)
+        self.font = pygame.font.Font(os.path.join(".", "gg", "data", "fonts", "arial.ttf"),
+                                     int(self.ggci.ggdata.screenheight / 15))
         self.char2 = []
         for c in range(256):
             self.char2.append(self.createCharacter(chr(c), (255, 255, 255), (0, 0, 0)))
@@ -38,7 +40,8 @@ class TextRender(object):
         self.lw2 = self.char2[ord('0')][1]
         self.lh2 = self.char2[ord('0')][2]
         self.angle2 = 0.0
-        self.font = pygame.font.Font(os.path.join(".", "gg", "data", "fonts", "arial.ttf"), 12)
+        self.font = pygame.font.Font(os.path.join(".", "gg", "data", "fonts", "arial.ttf"),
+                                     int(self.ggci.ggdata.screenheight / 60))
         self.statchar = []
         for c in range(256):
             self.statchar.append(self.createCharacter(chr(c), (0, 0, 0), (127, 127, 127)))

@@ -38,6 +38,7 @@ class SpaceShip(object):
 
         self.engine = Engine(data['engine'], self)
         self.weapon = Weapon("Machine Gun", self.ggci)
+        self.inventory = []
 
         self.radarrange = 250
 
@@ -63,7 +64,7 @@ class SpaceShip(object):
         self.indices = numpy.arange(0, len(self.vertex), None, 'i')
         print(len(self.vertex))
 
-    def move(self):
+    def action(self):
 
         self.nowtick = pygame.time.get_ticks()
 
@@ -201,7 +202,8 @@ class SpaceShip(object):
                                                                     math.cos(math.radians(self.angle)), 0,
                                                                     0, 0, 1], 'f').reshape(3, 3))
 
-            vx = vx + numpy.array([self.x + self.ggci.player.x, self.y + self.ggci.player.y, 0 - self.ggci.player.z], 'f').reshape(1, 3)
+            vx = vx + numpy.array([self.x + self.ggci.player.x, self.y + self.ggci.player.y, 0 - self.ggci.player.z],
+                                  'f').reshape(1, 3)
 
             vertex.append(vx)
 
@@ -217,7 +219,8 @@ class SpaceShip(object):
 
 
         textx = (((self.x + self.ggci.player.x)
-                  / ((math.tan(math.radians(45 / 2)) * (self.ggci.ggdata.screenwidth / self.ggci.ggdata.screenheight)) * (10 + self.ggci.player.z))
+                  / ((math.tan(math.radians(45 / 2)) * (self.ggci.ggdata.screenwidth / self.ggci.ggdata.screenheight))
+                     * (10 + self.ggci.player.z))
                   * self.ggci.ggdata.screenwidth / 2) + self.ggci.ggdata.screenwidth / 2)
 
         texty = (((self.y + self.ggci.player.y + 1)

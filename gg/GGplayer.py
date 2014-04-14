@@ -68,7 +68,7 @@ class Player(object):
                                     * (math.tan(math.radians(45 / 2))
                                        * (10 + self.z))))
 
-        self.playership.move()
+        self.playership.action()
 
         if self.playership.speed > 0:
             if self.after < (self.nowtick - 10):

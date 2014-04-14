@@ -8,7 +8,7 @@ from OpenGL.GL import *
 
 class Windowbutton(object):
 
-    def __init__(self, window, text, x, y, w, h, actiondict):
+    def __init__(self, window, text, x, y, w, h, action):
 
         self.window = window
         self.text = text
@@ -16,7 +16,7 @@ class Windowbutton(object):
         self.posy = y
         self.width = w
         self.height = h
-        self.actiondict = actiondict
+        self.actiondict = {'action': action}
 
     def render(self):
 

@@ -78,6 +78,7 @@ class Events(object):
 
                             self.uevents.clickedwindow = window
                             print(window)
+
                     self.uevents.lmsbtn = True
                     print('lmsbtn True')
 
@@ -299,7 +300,12 @@ class Events(object):
 
                 if event.type == pygame.MOUSEMOTION:
 
-                    if self.uevents.clickedwindow == None:
+                    if self.uevents.clickedwindow is not None:
+
+                        self.uevents.clickedwindow.posx += event.rel[0]
+                        self.uevents.clickedwindow.posy += event.rel[1]
+
+                    else:
 
                         if self.uevents.lock == True:
 
@@ -311,8 +317,3 @@ class Events(object):
                         self.player.y -= ((event.rel[1] / 100)
                                           + ((self.player.z / 10)
                                              * (event.rel[1] / 100)))
-
-                    else:
-
-                        self.uevents.clickedwindow.posx += event.rel[0]
-                        self.uevents.clickedwindow.posy += event.rel[1]

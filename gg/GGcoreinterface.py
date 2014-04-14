@@ -5,7 +5,7 @@ Created on 17 Dec 2013
 '''
 import os.path
 import pygame
-from gg.GGbuttonhandler import Buttonhandler
+from gg.GGButtonhandler import Buttonhandler
 from gg.GGchat import ChatWindow
 from gg.GGdata import GGData
 from gg.GGobjectlist import ObjectList
@@ -32,7 +32,7 @@ class GGCI(object):
 
         self.menuwindow = Window("Menu", self.ggdata.screenwidth / 2 - 50,
                                  self.ggdata.screenheight / 2 - 100, 100, 200, self)
-        self.menuwindow.buttons.append(Windowbutton(self.menuwindow, "Exit", 10, 170, 80, 20, {'action': 'quit'}))
+        self.menuwindow.buttons.append(Windowbutton(self.menuwindow, "Exit", 10, 170, 80, 20, 'quit'))
 
         self.statuswindow = Window("Status", 10, 10, 200, 400, self)
         self.statuswindow.text.append("test")
