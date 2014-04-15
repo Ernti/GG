@@ -57,18 +57,18 @@ class Network(object):
             data = self.sock.recv(1024)
             for match_group in re.finditer("\(([^()]+)\)", data.decode()):
 
-                    data_json = json.loads(match_group.group(1))
-            if data_json['type'] == 'connected':
+                data_json = json.loads(match_group.group(1))
+                if data_json['type'] == 'connected':
 
-                self.connected = True
-                print("connected")
-                self.recthread = ReceiverThread(self.sock)
-                self.sendthread = SenderThread(self.sock)
-                self.recthread.start()
+                    self.connected = True
+                    print("connected")
+                    self.recthread = ReceiverThread(self.sock)
+                    self.sendthread = SenderThread(self.sock)
+                    self.recthread.start()
 
-            elif data_json['type'] == 'loginerror':
+                elif data_json['type'] == 'loginerror':
 
-                print("Wrong Username or Password!")
+                    print("Wrong Username or Password!")
 
         except KeyboardInterrupt:
 

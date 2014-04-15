@@ -49,6 +49,5 @@ class WindowList(object):
 
             self.window.ggci.textrender.print(self.list[i].name, self.window.ggci.textrender.statchar,
                                               self.window.posx + self.posx + 2,
-                                              self.window.posy - self.posy
-                                              - (i * (2 + self.window.ggci.textrender.statchar[49][2])),
+                                              10,
                                               "left")
