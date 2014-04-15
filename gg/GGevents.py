@@ -267,24 +267,25 @@ class Events(object):
 
                             exists = True
 
-                            if data['x'] > objects.x + 1 or data['x'] < objects.x - 1:
-                                objects.x = data['x']
-                            if data['y'] > objects.y + 1 or data['y'] < objects.y - 1:
-                                objects.y = data['y']
+                            #if data['x'] > objects.x + 1 or data['x'] < objects.x - 1:
+                            #    objects.x = data['x']
+                            #if data['y'] > objects.y + 1 or data['y'] < objects.y - 1:
+                            #    objects.y = data['y']
                             #objects.scale_x = data['scale_x']
                             #objects.scale_y = data['scale_y']
                             #objects.speed = data['speed']
-                            objects.angle = data['r']
-                            objects.target = data['target']
+                            #objects.angle = data['r']
+                            #objects.target = data['target']
 
                     if exists == False:
 
-                        spaceship = SpaceShip(data, self.ggci)
-                        spaceship.scale_x = data['scale_x']
-                        spaceship.scale_y = data['scale_y']
-                        spaceship.speed = data['speed']
+                        spaceship = SpaceShip({'soid': data['soid'], 'x':  data['x'], 'y': data['y'],
+                             'engine': {'type': "Electromotor", 'thrust': 10, 'mass': 100}}, self.ggci)
+                        #spaceship.scale_x = data['scale_x']
+                        #spaceship.scale_y = data['scale_y']
+                        #spaceship.speed = data['speed']
                         spaceship.angle = data['r']
-                        spaceship.target = data['target']
+                        #spaceship.target = data['target']
                         self.ggci.objectlist.addObject(spaceship)
 
                 if data['type'] == 'sendchatmessage':
