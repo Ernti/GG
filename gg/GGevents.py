@@ -39,14 +39,7 @@ class Events(object):
 
     def eventLoop(self):
 
-        for event in pygame.event.get([pygame.QUIT,
-                                       pygame.KEYDOWN,
-                                       pygame.KEYUP,
-                                       pygame.USEREVENT,
-                                       pygame.MOUSEBUTTONDOWN,
-                                       pygame.MOUSEBUTTONUP,
-                                       pygame.MOUSEMOTION,
-                                       pygame.VIDEORESIZE]):
+        for event in pygame.event.get():
 
             if event.type == pygame.QUIT:
 
@@ -247,6 +240,13 @@ class Events(object):
 
                     self.running = False
 
+                if data['type'] == 'newspaceobject':
+
+                    spaceship = SpaceShip({'soid': data['soid'], 'x':  0, 'y': 0,
+                                           'engine': {'type': "Electromotor", 'thrust': 10, 'mass': 100}}, self.ggci)
+                    spaceship.angle = 0
+                    self.ggci.objectlist.addObject(spaceship)
+
                 if data['type'] == 'removespaceobject':
 
                     for objects in self.ggci.objectlist.objectlist:
@@ -257,15 +257,9 @@ class Events(object):
 
                 if data['type'] == 'spaceobjectmoved':
 
-                    exists = False
-
                     for objects in self.ggci.objectlist.objectlist:
 
                         if objects.id == data['soid']:
-
-                            # TODO: Lag Optimization
-
-                            exists = True
 
                             #if data['x'] > objects.x + 1 or data['x'] < objects.x - 1:
                             objects.x = data['x']
@@ -275,18 +269,7 @@ class Events(object):
                             #objects.scale_y = data['scale_y']
                             #objects.speed = data['speed']
                             objects.angle = data['r']
-                            #objects.target = data['target']
-
-                    if exists == False:
-
-                        spaceship = SpaceShip({'soid': data['soid'], 'x':  data['x'], 'y': data['y'],
-                             'engine': {'type': "Electromotor", 'thrust': 10, 'mass': 100}}, self.ggci)
-                        #spaceship.scale_x = data['scale_x']
-                        #spaceship.scale_y = data['scale_y']
-                        #spaceship.speed = data['speed']
-                        spaceship.angle = data['r']
-                        #spaceship.target = data['target']
-                        self.ggci.objectlist.addObject(spaceship)
+                            objects.target = (data['x'], data['y'])
 
                 if data['type'] == 'sendchatmessage':
 
@@ -298,6 +281,7 @@ class Events(object):
 
                         if objects.id == data['soid'] and objects.type == "ss":
                             objects.weapon.shoot(data)
+
 
             #----------------------------------------
             #-----------MOTION-CALCULATION-----------

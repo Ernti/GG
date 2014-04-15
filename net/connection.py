@@ -114,6 +114,11 @@ class ReceiverThread(Thread):
 
                         print(data.decode())
 
+                    elif data_json['type'] == 'newspaceobject':
+
+                        pygame.event.post(pygame.event.Event(pygame.USEREVENT,
+                                                            data_json))
+
                     elif data_json['type'] == 'removespaceobject':
 
                         pygame.event.post(pygame.event.Event(pygame.USEREVENT,

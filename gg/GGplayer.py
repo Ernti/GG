@@ -69,7 +69,7 @@ class Player(object):
         self.playership.action()
 
         if self.playership.speed > 0:
-            if self.after < (self.nowtick - 10):
+            if self.after < (self.nowtick - 30):
 
                 pygame.event.post(pygame.event.Event(
                                     26, {'type': 'playermoved',
@@ -79,14 +79,14 @@ class Player(object):
 
                 self.after = pygame.time.get_ticks()
 
-        else:
-
-            if self.after < (self.nowtick - 1000):
-
-                pygame.event.post(pygame.event.Event(
-                                    26, {'type': 'playermoved',
-                                    'x': self.playership.x,
-                                    'y': self.playership.y,
-                                    'r': self.playership.angle}))
-
-                self.after = pygame.time.get_ticks()
+#        else:
+#
+#           if self.after < (self.nowtick - 1000):
+#
+#               pygame.event.post(pygame.event.Event(
+#                                 26, {'type': 'playermoved',
+#                                 'x': self.playership.x,
+#                                 'y': self.playership.y,
+#                                 'r': self.playership.angle}))
+#
+#               self.after = pygame.time.get_ticks()
