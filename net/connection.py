@@ -53,9 +53,11 @@ class Network(object):
 
             self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             self.sock.connect((self.hostaddresse, int(self.hostport)))
-            self.sock.send(json.dumps(self.userdict).encode())
+            self.sock.send(('(' + json.dumps(self.userdict) + ')').encode())
             data = self.sock.recv(1024)
-            data_json = json.loads(data.decode())
+            for match_group in re.finditer("\(([^()]+)\)", data.decode()):
+
+                    data_json = json.loads(match_group.group(1))
             if data_json['type'] == 'connected':
 
                 self.connected = True
