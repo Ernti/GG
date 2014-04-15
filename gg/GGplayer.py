@@ -73,17 +73,9 @@ class Player(object):
 
                 pygame.event.post(pygame.event.Event(
                                     26, {'type': 'playermoved',
-                                    'soid': self.playership.id,
                                     'x': self.playership.x,
                                     'y': self.playership.y,
-                                    'speed': self.playership.speed,
-                                    'r': self.playership.angle,
-                                    'scale_x': self.playership.scale_x,
-                                    'scale_y': self.playership.scale_y,
-                                    'target': self.playership.target,
-                                    'engine': {'type': self.playership.engine.type,
-                                               'thrust': self.playership.engine.thrust,
-                                               'mass': self.playership.engine.mass}}))
+                                    'r': self.playership.angle}))
 
                 self.after = pygame.time.get_ticks()
 
@@ -93,16 +85,8 @@ class Player(object):
 
                 pygame.event.post(pygame.event.Event(
                                     26, {'type': 'playermoved',
-                                    'soid': self.playership.id,
                                     'x': self.playership.x,
                                     'y': self.playership.y,
-                                    'speed': self.playership.speed,
-                                    'r': self.playership.angle,
-                                    'scale_x': self.playership.scale_x,
-                                    'scale_y': self.playership.scale_y,
-                                    'target': self.playership.target,
-                                    'engine': {'type': self.playership.engine.type,
-                                               'thrust': self.playership.engine.thrust,
-                                               'mass': self.playership.engine.mass}}))
+                                    'r': self.playership.angle}))
 
                 self.after = pygame.time.get_ticks()
