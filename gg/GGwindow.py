@@ -17,6 +17,7 @@ class Window(object):
         self.title = title
         self.text = []
         self.buttons = []
+        self.lists = []
 
         self.visible = False
 
@@ -46,13 +47,17 @@ class Window(object):
 
         self.ggci.textrender.print(self.title, self.ggci.textrender.statchar, self.posx + 5, self.ggci.ggdata.screenheight - self.posy - 17, "left")
 
-        for text in self.text:
+        for list in self.lists:
 
-            self.ggci.textrender.print(text, self.ggci.textrender.statchar, self.posx + 5, self.ggci.ggdata.screenheight - self.posy - 38 - self.text.index(text)* 15, "left")
+            list.render()
 
         for button in self.buttons:
 
             button.render()
+
+        for text in self.text:
+
+            self.ggci.textrender.print(text, self.ggci.textrender.statchar, self.posx + 5, self.ggci.ggdata.screenheight - self.posy - 38 - self.text.index(text)* 15, "left")
 
     def show(self):
 

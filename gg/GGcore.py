@@ -12,6 +12,7 @@ import pygame
 from gg.GGchat import ChatWindow
 from gg.GGcoreinterface import GGCI
 from gg.GGevents import Events
+from gg.GGitem import Item
 from gg.GGitemobject import Itemobject
 from gg.GGrender import Render
 from gg.GGspaceship import SpaceShip
@@ -28,6 +29,11 @@ class GGcore(object):
                              'engine': {'type': "Electromotor", 'thrust': 10, 'mass': 100}}, self.ggci)
         self.ggci.player.playership = self.ss
         self.ggci.objectlist.addObject(self.ss)
+
+        testitem1 = Item({'name': 'Scrap', 'id': 1, 'type': 'scrap', 'amount': 7})
+        self.ggci.player.playership.inventory.append(testitem1)
+
+        self.ggci.wmInit()
         self.render = Render(self.ggci)
         self.events = Events(self.ggci, self.render)
         self.clock = pygame.time.Clock()

@@ -23,7 +23,7 @@ class SpaceShip(object):
         self.type = "ss"
 
         self.oxygen = 100
-        self.hull = 0
+        self.hull = 100
 
         self.x = data['x']
         self.y = data['y']

@@ -136,16 +136,22 @@ class Events(object):
                     self.ggci.chat.addLine("test2")
 
                 elif event.key == pygame.K_ESCAPE:
-                    if self.ggci.menuwindow.visible is False:
-                        self.ggci.menuwindow.show()
+                    if self.ggci.wm.menuwindow.visible is False:
+                        self.ggci.wm.menuwindow.show()
                     else:
-                        self.ggci.menuwindow.hide()
+                        self.ggci.wm.menuwindow.hide()
 
                 elif event.key == pygame.K_s:
-                    if self.ggci.statuswindow.visible is False:
-                        self.ggci.statuswindow.show()
+                    if self.ggci.wm.statuswindow.visible is False:
+                        self.ggci.wm.statuswindow.show()
                     else:
-                        self.ggci.statuswindow.hide()
+                        self.ggci.wm.statuswindow.hide()
+
+                elif event.key == pygame.K_i:
+                    if self.ggci.wm.inventorywindow.visible is False:
+                        self.ggci.wm.inventorywindow.show()
+                    else:
+                        self.ggci.wm.inventorywindow.hide()
 
                 elif event.key == pygame.K_o:
                     self.ss.oxygen = self.ss.oxygen - 1

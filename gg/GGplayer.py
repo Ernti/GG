@@ -18,8 +18,6 @@ class Player(object):
         self.y = 0
         self.z = 10
 
-        self.target = (0, 0)
-
         self.nowtick = pygame.time.get_ticks()
         self.lasttick = self.nowtick
         self.after = pygame.time.get_ticks()

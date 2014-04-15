@@ -62,6 +62,7 @@ class GGlauncher():
                     #Usage of Login and Exit Buttons
                     if (x > 386) & (x < 477) & (y > 416) & (y < 474):
                         launcherUp = False
+                        return {'username': self.loginName, 'password': 'iminspace'}
 
                     if (x > 386) & (x < 477) & (y > 496) & (y < 554):
                         launcherUp = False

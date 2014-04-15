@@ -1,5 +1,5 @@
 '''
-Created on 1 Mar 2014
+Created on 15 Apr 2014
 
 @author: tore
 '''
@@ -7,17 +7,18 @@ Created on 1 Mar 2014
 from OpenGL.GL import *
 
 
-class WindowButton(object):
+class WindowList(object):
 
-    def __init__(self, window, text, x, y, w, h, action):
+    def __init__(self, window, list, x, y, w, h, rows):
 
         self.window = window
-        self.text = text
+        self.list = list
         self.posx = x
         self.posy = y
         self.width = w
         self.height = h
-        self.actiondict = {'action': action}
+        self.rows = rows
+        self.toprow = 0
 
     def render(self):
 
@@ -44,12 +45,10 @@ class WindowButton(object):
                    self.window.ggci.ggdata.screenheight - self.window.posy - self.posy - self.height)
         glEnd()
 
-        self.window.ggci.textrender.print(self.text, self.window.ggci.textrender.statchar,
-                                          self.window.posx + self.posx + self.width / 2,
-                                          self.window.ggci.ggdata.screenheight - self.window.posy - self.posy
-                                          - ((self.height + self.window.ggci.textrender.statchar[49][2]) / 2),
-                                          "center")
+        for i in range(self.toprow, self.rows):
 
-    def action(self):
-
-        self.window.ggci.buttonhandler.handle(self.actiondict)
+            self.window.ggci.textrender.print(self.list[i].name, self.window.ggci.textrender.statchar,
+                                              self.window.posx + self.posx + 2,
+                                              self.window.posy - self.posy
+                                              - (i * (2 + self.window.ggci.textrender.statchar[49][2])),
+                                              "left")

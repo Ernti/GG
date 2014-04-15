@@ -11,9 +11,9 @@ from net.connection import Network
 from gg.GGlauncher import GGlauncher
 
 launcher = GGlauncher()
-launcher.launcherLoop()
+login = launcher.launcherLoop()
 
-net = Network()
+net = Network(login)
 net.connect()
 
 

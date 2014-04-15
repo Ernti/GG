@@ -17,11 +17,11 @@ stop_requested = False
 
 class Network(object):
 
-    def __init__(self):
+    def __init__(self, userdict):
 
         self.hostaddresse = ''
         self.hostport = ''
-        self.userdict = {'username': 'testname', 'password': 'iminspace'}
+        self.userdict = userdict
         self.connected = False
         global stop_requested
 
