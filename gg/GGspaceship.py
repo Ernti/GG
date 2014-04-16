@@ -55,6 +55,8 @@ class SpaceShip(object):
         self.velocity_x = (self.speed * self.scale_x)
         self.velocity_y = (self.speed * self.scale_y)
 
+        self.turntime = (self.thrust / (self.mass ** 1.08) * 1000)
+
         self.nowtick = pygame.time.get_ticks()
         self.lasttick = self.nowtick
         self.render_nowtick = pygame.time.get_ticks()
@@ -74,7 +76,6 @@ class SpaceShip(object):
         self.nexty = nexty
         self.nextr = nextr
 
-        self.lasttick = self.nowtick
         self.nowtick = pygame.time.get_ticks()
 
     def action(self):
@@ -88,6 +89,8 @@ class SpaceShip(object):
 
         if self.velocity_r < -180:
             self.velocity_r += 360
+
+        self.lasttick = self.nowtick
 
     def render(self):
 

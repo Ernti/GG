@@ -100,11 +100,11 @@ class Player(object):
 
         self.lasttick = self.nowtick
 
-        #self.playership.velocity_x = (self.playership.speed * self.playership.scale_x)
-        #self.playership.velocity_y = (self.playership.speed * self.playership.scale_y)
+        self.playership.velocity_x = (self.playership.speed * self.playership.scale_x)
+        self.playership.velocity_y = (self.playership.speed * self.playership.scale_y)
 
         if self.playership.speed > 0:
-            if self.after < (self.nowtick - 50):
+            if self.after < (self.nowtick - 20):
 
                 pygame.event.post(pygame.event.Event(
                                     26, {'type': 'playermoved',
