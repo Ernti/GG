@@ -73,8 +73,8 @@ class Player(object):
 
                 pygame.event.post(pygame.event.Event(
                                     26, {'type': 'playermoved',
-                                    'x': self.playership.x,
-                                    'y': self.playership.y,
+                                    'x': self.playership.target[0],
+                                    'y': self.playership.target[1],
                                     'r': self.playership.angle}))
 
                 self.after = pygame.time.get_ticks()
