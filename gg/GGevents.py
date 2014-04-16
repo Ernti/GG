@@ -244,7 +244,7 @@ class Events(object):
 
                     spaceship = SpaceShip({'soid': data['soid'], 'x':  0, 'y': 0,
                                            'engine': {'type': "Electromotor", 'thrust': 10, 'mass': 100}}, self.ggci)
-                    spaceship.angle = 0
+                    spaceship.r = 0
                     self.ggci.objectlist.addObject(spaceship)
 
                 if data['type'] == 'removespaceobject':
@@ -261,6 +261,12 @@ class Events(object):
 
                         if objects.id == data['soid']:
 
+                            objects.move(data['x'], data['y'], data['r'])
+
+                            #objects.nextx = data['x']
+                            #objects.nexty = data['y']
+                            #objects.nextr = data['r']
+
                             #if data['x'] > objects.x + 1 or data['x'] < objects.x - 1:
                             #objects.x = data['x']
                             #if data['y'] > objects.y + 1 or data['y'] < objects.y - 1:
@@ -269,7 +275,7 @@ class Events(object):
                             #objects.scale_y = data['scale_y']
                             #objects.speed = data['speed']
                             #objects.angle = data['r']
-                            objects.target = (data['x'], data['y'])
+                            #objects.target = (data['x'], data['y'])
 
                 if data['type'] == 'sendchatmessage':
 

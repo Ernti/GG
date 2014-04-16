@@ -26,12 +26,16 @@ class SpaceShip(object):
         self.hull = 100
 
         self.x = data['x']
+        self.nextx = self.x
         self.y = data['y']
-        self.target = (self.x, self.y)
+        self.nexty = self.y
         self.lastx = self.x
         self.lasty = self.y
-        self.angle = 0
-        self.targetangle = 0
+
+        self.r = 0
+        self.nextr = self.r
+        self.velocity_r = 0
+
         self.speed = 0
         self.turntime = 1
         self.acceleration = 0
@@ -45,8 +49,8 @@ class SpaceShip(object):
         self.mass = self.engine.mass
         self.thrust = self.engine.thrust
 
-        self.scale_x = math.cos(math.radians(self.angle))
-        self.scale_y = math.sin(math.radians(self.angle))
+        self.scale_x = math.cos(math.radians(self.r))
+        self.scale_y = math.sin(math.radians(self.r))
 
         self.velocity_x = (self.speed * self.scale_x)
         self.velocity_y = (self.speed * self.scale_y)
@@ -64,129 +68,43 @@ class SpaceShip(object):
         self.indices = numpy.arange(0, len(self.vertex), None, 'i')
         print(len(self.vertex))
 
-    def action(self):
+    def move(self, nextx, nexty, nextr):
 
-        self.nowtick = pygame.time.get_ticks()
-
-        if (self.x, self.y) != self.target:
-
-            self.targetangle = math.degrees(math.atan2((self.target[1] - self.y),
-                                                       (self.target[0] - self.x)))
-
-            if self.targetangle - self.angle > 180:
-
-                self.turnRight()
-
-            elif self.targetangle - self.angle < (-180):
-
-                self.turnLeft()
-
-            elif (self.targetangle - self.angle > 0
-                  and self.targetangle - self.angle < 180):
-
-                self.turnLeft()
-
-            elif (self.targetangle - self.angle < 0
-                  and self.targetangle - self.angle > (-180)):
-
-                self.turnRight()
-
-            self.speedUp()
-
-        else:
-
-            self.target = (self.x, self.y)
+        self.nextx = nextx
+        self.nexty = nexty
+        self.nextr = nextr
 
         self.lasttick = self.nowtick
+        self.nowtick = pygame.time.get_ticks()
 
-    def speedUp(self):
+    def action(self):
 
-        self.acceleration = (self.thrust / (self.mass ** 1.08) * 100)
+        self.velocity_x = (self.nextx - self.x)
+        self.velocity_y = (self.nexty - self.y)
+        self.velocity_r = (self.nextr - self.r)
 
-        self.velocity_x = (self.speed * self.scale_x)
-        self.velocity_y = (self.speed * self.scale_y)
+        if self.velocity_r > 180:
+            self.velocity_r -= 360
 
-        stopx = (self.velocity_x * (self.mass ** 1.08) / self.thrust / 6)
-        stopy = (self.velocity_y * (self.mass ** 1.08) / self.thrust / 6)
-
-        if (abs(self.target[0] - self.x) >= 0.1 + abs(stopx) or abs(self.target[1] - self.y) >= 0.1 + abs(stopy)):
-
-            if self.speed < ((self.acceleration * (self.mass ** 1.08) / self.thrust / 6)):
-
-                self.speed += (self.acceleration * ((self.nowtick - self.lasttick) / 1000))
-
-            else:
-
-                self.speed = ((self.acceleration * (self.mass ** 1.08) / self.thrust / 6))
-
-        else:
-
-            self.slowDown()
-
-    def slowDown(self):
-
-        self.acceleration = (self.thrust / (self.mass ** 1.08) * 100)
-
-        if (self.speed - (self.acceleration * ((self.nowtick - self.lasttick) / 1000))) > 0.01:
-
-            self.speed -= (self.acceleration * ((self.nowtick - self.lasttick) / 1000))
-
-        else:
-
-            self.speed = 0
-
-    def turnLeft(self):
-
-        self.turntime = (self.thrust / (self.mass ** 1.08) * 1000)
-
-        if abs(self.targetangle - self.angle) > (self.turntime * ((self.nowtick - self.lasttick) / 1000)):
-
-            self.slowDown()
-            self.angle += (self.turntime * ((self.nowtick - self.lasttick) / 1000))
-
-            if self.angle > 180:
-
-                self.angle -= 360
-
-        else:
-
-            self.angle = self.targetangle
-
-        self.scale_x = math.cos(math.radians(self.angle))
-        self.scale_y = math.sin(math.radians(self.angle))
-
-    def turnRight(self):
-
-        self.turntime = (self.thrust / (self.mass ** 1.08) * 1000)
-
-        if (abs(self.targetangle - self.angle) > (self.turntime * ((self.nowtick - self.lasttick) / 1000))):
-
-            self.slowDown()
-
-            self.angle -= (self.turntime * ((self.nowtick - self.lasttick) / 1000))
-
-            if self.angle < -180:
-
-                self.angle += 360
-
-        else:
-
-            self.angle = self.targetangle
-
-        self.scale_x = math.cos(math.radians(self.angle))
-        self.scale_y = math.sin(math.radians(self.angle))
+        if self.velocity_r < -180:
+            self.velocity_r += 360
 
     def render(self):
 
         self.render_nowtick = pygame.time.get_ticks()
 
-        self.velocity_x = (self.speed * self.scale_x)
-        self.velocity_y = (self.speed * self.scale_y)
-
         self.x = self.x + (self.velocity_x * ((self.render_nowtick
                                                - self.render_lasttick) / 1000))
         self.y = self.y + (self.velocity_y * ((self.render_nowtick
                                                - self.render_lasttick) / 1000))
+        self.r = self.r + (self.velocity_r * ((self.render_nowtick
+                                               - self.render_lasttick) / 1000))
+
+        if self.r > 180:
+            self.r -= 360
+
+        if self.r < -180:
+            self.r += 360
 
         glColor(0.2, 0.2, 0.2)
 
@@ -196,10 +114,10 @@ class SpaceShip(object):
 
         for vert, verts in enumerate(self.vertex):
 
-            vx = numpy.dot(self.vertex[vert], numpy.array([math.cos(math.radians(self.angle)),
-                                                                    math.sin(math.radians(self.angle)), 0,
-                                                                    -math.sin(math.radians(self.angle)),
-                                                                    math.cos(math.radians(self.angle)), 0,
+            vx = numpy.dot(self.vertex[vert], numpy.array([math.cos(math.radians(self.r)),
+                                                                    math.sin(math.radians(self.r)), 0,
+                                                                    -math.sin(math.radians(self.r)),
+                                                                    math.cos(math.radians(self.r)), 0,
                                                                     0, 0, 1], 'f').reshape(3, 3))
 
             vx = vx + numpy.array([self.x + self.ggci.player.x, self.y + self.ggci.player.y, 0 - self.ggci.player.z],

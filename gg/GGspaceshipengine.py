@@ -32,10 +32,10 @@ class Engine(object):
 
         for vert, verts in enumerate(self.vertex):
 
-            vx = numpy.dot(self.vertex[vert], numpy.array([math.cos(math.radians(self.ss.angle)),
-                                                                    math.sin(math.radians(self.ss.angle)), 0,
-                                                                    -math.sin(math.radians(self.ss.angle)),
-                                                                    math.cos(math.radians(self.ss.angle)), 0,
+            vx = numpy.dot(self.vertex[vert], numpy.array([math.cos(math.radians(self.ss.r)),
+                                                                    math.sin(math.radians(self.ss.r)), 0,
+                                                                    -math.sin(math.radians(self.ss.r)),
+                                                                    math.cos(math.radians(self.ss.r)), 0,
                                                                     0, 0, 1], 'f').reshape(3, 3))
 
             vx = vx + numpy.array([self.ss.x + self.ss.ggci.player.x, self.ss.y + self.ss.ggci.player.y, 0 - self.ss.ggci.player.z], 'f').reshape(1, 3)
