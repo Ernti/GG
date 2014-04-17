@@ -35,8 +35,16 @@ class Itemobject(object):
         a = math.sqrt(x**2+y**2)
 
         if a < 2:
-            self.ggci.player.playership.inventory.append(self.item)
-            self.ggci.chat.addLine("You get " + str(self.item.amount) + ' ' + self.item.name + '!')
+            newitem = True
+            for item in self.ggci.player.playership.inventory:
+                if item.name == self.item.name and item.type == self.item.type:
+                    self.ggci.player.playership.inventory[self.ggci.player.playership.inventory.index(item)].amount \
+                        += self.item.amount
+                    newitem = False
+
+            if newitem is True:
+                self.ggci.player.playership.inventory.append(self.item)
+            self.ggci.chat.chat.append("You get " + str(self.item.amount) + ' ' + self.item.name + '!')
             self.ggci.objectlist.removeObject(self)
 
     def render(self):

@@ -36,7 +36,6 @@ class GGcore(object):
         self.ggci.wmInit()
         self.render = Render(self.ggci)
         self.events = Events(self.ggci, self.render)
-        self.clock = pygame.time.Clock()
 
         self.ggci.player.eventtest(self.events.uevents)
 
@@ -44,17 +43,13 @@ class GGcore(object):
                                                                                       'type': 'scrap', 'amount': 7}}, self.ggci)
         self.ggci.objectlist.addObject(testitem)
 
-        # GAMETICK = 25
-        # pygame.event.Event(GAMETICK)
-        # pygame.time.set_timer(GAMETICK, 1000)
-
     def gameLoop(self):
 
         self.test = 0
         self.test2 = 0
         while self.events.running:
 
-            self.clock.tick()
+            self.events.eventLoop()
 
             self.ggci.player.move()
             for objects in self.ggci.objectlist.objectlist:
@@ -71,4 +66,3 @@ class GGcore(object):
                 self.ggci.speed = int(self.ggci.player.playership.speed * 3.6)
 
             self.render.render()
-            self.events.eventLoop()

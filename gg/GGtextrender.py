@@ -82,10 +82,17 @@ class TextRender(object):
 
         elif align == "right":
             while i < length:
-                glRasterPos2f(x - lx, y)
+                ch = char[ord(s[i])]
+                lx += ch[1]
+                i += 1
+
+            lx = -lx
+            i = 0
+            while i < length:
+                glRasterPos2f(x + lx, y)
                 ch = char[ord(s[i])]
                 glDrawPixels(ch[1], ch[2], GL_RGBA, GL_UNSIGNED_BYTE, ch[0])
-                lx -= ch[1]
+                lx += ch[1]
                 i += 1
 
     def textView(self):

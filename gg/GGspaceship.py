@@ -78,7 +78,21 @@ class SpaceShip(object):
 
         self.nowtick = pygame.time.get_ticks()
 
+        self.velocity_x = (self.nextx - self.x)
+        self.velocity_y = (self.nexty - self.y)
+        self.velocity_r = (self.nextr - self.r)
+
+        if self.velocity_r > 180:
+            self.velocity_r -= 360
+
+        if self.velocity_r < -180:
+            self.velocity_r += 360
+
+        self.lasttick = self.nowtick
+
     def action(self):
+
+        self.nowtick = pygame.time.get_ticks()
 
         self.velocity_x = (self.nextx - self.x)
         self.velocity_y = (self.nexty - self.y)
@@ -92,16 +106,17 @@ class SpaceShip(object):
 
         self.lasttick = self.nowtick
 
+
+
     def render(self):
 
         self.render_nowtick = pygame.time.get_ticks()
 
-        self.x = self.x + (self.velocity_x * ((self.render_nowtick
-                                               - self.render_lasttick) / 1000))
-        self.y = self.y + (self.velocity_y * ((self.render_nowtick
-                                               - self.render_lasttick) / 1000))
-        self.r = self.r + (self.velocity_r * ((self.render_nowtick
-                                               - self.render_lasttick) / 1000))
+        self.x += self.velocity_x * ((self.render_nowtick - self.render_lasttick) / 1000)
+        self.y += self.velocity_y * ((self.render_nowtick - self.render_lasttick) / 1000)
+        self.r += self.velocity_r * ((self.render_nowtick - self.render_lasttick) / 1000)
+
+        #print(self.velocity_x * ((self.render_nowtick - self.render_lasttick) / 1000), self.velocity_y * ((self.render_nowtick - self.render_lasttick) / 1000))
 
         if self.r > 180:
             self.r -= 360

@@ -167,6 +167,7 @@ class SenderThread(Thread):
                     if event.type == 26:
 
                         self.sock.send(('(' + json.dumps(event.dict) + ')').encode())
+
                 pygame.time.wait(10)
 
             except socket.error:
