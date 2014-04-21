@@ -45,48 +45,26 @@ class WindowList(object):
                    self.window.ggci.ggdata.screenheight - self.window.posy - self.posy - self.height)
         glEnd()
 
-        glBegin(GL_LINES)
-        glColor3f(0.4, 0.4, 0.4)
-        glVertex2f(self.window.posx + self.posx,
-                   self.window.ggci.ggdata.screenheight - self.window.posy - self.posy - self.window.ggci.textrender.statchar[49][2] - 2)
-        glVertex2f(self.window.posx + self.posx + self.width,
-                   self.window.ggci.ggdata.screenheight - self.window.posy - self.posy - self.window.ggci.textrender.statchar[49][2] - 2)
-        glEnd()
-
-
-        self.window.ggci.textrender.print('Item', self.window.ggci.textrender.statchar,
-                                          self.window.posx + self.posx
-                                          + self.window.ggci.textrender.statchar[49][1] * 5,
-                                          self.window.ggci.ggdata.screenheight - self.window.posy - self.posy
-                                          - self.window.ggci.textrender.statchar[49][2],
-                                          "left")
-
-        self.window.ggci.textrender.print('Type', self.window.ggci.textrender.statchar,
-                                          self.window.posx + self.posx + self.width - 2,
-                                          self.window.ggci.ggdata.screenheight - self.window.posy - self.posy
-                                          - self.window.ggci.textrender.statchar[49][2],
-                                          "right")
-
         for item in self.list:
 
             self.window.ggci.textrender.print(str(item.amount), self.window.ggci.textrender.statchar,
                                               self.window.posx + self.posx + 2,
                                               self.window.ggci.ggdata.screenheight - self.window.posy - self.posy
-                                              - self.window.ggci.textrender.statchar[49][2] * 2
-                                                - self.window.ggci.textrender.statchar[49][2] * self.list.index(item)-2,
+                                              - self.window.ggci.textrender.statchar[49][2] * 1
+                                              - self.window.ggci.textrender.statchar[49][2] * self.list.index(item)-2,
                                               "left")
 
             self.window.ggci.textrender.print(item.name, self.window.ggci.textrender.statchar,
                                               self.window.posx + self.posx
                                               + self.window.ggci.textrender.statchar[49][1] * 5,
                                               self.window.ggci.ggdata.screenheight - self.window.posy - self.posy
-                                              - self.window.ggci.textrender.statchar[49][2] * 2
+                                              - self.window.ggci.textrender.statchar[49][2] * 1
                                                 - self.window.ggci.textrender.statchar[49][2] * self.list.index(item)-2,
                                               "left")
 
             self.window.ggci.textrender.print(item.type, self.window.ggci.textrender.statchar,
                                               self.window.posx + self.posx + self.width - 2,
                                               self.window.ggci.ggdata.screenheight - self.window.posy - self.posy
-                                              - self.window.ggci.textrender.statchar[49][2] * 2
+                                              - self.window.ggci.textrender.statchar[49][2] * 1
                                                 - self.window.ggci.textrender.statchar[49][2] * self.list.index(item)-2,
                                               "right")

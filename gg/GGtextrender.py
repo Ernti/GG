@@ -102,6 +102,7 @@ class TextRender(object):
         glOrtho(0.0, self.ggci.ggdata.screenwidth - 1.0, 0.0, self.ggci.ggdata.screenheight - 1.0, -1.0, 1.0)
         glMatrixMode(GL_MODELVIEW)
         glLoadIdentity()
+        glDisable(GL_DEPTH_TEST)
 
     def createCharacter(self, s, fc, bg):
         try:

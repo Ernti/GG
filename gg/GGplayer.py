@@ -18,6 +18,8 @@ class Player(object):
         self.y = 0
         self.z = 10
 
+        self.skills = []
+
         self.target = (0, 0)
         self.targetangle = 0
 

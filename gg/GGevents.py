@@ -135,6 +135,12 @@ class Events(object):
                         self.ggci.wm.menuwindow.hide()
 
                 elif event.key == pygame.K_s:
+                    if self.ggci.wm.skillswindow.visible is False:
+                        self.ggci.wm.skillswindow.show()
+                    else:
+                        self.ggci.wm.skillswindow.hide()
+
+                elif event.key == pygame.K_c:
                     if self.ggci.wm.statuswindow.visible is False:
                         self.ggci.wm.statuswindow.show()
                     else:

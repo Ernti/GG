@@ -28,7 +28,7 @@ class Render(object):
         #glEnable(GL_LIGHT0)
         #glEnable(GL_LIGHTING)
         #glEnable(GL_COLOR_MATERIAL)
-        #glEnable(GL_DEPTH_TEST)
+        glEnable(GL_DEPTH_TEST)
         #glShadeModel(GL_SMOOTH)
         glEnable(GL_BLEND)
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
@@ -120,3 +120,4 @@ class Render(object):
         glLoadIdentity()
 
         gluLookAt(0, 0, 10, 0, 0, 0, 0, 1, 0)
+        glEnable(GL_DEPTH_TEST)

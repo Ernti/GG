@@ -21,7 +21,12 @@ if net.connected == True:
 
     game = GGcore()
     net.sendthread.start()
-    game.gameLoop()
+    try:
+        game.gameLoop()
+    except KeyboardInterrupt:
+        print("stopping...")
+        game.events.running = False
+
 
 net.close()
 sys.exit()

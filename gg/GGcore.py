@@ -14,6 +14,7 @@ from gg.GGcoreinterface import GGCI
 from gg.GGevents import Events
 from gg.GGitem import Item
 from gg.GGitemobject import Itemobject
+from gg.GGplanet import Planet
 from gg.GGrender import Render
 from gg.GGspaceship import SpaceShip
 from gg.GGobjloader import *
@@ -42,6 +43,9 @@ class GGcore(object):
         testitem = Itemobject({'soid': 123, 'x': 10, 'y': 10, 'lived': 0, 'alive': 100, 'item': {'name': 'Scrap', 'id': 1,
                                                                                       'type': 'scrap', 'amount': 7}}, self.ggci)
         self.ggci.objectlist.addObject(testitem)
+
+        testplanet = Planet(1337, 50, 50, self.ggci)
+        self.ggci.objectlist.addObject(testplanet)
 
     def gameLoop(self):
 
