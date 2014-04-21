@@ -44,7 +44,7 @@ class GGcore(object):
                                                                                       'type': 'scrap', 'amount': 7}}, self.ggci)
         self.ggci.objectlist.addObject(testitem)
 
-        testplanet = Planet(1337, 50, 50, self.ggci)
+        testplanet = Planet(1337, 0, 1000, 1000, 0.0001, self.ggci)
         self.ggci.objectlist.addObject(testplanet)
 
     def gameLoop(self):

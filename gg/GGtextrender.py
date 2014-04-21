@@ -26,7 +26,7 @@ class TextRender(object):
                                      int(self.ggci.ggdata.screenheight / 40))
         self.char = []
         for c in range(256):
-            self.char.append(self.createCharacter(chr(c), (255, 255, 255), (0, 0, 0)))
+            self.char.append(self.createCharacter(chr(c), (255, 255, 255), None))
         self.char = tuple(self.char)
         self.lw = self.char[ord('0')][1]
         self.lh = self.char[ord('0')][2]
@@ -35,7 +35,7 @@ class TextRender(object):
                                      int(self.ggci.ggdata.screenheight / 15))
         self.char2 = []
         for c in range(256):
-            self.char2.append(self.createCharacter(chr(c), (255, 255, 255), (0, 0, 0)))
+            self.char2.append(self.createCharacter(chr(c), (255, 255, 255), None))
         self.char2 = tuple(self.char2)
         self.lw2 = self.char2[ord('0')][1]
         self.lh2 = self.char2[ord('0')][2]
@@ -44,7 +44,7 @@ class TextRender(object):
                                      int(self.ggci.ggdata.screenheight / 60))
         self.statchar = []
         for c in range(256):
-            self.statchar.append(self.createCharacter(chr(c), (0, 0, 0), (127, 127, 127)))
+            self.statchar.append(self.createCharacter(chr(c), (0, 0, 0), None))
         self.statchar = tuple(self.statchar)
         self.statlw = self.statchar[ord('0')][1]
         self.statlh = self.statchar[ord('0')][2]
