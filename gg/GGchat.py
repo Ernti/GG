@@ -12,6 +12,8 @@ class ChatWindow(object):
 
         self.ggci = ggci
         self.chat = []
+        self.input = False
+        self.inputstring = ""
         self.chat.append("Wilkommen!")
 
     def addLine(self, message):

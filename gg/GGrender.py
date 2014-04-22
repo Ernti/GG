@@ -40,7 +40,12 @@ class Render(object):
 
         pygame.display.set_caption('GG')
 
+        self.nowtick = pygame.time.get_ticks()
+        self.lasttick = self.nowtick
+
     def render(self):
+
+        self.nowtick = pygame.time.get_ticks()
 
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
 
@@ -79,16 +84,16 @@ class Render(object):
         while line < self.ggci.ggdata.chatlength:
             if line < len(self.ggci.chat.chat):
                 self.ggci.textrender.print(self.ggci.chat.chat[(len(self.ggci.chat.chat) - line) - 1],
-                                           self.ggci.textrender.char, 10, 20 * (line + 1), "left")
+                                           self.ggci.textrender.char, 10, (self.ggci.textrender.char[49][2] + 2) * (line + 1), "left")
             line += 1
 
-        #if self.ggci.chat.input is True:
-        #   self.print(self.ggci.chat.inputstring, self.char, 10, 20)
+        if self.ggci.chat.input is True:
+            self.ggci.textrender.print(self.ggci.chat.inputstring + '|', self.ggci.textrender.char, 10, 2, 'left')
 
         #for line in self.ggci.chat.chat:
         #    if len(self.ggci.chat.chat) - self.ggci.chat.chat.index(line) < 5:
-        #        self.print(line, self.char, 10,
-        #                    20 * len(self.ggci.chat.chat) - 20 * self.ggci.chat.chat.index(line))
+        #        self.ggci.textrender.print(line, self.ggci.textrender.char, 10,
+        #                                   (self.ggci.textrender.char[49][2] + 2) * len(self.ggci.chat.chat) - (self.ggci.textrender.char[49][2] + 2), 'left')
 
         #glPopMatrix()
 
@@ -108,6 +113,8 @@ class Render(object):
         glPopMatrix()
 
         pygame.display.flip()
+
+        self.lasttick = self.nowtick
 
     def resize(self, w, h):
         if h == 0: h = 1

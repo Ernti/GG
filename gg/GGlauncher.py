@@ -6,7 +6,7 @@ Created on 11.12.2013
 import pygame
 import sys
 import os
-from gg.GGtextinput import GGtextinput
+from gg.GGtextinput import TextInput
 
 pygame.init()
 
@@ -38,7 +38,7 @@ class GGlauncher():
         self.backspaceIsPressed = False
         self.keyHolder = ""
         self.passHolder = ""
-        self.textinput = GGtextinput()
+        self.textinput = TextInput()
         
         
     def launcherLoop(self):

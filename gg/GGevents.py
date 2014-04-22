@@ -10,6 +10,7 @@ import pygame.event
 from gg.GGbullet import Bullet
 
 from gg.GGspaceship import SpaceShip
+from gg.GGtextinput import TextInput
 
 
 class UserEvents(object):
@@ -24,6 +25,7 @@ class UserEvents(object):
         self.swup = False
 
         self.clickedwindow = None
+        self.chatting = False
 
 
 class Events(object):
@@ -36,6 +38,7 @@ class Events(object):
         self.ss = self.player.playership
         self.render = render
         self.running = True
+        self.ti = TextInput()
 
     def eventLoop(self):
 
@@ -122,103 +125,123 @@ class Events(object):
 
             elif event.type == pygame.KEYDOWN:
 
-                if event.key == pygame.K_RETURN:
-                    self.ggci.chat.addLine("test")
+                if self.ggci.chat.input is False:
 
-                elif event.key == pygame.K_KP_ENTER:
-                    self.ggci.chat.addLine("test2")
+                    if event.key == pygame.K_RETURN:
+                        self.ggci.chat.input = True
 
-                elif event.key == pygame.K_ESCAPE:
-                    if self.ggci.wm.menuwindow.visible is False:
-                        self.ggci.wm.menuwindow.show()
-                    else:
-                        self.ggci.wm.menuwindow.hide()
+                    elif event.key == pygame.K_KP_ENTER:
+                        self.ggci.chat.addLine("test2")
 
-                elif event.key == pygame.K_s:
-                    if self.ggci.wm.skillswindow.visible is False:
-                        self.ggci.wm.skillswindow.show()
-                    else:
-                        self.ggci.wm.skillswindow.hide()
+                    elif event.key == pygame.K_ESCAPE:
+                        if self.ggci.wm.menuwindow.visible is False:
+                            self.ggci.wm.menuwindow.show()
+                        else:
+                            self.ggci.wm.menuwindow.hide()
 
-                elif event.key == pygame.K_c:
-                    if self.ggci.wm.statuswindow.visible is False:
-                        self.ggci.wm.statuswindow.show()
-                    else:
-                        self.ggci.wm.statuswindow.hide()
+                    elif event.key == pygame.K_s:
+                        if self.ggci.wm.skillswindow.visible is False:
+                            self.ggci.wm.skillswindow.show()
+                        else:
+                            self.ggci.wm.skillswindow.hide()
 
-                elif event.key == pygame.K_i:
-                    if self.ggci.wm.inventorywindow.visible is False:
-                        self.ggci.wm.inventorywindow.show()
-                    else:
-                        self.ggci.wm.inventorywindow.hide()
+                    elif event.key == pygame.K_c:
+                        if self.ggci.wm.statuswindow.visible is False:
+                            self.ggci.wm.statuswindow.show()
+                        else:
+                            self.ggci.wm.statuswindow.hide()
 
-                elif event.key == pygame.K_o:
-                    self.ss.oxygen = self.ss.oxygen - 1
+                    elif event.key == pygame.K_i:
+                        if self.ggci.wm.inventorywindow.visible is False:
+                            self.ggci.wm.inventorywindow.show()
+                        else:
+                            self.ggci.wm.inventorywindow.hide()
 
-                elif event.key == pygame.K_F11:
+                    elif event.key == pygame.K_o:
+                        self.ss.oxygen = self.ss.oxygen - 1
 
-                    if self.render.fullscreen == True:
-                        self.render.fullscreen = False
-                        self.render.screen = pygame.display. \
-                        set_mode(self.render.size,
-                                pygame.RESIZABLE)
+                    elif event.key == pygame.K_F11:
 
-                    else:
-                        self.render.fullscreen = True
-                        self.render.screen = pygame.display. \
-                        set_mode(self.render.fsres,
-                                pygame.FULLSCREEN |
-                                pygame.HWSURFACE |
-                                pygame.DOUBLEBUF)
+                        if self.render.fullscreen == True:
+                            self.render.fullscreen = False
+                            self.render.screen = pygame.display. \
+                            set_mode(self.render.size,
+                                    pygame.RESIZABLE)
 
-                elif event.key == pygame.K_SPACE:
-                    if self.uevents.lock == True:
+                        else:
+                            self.render.fullscreen = True
+                            self.render.screen = pygame.display. \
+                            set_mode(self.render.fsres,
+                                    pygame.FULLSCREEN |
+                                    pygame.HWSURFACE |
+                                    pygame.DOUBLEBUF)
 
-                        self.uevents.lock = False
-                    else:
+                    elif event.key == pygame.K_SPACE:
+                        if self.uevents.lock == True:
 
-                        self.uevents.lock = True
+                            self.uevents.lock = False
+                        else:
 
-                elif event.key == pygame.K_q:
+                            self.uevents.lock = True
 
-                    pygame.event.post(pygame.event.Event(
-                                            26, {'type': 'playershot',
-                                            'x': self.player.playership.x,
-                                            'y': self.player.playership.y,
-                                            'speed': 10,
-                                            'r': self.player.playership.angle}))
+                    elif event.key == pygame.K_q:
 
-                elif event.key == pygame.K_m:
-                    self.player.playership.mass += 1
-                    maxspeed = math.log((0.001 * self.player.playership.mass
-                                         ** 1.08)
-                            / self.player.playership.thrust, 0.85)
-                    print(self.player.playership.mass,
-                          self.player.playership.thrust, maxspeed)
+                        pygame.event.post(pygame.event.Event(
+                                                26, {'type': 'playershot',
+                                                'x': self.player.playership.x,
+                                                'y': self.player.playership.y,
+                                                'speed': 10,
+                                                'r': self.player.playership.angle}))
 
-                elif event.key == pygame.K_n:
-                    self.player.playership.mass -= 1
-                    maxspeed = math.log((0.001 * self.player.playership.mass
-                                         ** 1.08)
-                            / self.player.playership.thrust, 0.85)
-                    print(self.player.playership.mass,
-                          self.player.playership.thrust, maxspeed)
+                    elif event.key == pygame.K_m:
+                        self.player.playership.mass += 1
+                        maxspeed = math.log((0.001 * self.player.playership.mass
+                                             ** 1.08)
+                                / self.player.playership.thrust, 0.85)
+                        print(self.player.playership.mass,
+                              self.player.playership.thrust, maxspeed)
 
-                elif event.key == pygame.K_k:
-                    self.player.playership.thrust += 1
-                    maxspeed = math.log((0.001 * self.player.playership.mass
-                                         ** 1.08)
-                            / self.player.playership.thrust, 0.85)
-                    print(self.player.playership.mass,
-                          self.player.playership.thrust, maxspeed)
+                    elif event.key == pygame.K_n:
+                        self.player.playership.mass -= 1
+                        maxspeed = math.log((0.001 * self.player.playership.mass
+                                             ** 1.08)
+                                / self.player.playership.thrust, 0.85)
+                        print(self.player.playership.mass,
+                              self.player.playership.thrust, maxspeed)
 
-                elif event.key == pygame.K_j:
-                    self.player.playership.thrust -= 1
-                    maxspeed = math.log((0.001 * self.player.playership.mass
-                                         ** 1.08)
-                            / self.player.playership.thrust, 0.85)
-                    print(self.player.playership.mass,
-                          self.player.playership.thrust, maxspeed)
+                    elif event.key == pygame.K_k:
+                        self.player.playership.thrust += 1
+                        maxspeed = math.log((0.001 * self.player.playership.mass
+                                             ** 1.08)
+                                / self.player.playership.thrust, 0.85)
+                        print(self.player.playership.mass,
+                              self.player.playership.thrust, maxspeed)
+
+                    elif event.key == pygame.K_j:
+                        self.player.playership.thrust -= 1
+                        maxspeed = math.log((0.001 * self.player.playership.mass
+                                             ** 1.08)
+                                / self.player.playership.thrust, 0.85)
+                        print(self.player.playership.mass,
+                              self.player.playership.thrust, maxspeed)
+
+            #----------------------------------------
+            #--------------KEY-PRESSED---------------
+            #------------------CHAT------------------
+
+                else:
+                    if event.key == pygame.K_RETURN:
+                        if self.ggci.chat.inputstring is not "":
+                            self.ggci.chat.addLine(self.ggci.chat.inputstring)
+                            self.ggci.chat.inputstring = ""
+                        self.ggci.chat.input = False
+
+                    elif event.key == pygame.K_BACKSPACE:
+                        self.ggci.chat.inputstring = self.ggci.chat.inputstring[:-1]
+
+                    elif len(self.ggci.chat.inputstring) < 30:
+
+                        self.ggci.chat.inputstring += event.unicode
 
             #----------------------------------------
             #--------------KEY-RELEASED--------------

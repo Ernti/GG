@@ -8,7 +8,7 @@ import pygame
 
 pygame.init()
 
-class GGtextinput ():
+class TextInput ():
     
     def isLetter(self,character):
         if (character == pygame.K_a) | (character == pygame.K_b) \
