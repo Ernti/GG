@@ -74,7 +74,7 @@ class Render(object):
                 objects.renderNameplate()
 
         self.ggci.textrender.print(str(self.ggci.speed) + " km/h", self.ggci.textrender.char2,
-                                   self.ggci.ggdata.screenwidth - 200, 10, "left")
+                                   self.ggci.ggdata.screenwidth - 10, 10, "right")
         line = 0
         while line < self.ggci.ggdata.chatlength:
             if line < len(self.ggci.chat.chat):

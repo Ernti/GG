@@ -76,3 +76,10 @@ class Radar(object):
                                self.ggci.ggdata.screenheight - 110 + ((objects.y - self.ggci.player.playership.y)
                                                                       / self.ggci.player.playership.radarrange)*100)
                     glEnd()
+
+        self.ggci.textrender.print("x: " + str(int(self.ggci.player.playership.x))
+                                   + ", y: " + str(int(self.ggci.player.playership.y)),
+                                   self.ggci.textrender.char,
+                                   self.ggci.ggdata.screenwidth - 110,
+                                   self.ggci.ggdata.screenheight - 215 - self.ggci.textrender.char[49][2],
+                                   'center')

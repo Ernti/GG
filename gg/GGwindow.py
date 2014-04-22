@@ -30,6 +30,7 @@ class Window(object):
         glVertex2f(self.posx + self.width, self.ggci.ggdata.screenheight - self.posy - self.height)
         glVertex2f(self.posx, self.ggci.ggdata.screenheight - self.posy - self.height)
         glEnd()
+
         glBegin(GL_LINE_LOOP)
         glColor3f(0.4, 0.4, 0.4)
         glVertex2f(self.posx, self.ggci.ggdata.screenheight - self.posy)
@@ -37,15 +38,16 @@ class Window(object):
         glVertex2f(self.posx + self.width, self.ggci.ggdata.screenheight - self.posy - self.height)
         glVertex2f(self.posx, self.ggci.ggdata.screenheight - self.posy - self.height)
         glEnd()
+
         glBegin(GL_LINE_LOOP)
         glColor3f(0.4, 0.4, 0.4)
         glVertex2f(self.posx, self.ggci.ggdata.screenheight - self.posy)
         glVertex2f(self.posx + self.width, self.ggci.ggdata.screenheight - self.posy)
-        glVertex2f(self.posx + self.width, self.ggci.ggdata.screenheight - self.posy - 20)
-        glVertex2f(self.posx, self.ggci.ggdata.screenheight - self.posy - 20)
+        glVertex2f(self.posx + self.width, self.ggci.ggdata.screenheight - self.posy - self.ggci.textrender.statchar[49][2] - 2)
+        glVertex2f(self.posx, self.ggci.ggdata.screenheight - self.posy - self.ggci.textrender.statchar[49][2] - 2)
         glEnd()
 
-        self.ggci.textrender.print(self.title, self.ggci.textrender.statchar, self.posx + 5, self.ggci.ggdata.screenheight - self.posy - 17, "left")
+        self.ggci.textrender.print(self.title, self.ggci.textrender.statchar, self.posx + 5, self.ggci.ggdata.screenheight - self.posy - self.ggci.textrender.statchar[49][2], "left")
 
         for list in self.lists:
 

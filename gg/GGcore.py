@@ -46,6 +46,12 @@ class GGcore(object):
 
         testplanet = Planet(1337, 0, 1000, 1000, 0.0001, self.ggci)
         self.ggci.objectlist.addObject(testplanet)
+        testplanet = Planet(1338, 0, 1000, 750, 0.001, self.ggci)
+        self.ggci.objectlist.addObject(testplanet)
+        testplanet = Planet(1339, 0, 1000, 1250, 0.0003, self.ggci)
+        self.ggci.objectlist.addObject(testplanet)
+        testplanet = Planet(1340, 0, 1000, 1500, 0.00001, self.ggci)
+        self.ggci.objectlist.addObject(testplanet)
 
     def gameLoop(self):
 
