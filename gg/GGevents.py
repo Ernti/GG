@@ -239,6 +239,10 @@ class Events(object):
                     elif event.key == pygame.K_BACKSPACE:
                         self.ggci.chat.inputstring = self.ggci.chat.inputstring[:-1]
 
+                    elif event.key == pygame.K_ESCAPE:
+                        self.ggci.chat.inputstring = ""
+                        self.ggci.chat.input = False
+
                     elif len(self.ggci.chat.inputstring) < 30:
 
                         self.ggci.chat.inputstring += event.unicode

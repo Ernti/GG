@@ -18,7 +18,6 @@ class ChatWindow(object):
 
     def addLine(self, message):
 
-        self.chat.append(message)
         pygame.event.post(pygame.event.Event(
                                     26,{
                                         'type': 'sendchatmessage',
