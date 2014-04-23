@@ -32,4 +32,4 @@ class GGCI(object):
     def wmInit(self):
 
         self.wm = WindowManager(self)
-        self.buttonhandler = Buttonhandler()
+        self.buttonhandler = Buttonhandler(self)

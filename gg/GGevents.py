@@ -134,10 +134,10 @@ class Events(object):
                         self.ggci.chat.addLine("test2")
 
                     elif event.key == pygame.K_ESCAPE:
-                        if self.ggci.wm.menuwindow.visible is False:
+                        if len(self.ggci.objectlist.windowlist) is 0:
                             self.ggci.wm.menuwindow.show()
                         else:
-                            self.ggci.wm.menuwindow.hide()
+                            self.ggci.objectlist.windowlist[-1].hide()
 
                     elif event.key == pygame.K_s:
                         if self.ggci.wm.skillswindow.visible is False:
@@ -269,6 +269,24 @@ class Events(object):
             elif event.type == pygame.USEREVENT:
 
                 data = event.dict
+                if data['type'] == 'fullscreen':
+
+                    self.render.screen = pygame.display.set_mode(self.ggci.ggdata.screensize,
+                                              pygame.DOUBLEBUF |
+                                              pygame.OPENGL | pygame.FULLSCREEN,
+                                              24)
+                    self.render.reinit()
+                    self.ggci.wm.optionswindow.buttons[0].text = "Windowed"
+
+                if data['type'] == 'windowed':
+
+                    self.render.screen = pygame.display.set_mode(self.ggci.ggdata.screensize,
+                                              pygame.DOUBLEBUF |
+                                              pygame.OPENGL,
+                                              24)
+                    self.render.reinit()
+                    self.ggci.wm.optionswindow.buttons[0].text = "Fullscreen"
+
                 if data['type'] == 'QUIT':
 
                     self.running = False

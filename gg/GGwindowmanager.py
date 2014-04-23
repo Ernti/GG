@@ -27,13 +27,32 @@ class WindowManager(object):
                                  100,
                                  200,
                                  self.ggci)
-        self.menuwindow.buttons.append(WindowButton(self.menuwindow,
-                                                    "Exit",
-                                                    10,
-                                                    170,
-                                                    80,
-                                                    20,
+        self.menuwindow.buttons.append(WindowButton(self.menuwindow, "Options",
+                                                    10, 140, 80, 20,
+                                                    'options'))
+        self.menuwindow.buttons.append(WindowButton(self.menuwindow, "Exit",
+                                                    10, 170, 80, 20,
                                                     'quit'))
+
+        #    ____       __  _                     _         __
+        #   / __ \___  / /_(_)__  ___  ____    __(_)__  ___/ /__ _    __
+        #  / /_/ / _ \/ __/ / _ \/ _ \(_-< |/|/ / / _ \/ _  / _ \ |/|/ /
+        #  \____/ .__/\__/_/\___/_//_/___/__,__/_/_//_/\_,_/\___/__,__/
+        #      /_/
+
+        self.optionswindow = Window("Options",
+                                    self.ggci.ggdata.screenwidth / 2 - self.ggci.textrender.statchar[49][1] * 20,
+                                    self.ggci.ggdata.screenheight / 2 - self.ggci.textrender.statchar[49][2] * 10,
+                                    self.ggci.textrender.statchar[49][1] * 40,
+                                    self.ggci.textrender.statchar[49][2] * 20,
+                                    self.ggci)
+
+        self.optionswindow.buttons.append(WindowButton(self.optionswindow, "Fullscreen",
+                                                       self.ggci.textrender.statchar[49][1],
+                                                       self.ggci.textrender.statchar[49][2] * 2,
+                                                       self.ggci.textrender.statchar[49][1] * 15,
+                                                       self.ggci.textrender.statchar[49][2] * 1,
+                                                       'fullscreen'))
 
         #     ______       __                 _         __
         #    / __/ /____ _/ /___ ______    __(_)__  ___/ /__ _    __
