@@ -5,6 +5,7 @@ Created on 1 Mar 2014
 '''
 
 from OpenGL.GL import *
+import pygame
 
 
 class WindowButton(object):
@@ -21,8 +22,16 @@ class WindowButton(object):
 
     def render(self):
 
+        mousepos = pygame.mouse.get_pos()
+
         glBegin(GL_QUADS)
-        glColor3f(0.5, 0.5, 0.5)
+        if ((mousepos[0] < self.window.posx + self.posx + self.width
+             and mousepos[0] > self.window.posx + self.posx)
+            and (mousepos[1] > self.window.posy + self.posy
+                 and mousepos[1] < self.window.posy + self.posy + self.height)):
+            glColor3f(0.7, 0.7, 0.7)
+        else:
+            glColor3f(0.5, 0.5, 0.5)
         glVertex2f(self.window.posx + self.posx,
                    self.window.ggci.ggdata.screenheight - self.window.posy - self.posy)
         glVertex2f(self.window.posx + self.posx + self.width,
