@@ -4,6 +4,7 @@ Created on 14 Apr 2014
 @author: tore
 '''
 import math
+import random
 from OpenGL.GL import *
 
 from gg.GGitem import Item
@@ -46,6 +47,10 @@ class Itemobject(object):
                 self.ggci.player.playership.inventory.append(self.item)
             self.ggci.chat.chat.append("You get " + str(self.item.amount) + ' ' + self.item.name + '!')
             self.ggci.objectlist.removeObject(self)
+
+            testitem = Itemobject({'soid': 123, 'x': random.randint(-100, 100), 'y': random.randint(-100, 100), 'lived': 0, 'alive': 100, 'item': {'name': 'Scrap', 'id': 1,
+                                                                                      'type': 'scrap', 'amount': 7}}, self.ggci)
+            self.ggci.objectlist.addObject(testitem)
 
     def render(self):
 

@@ -4,6 +4,7 @@ Created on 11 Dec 2013
 @author: tore
 '''
 import os.path
+import random
 
 import time
 
@@ -40,7 +41,19 @@ class GGcore(object):
 
         self.ggci.player.eventtest(self.events.uevents)
 
-        testitem = Itemobject({'soid': 123, 'x': 10, 'y': 10, 'lived': 0, 'alive': 100, 'item': {'name': 'Scrap', 'id': 1,
+        testitem = Itemobject({'soid': 123, 'x': random.randint(-100, 100), 'y': random.randint(-100, 100), 'lived': 0, 'alive': 100, 'item': {'name': 'Scrap', 'id': 1,
+                                                                                      'type': 'scrap', 'amount': 7}}, self.ggci)
+        self.ggci.objectlist.addObject(testitem)
+        testitem = Itemobject({'soid': 123, 'x': random.randint(-100, 100), 'y': random.randint(-100, 100), 'lived': 0, 'alive': 100, 'item': {'name': 'Scrap', 'id': 1,
+                                                                                      'type': 'scrap', 'amount': 7}}, self.ggci)
+        self.ggci.objectlist.addObject(testitem)
+        testitem = Itemobject({'soid': 123, 'x': random.randint(-100, 100), 'y': random.randint(-100, 100), 'lived': 0, 'alive': 100, 'item': {'name': 'Scrap', 'id': 1,
+                                                                                      'type': 'scrap', 'amount': 7}}, self.ggci)
+        self.ggci.objectlist.addObject(testitem)
+        testitem = Itemobject({'soid': 123, 'x': random.randint(-100, 100), 'y': random.randint(-100, 100), 'lived': 0, 'alive': 100, 'item': {'name': 'Scrap', 'id': 1,
+                                                                                      'type': 'scrap', 'amount': 7}}, self.ggci)
+        self.ggci.objectlist.addObject(testitem)
+        testitem = Itemobject({'soid': 123, 'x': random.randint(-100, 100), 'y': random.randint(-100, 100), 'lived': 0, 'alive': 100, 'item': {'name': 'Scrap', 'id': 1,
                                                                                       'type': 'scrap', 'amount': 7}}, self.ggci)
         self.ggci.objectlist.addObject(testitem)
 

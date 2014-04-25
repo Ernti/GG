@@ -77,6 +77,21 @@ class Radar(object):
                                                                       / self.ggci.player.playership.radarrange)*100)
                     glEnd()
 
+            elif objects.type is "item":
+
+                if math.sqrt(((objects.x - self.ggci.player.playership.x)
+                                    / self.ggci.player.playership.radarrange)**2
+                        + ((objects.y - self.ggci.player.playership.y)
+                               / self.ggci.player.playership.radarrange) ** 2) < 1:
+
+                    glBegin(GL_POINTS)
+                    glColor(0, 0, 1)
+                    glVertex2f(self.ggci.ggdata.screenwidth - 110 + ((objects.x - self.ggci.player.playership.x)
+                                                                     / self.ggci.player.playership.radarrange)*100,
+                               self.ggci.ggdata.screenheight - 110 + ((objects.y - self.ggci.player.playership.y)
+                                                                      / self.ggci.player.playership.radarrange)*100)
+                    glEnd()
+
         self.ggci.textrender.print("x: " + str(int(self.ggci.player.playership.x))
                                    + ", y: " + str(int(self.ggci.player.playership.y)),
                                    self.ggci.textrender.char,

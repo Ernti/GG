@@ -5,7 +5,7 @@ Created on 17 Dec 2013
 '''
 import os.path
 import pygame
-from gg.GGButtonhandler import Buttonhandler
+from gg.GGbuttonhandler import Buttonhandler
 from gg.GGchat import ChatWindow
 from gg.GGdata import GGData
 from gg.GGobjectlist import ObjectList
