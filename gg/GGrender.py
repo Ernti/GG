@@ -110,6 +110,9 @@ class Render(object):
 
             window.render()
 
+        if self.ggci.contextmenu is not None:
+            self.ggci.contextmenu.render()
+
         glPopMatrix()
 
         pygame.display.flip()

@@ -8,9 +8,11 @@ import math
 
 import pygame.event
 from gg.GGbullet import Bullet
+from gg.GGcontextmenu import ContextMenu
 
 from gg.GGspaceship import SpaceShip
 from gg.GGtextinput import TextInput
+from gg.GGwindowbutton import WindowButton
 
 
 class UserEvents(object):
@@ -54,6 +56,29 @@ class Events(object):
 
             elif event.type == pygame.MOUSEBUTTONDOWN:
 
+                if self.ggci.contextmenu is not None:
+                    if ((event.dict['pos'][0] > self.ggci.contextmenu.posx
+                         and event.dict['pos'][1] > self.ggci.contextmenu.posy)
+                        and (event.dict['pos'][0] < (self.ggci.contextmenu.posx + self.ggci.contextmenu.width)
+                             and event.dict['pos'][1] < (self.ggci.contextmenu.posy + self.ggci.contextmenu.height))):
+
+                        for button in self.ggci.contextmenu.buttons:
+
+                                if ((event.dict['pos'][0] > (self.ggci.contextmenu.posx + button.posx)
+                                     and event.dict['pos'][1] > (self.ggci.contextmenu.posy + button.posy))
+                                    and (event.dict['pos'][0] < (self.ggci.contextmenu.posx + button.posx + button.width)
+                                         and event.dict['pos'][1] < (self.ggci.contextmenu.posy + button.posy + button.height))):
+
+
+                                    button.action()
+                                    self.ggci.contextmenu = None
+                                    break
+                        continue
+
+                    else:
+
+                        self.ggci.contextmenu = None
+
                 if event.dict['button'] == 1:
                     print(event.dict['pos'])
                     for window in self.ggci.objectlist.windowlist:
@@ -80,8 +105,40 @@ class Events(object):
 
                 if event.dict['button'] == 3:
 
-                    self.uevents.rmsbtn = True
-                    print('Rmsbtn True')
+                    for window in self.ggci.objectlist.windowlist:
+                        print((window.posx, window.posy), ((window.posx + window.width), (window.posy + window.height)))
+                        if ((event.dict['pos'][0] > window.posx
+                             and event.dict['pos'][1] > window.posy)
+                            and (event.dict['pos'][0] < (window.posx + window.width)
+                                 and event.dict['pos'][1] < (window.posy + window.height))):
+
+                            for list in window.lists:
+                                for item in list.list:
+                                    if ((event.dict['pos'][0] > window.posx + list.posx
+                                         and event.dict['pos'][1] > window.posy + list.posy
+                                            + self.ggci.textrender.statchar[49][2] * list.list.index(item))
+                                        and (event.dict['pos'][0] < (window.posx + list.posx + list.width)
+                                             and event.dict['pos'][1] < window.posy + list.posy
+                                                + self.ggci.textrender.statchar[49][2]
+                                                + self.ggci.textrender.statchar[49][2] * list.list.index(item))):
+
+                                        contextmenu = ContextMenu(item, event.dict['pos'], self.ggci)
+                                        testbuttons = [WindowButton(contextmenu, 'use', 0, 0, 100, self.ggci.textrender.statchar[49][2], 'useitem'),
+                                                       WindowButton(contextmenu, 'test', 0, self.ggci.textrender.statchar[49][2], 100, self.ggci.textrender.statchar[49][2], ''),
+                                                       WindowButton(contextmenu, 'test', 0, self.ggci.textrender.statchar[49][2] * 2, 100, self.ggci.textrender.statchar[49][2], ''),
+                                                       WindowButton(contextmenu, 'test', 0, self.ggci.textrender.statchar[49][2] * 3, 100, self.ggci.textrender.statchar[49][2], '')]
+                                        contextmenu.addButtons(testbuttons)
+                                        self.ggci.contextmenu = contextmenu
+
+                                        print(item.name)
+
+
+
+
+                        else:
+
+                            self.uevents.rmsbtn = True
+                            print('Rmsbtn True')
 
                 if event.dict['button'] == 4:
                     self.uevents.swdwn = True

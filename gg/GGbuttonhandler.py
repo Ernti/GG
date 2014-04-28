@@ -32,3 +32,9 @@ class Buttonhandler(object):
             else:
                 pygame.event.post(pygame.event.Event(pygame.USEREVENT, {'type': 'fullscreen'}))
                 self.ggci.ggdata.fullscreen = True
+
+        elif dict['action'] == 'useitem':
+
+            self.ggci.contextmenu.item.amount -= 1
+            if self.ggci.contextmenu.item.amount < 1:
+                self.ggci.player.playership.inventory.remove(self.ggci.contextmenu.item)

@@ -27,6 +27,8 @@ class GGCI(object):
         self.textrender = TextRender(self)
         self.radar = Radar(self)
 
+        self.contextmenu = None
+
         # self.obj = OBJ(os.path.join(".", "gg", "data", "objects", "ship.obj"), swapyz=False)
 
     def wmInit(self):
