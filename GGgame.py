@@ -4,14 +4,20 @@ Created on 5 Dec 2013
 @author: tore
 '''
 
+import os
 import sys
 
 from gg.GGcore import GGcore
+from gg.GGsplashscreen import SplashScreen
 from net.connection import Network
 from gg.GGlauncher import GGlauncher
 
+os.environ['SDL_VIDEO_CENTERED'] = '1'
+
 launcher = GGlauncher()
 login = launcher.launcherLoop()
+
+splashscreen = SplashScreen()
 
 net = Network(login)
 net.connect()

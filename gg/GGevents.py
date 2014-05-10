@@ -105,6 +105,9 @@ class Events(object):
 
                 if event.dict['button'] == 3:
 
+                    if len(self.ggci.objectlist.windowlist) is 0:
+                        self.uevents.rmsbtn = True
+                        print('Rmsbtn True')
                     for window in self.ggci.objectlist.windowlist:
                         print((window.posx, window.posy), ((window.posx + window.width), (window.posy + window.height)))
                         if ((event.dict['pos'][0] > window.posx
