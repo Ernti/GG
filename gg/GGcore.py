@@ -11,6 +11,7 @@ import time
 import pygame
 
 from gg.GGchat import ChatWindow
+from gg.GGcollisiondetector import CollisionDetektor
 from gg.GGcoreinterface import GGCI
 from gg.GGevents import Events
 from gg.GGitem import Item
@@ -87,5 +88,7 @@ class GGcore(object):
                 self.test = 0
                 print(self.fps, " fps")
                 self.ggci.speed = int(self.ggci.player.playership.speed * 3.6)
+
+            CollisionDetektor(self.ggci)
 
             self.render.render()

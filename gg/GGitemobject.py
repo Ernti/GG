@@ -26,6 +26,9 @@ class Itemobject(object):
         self.lived = data['lived']
         self.alive = data['alive']
 
+        self.vertex = [[2, 2, 0], [-2, -2, 0]]
+        self.r = 0
+
     def action(self):
 
         if self.lived > self.alive:
@@ -63,6 +66,25 @@ class Itemobject(object):
                        self.ggci.player.y + self.y + r * math.sin(angle),
                        0 - self.ggci.player.z)
             angle += 0.1
+        glEnd()
+
+    def debugRender(self):
+
+        glColor(0, 0.8, 0.2)
+
+        glBegin(GL_LINE_LOOP)
+        glVertex3f(self.collisionbox[0] + self.x + self.ggci.player.x,
+                   self.collisionbox[2] + self.y + self.ggci.player.y,
+                   0 - self.ggci.player.z)
+        glVertex3f(self.collisionbox[1] + self.x + self.ggci.player.x,
+                   self.collisionbox[2] + self.y + self.ggci.player.y,
+                   0 - self.ggci.player.z)
+        glVertex3f(self.collisionbox[1] + self.x + self.ggci.player.x,
+                   self.collisionbox[3] + self.y + self.ggci.player.y,
+                   0 - self.ggci.player.z)
+        glVertex3f(self.collisionbox[0] + self.x + self.ggci.player.x,
+                   self.collisionbox[3] + self.y + self.ggci.player.y,
+                   0 - self.ggci.player.z)
         glEnd()
 
 

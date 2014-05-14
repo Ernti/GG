@@ -8,7 +8,7 @@ Created on 8 Dec 2013
 import math
 import numpy
 
-from OpenGL.GL import GL_POLYGON, glVertexPointerf, glDrawElementsui, GL_VERTEX_ARRAY, glEnableClientState, glColor
+from OpenGL.GL import *
 import pygame
 from gg.GGspaceshipengine import Engine
 from gg.GGspaceshipweapon import Weapon
@@ -21,6 +21,8 @@ class SpaceShip(object):
         self.ggci = ggci
         self.id = data['soid']
         self.type = "ss"
+
+        self.debug = False
 
         self.oxygen = 100
         self.hull = 100
@@ -69,6 +71,19 @@ class SpaceShip(object):
 
         self.indices = numpy.arange(0, len(self.vertex), None, 'i')
         print(len(self.vertex))
+
+        self.collisionbox = [0, 0, 0, 0]
+        self.collisionvertex = self.vertex.reshape(len(self.vertex), 3)
+        for vert in self.collisionvertex:
+            if vert[0] < self.collisionbox[0]:
+                self.collisionbox[0] = vert[0]
+            if vert[0] > self.collisionbox[1]:
+                self.collisionbox[1] = vert[0]
+            if vert[1] < self.collisionbox[2]:
+                self.collisionbox[2] = vert[1]
+            if vert[1] > self.collisionbox[3]:
+                self.collisionbox[3] = vert[1]
+        print(self.collisionbox)
 
     def move(self, nextx, nexty, nextr):
 
@@ -149,6 +164,9 @@ class SpaceShip(object):
         glVertexPointerf(vertex)
         glDrawElementsui(GL_POLYGON, self.indices)
 
+        if self.debug is True:
+            self.debugRender()
+
         self.render_lasttick = self.render_nowtick
 
     def renderNameplate(self):
@@ -164,5 +182,24 @@ class SpaceShip(object):
                   * self.ggci.ggdata.screenheight / 2) + self.ggci.ggdata.screenheight / 2)
 
         self.ggci.textrender.print(self.id, self.ggci.textrender.char, textx, texty, "center")
+
+    def debugRender(self):
+
+        glColor(0, 0.8, 0.2)
+
+        glBegin(GL_LINE_LOOP)
+        glVertex3f(self.collisionbox[0] + self.x + self.ggci.player.x,
+                   self.collisionbox[2] + self.y + self.ggci.player.y,
+                   0 - self.ggci.player.z)
+        glVertex3f(self.collisionbox[1] + self.x + self.ggci.player.x,
+                   self.collisionbox[2] + self.y + self.ggci.player.y,
+                   0 - self.ggci.player.z)
+        glVertex3f(self.collisionbox[1] + self.x + self.ggci.player.x,
+                   self.collisionbox[3] + self.y + self.ggci.player.y,
+                   0 - self.ggci.player.z)
+        glVertex3f(self.collisionbox[0] + self.x + self.ggci.player.x,
+                   self.collisionbox[3] + self.y + self.ggci.player.y,
+                   0 - self.ggci.player.z)
+        glEnd()
 
 

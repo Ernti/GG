@@ -17,7 +17,7 @@ os.environ['SDL_VIDEO_CENTERED'] = '1'
 launcher = GGlauncher()
 login = launcher.launcherLoop()
 
-splashscreen = SplashScreen()
+SplashScreen()
 
 net = Network(login)
 net.connect()
