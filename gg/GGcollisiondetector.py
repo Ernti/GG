@@ -45,7 +45,7 @@ class CollisionDetektor(object):
                                                                     math.cos(math.radians(object.r)), 0,
                                                                     0, 0, 1], 'f').reshape(3, 3))
                     vertex.append(vx)
-                vertex = numpy.array(vertex, 'f').reshape(len(object.vertex), 3)
+                vertex = numpy.array(vertex, 'f').reshape(len(vertex), 3)
                 for vert in vertex:
                     if vert[0] < object.collisionbox[0]:
                         object.collisionbox[0] = vert[0]

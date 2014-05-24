@@ -9,12 +9,13 @@ from gg.GGbullet import Bullet
 
 class Weapon(object):
 
-    def __init__(self, type, ggci):
+    def __init__(self, ss, type, ggci):
 
         self.ggci = ggci
+        self.ss = ss
         self.type = type
 
-    def shoot(self, data):
+    def shoot(self):
 
-        bullet = Bullet(data, self.ggci)
+        bullet = Bullet({'x': self.ss.x, 'y': self.ss.y, 'r': self.ss.r}, self.ggci)
         self.ggci.objectlist.addObject(bullet)

@@ -246,12 +246,13 @@ class Events(object):
 
                     elif event.key == pygame.K_q:
 
-                        pygame.event.post(pygame.event.Event(
-                                                26, {'type': 'playershot',
-                                                'x': self.player.playership.x,
-                                                'y': self.player.playership.y,
-                                                'speed': 10,
-                                                'r': self.player.playership.angle}))
+                        self.player.playership.weapon.shoot()
+
+                        #pygame.event.post(pygame.event.Event(
+                        #                        26, {'type': 'playershot',
+                        #                        'x': self.player.playership.x,
+                        #                        'y': self.player.playership.y,
+                        #                        'r': self.player.playership.r}))
 
                     elif event.key == pygame.K_m:
                         self.player.playership.mass += 1

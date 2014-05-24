@@ -43,7 +43,7 @@ class SpaceShip(object):
         self.acceleration = 0
 
         self.engine = Engine(data['engine'], self)
-        self.weapon = Weapon("Machine Gun", self.ggci)
+        self.weapon = Weapon(self, "Machine Gun", self.ggci)
         self.inventory = []
 
         self.radarrange = 250
@@ -65,9 +65,11 @@ class SpaceShip(object):
         self.render_lasttick = self.render_nowtick
 
         self.vertex = numpy.array([numpy.array([3, 0, 0], 'f').reshape(1, 3),
-                                   numpy.array([-1, -2, 0], 'f').reshape(1, 3),
+                                   numpy.array([0, 0.5, 0], 'f').reshape(1, 3),
+                                   numpy.array([-1, 2, 0], 'f').reshape(1, 3),
                                    numpy.array([-0.5, 0, 0], 'f').reshape(1, 3),
-                                   numpy.array([-1, 2, 0], 'f').reshape(1, 3)])
+                                   numpy.array([-1, -2, 0], 'f').reshape(1, 3),
+                                   numpy.array([0, -0.5, 0], 'f').reshape(1, 3)])
 
         self.indices = numpy.arange(0, len(self.vertex), None, 'i')
         print(len(self.vertex))

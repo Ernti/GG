@@ -29,7 +29,7 @@ class GGcore(object):
         pygame.init()
         self.ggci = GGCI()
         self.ss = SpaceShip({'soid': -1, 'x': 0, 'y': 0,
-                             'engine': {'type': "Electromotor", 'thrust': 10, 'mass': 100}}, self.ggci)
+                             'engine': {'type': "Electromotor", 'thrust': 100, 'mass': 100}}, self.ggci)
         self.ggci.player.playership = self.ss
         self.ggci.objectlist.addObject(self.ss)
 
@@ -89,6 +89,6 @@ class GGcore(object):
                 print(self.fps, " fps")
                 self.ggci.speed = int(self.ggci.player.playership.speed * 3.6)
 
-            CollisionDetektor(self.ggci)
+            #CollisionDetektor(self.ggci)
 
             self.render.render()

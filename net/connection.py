@@ -53,8 +53,10 @@ class Network(object):
 
             self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             self.sock.connect((self.hostaddresse, int(self.hostport)))
+            print('connected to server!')
             self.sock.send(('(' + json.dumps(self.userdict) + ')').encode())
             data = self.sock.recv(1024)
+            print('answer received!')
             for match_group in re.finditer("\(([^()]+)\)", data.decode()):
 
                 data_json = json.loads(match_group.group(1))
