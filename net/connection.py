@@ -67,10 +67,13 @@ class Network(object):
                     self.recthread = ReceiverThread(self.sock)
                     self.sendthread = SenderThread(self.sock)
                     self.recthread.start()
+                    return data_json
 
                 elif data_json['type'] == 'loginerror':
 
                     print("Wrong Username or Password!")
+                    return data_json
+
 
         except KeyboardInterrupt:
 

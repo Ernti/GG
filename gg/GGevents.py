@@ -355,7 +355,7 @@ class Events(object):
                 if data['type'] == 'newspaceobject':
 
                     spaceship = SpaceShip({'soid': data['soid'], 'x':  0, 'y': 0,
-                                           'engine': {'type': "Electromotor", 'thrust': 10, 'mass': 100}}, self.ggci)
+                                           'engine': {'type': "Electromotor", 'thrust': 100, 'mass': 100}}, self.ggci)
                     spaceship.r = 0
                     self.ggci.objectlist.addObject(spaceship)
 
@@ -373,7 +373,7 @@ class Events(object):
 
                         if objects.id == data['soid']:
 
-                            objects.move(data['x'], data['y'], data['r'])
+                            objects.move(data['target'])
 
                             #objects.nextx = data['x']
                             #objects.nexty = data['y']

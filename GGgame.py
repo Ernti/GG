@@ -20,12 +20,12 @@ login = launcher.launcherLoop()
 SplashScreen()
 
 net = Network(login)
-net.connect()
+playerdata = net.connect()
 
 
 if net.connected == True:
 
-    game = GGcore()
+    game = GGcore(playerdata)
     net.sendthread.start()
     try:
         game.gameLoop()

@@ -58,22 +58,3 @@ class Planet(object):
                        0-100 - self.ggci.player.z)
             self.angle += 0.1
         glEnd()
-
-    def debugRender(self):
-
-        glColor(0, 0.8, 0.2)
-
-        glBegin(GL_LINE_LOOP)
-        glVertex3f(self.collisionbox[0] + self.x + self.ggci.player.x,
-                   self.collisionbox[2] + self.y + self.ggci.player.y,
-                   0 - self.ggci.player.z)
-        glVertex3f(self.collisionbox[1] + self.x + self.ggci.player.x,
-                   self.collisionbox[2] + self.y + self.ggci.player.y,
-                   0 - self.ggci.player.z)
-        glVertex3f(self.collisionbox[1] + self.x + self.ggci.player.x,
-                   self.collisionbox[3] + self.y + self.ggci.player.y,
-                   0 - self.ggci.player.z)
-        glVertex3f(self.collisionbox[0] + self.x + self.ggci.player.x,
-                   self.collisionbox[3] + self.y + self.ggci.player.y,
-                   0 - self.ggci.player.z)
-        glEnd()

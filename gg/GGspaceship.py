@@ -27,6 +27,7 @@ class SpaceShip(object):
         self.oxygen = 100
         self.hull = 100
 
+        self.target = (0, 0)
         self.x = data['x']
         self.nextx = self.x
         self.y = data['y']
@@ -87,41 +88,138 @@ class SpaceShip(object):
                 self.collisionbox[3] = vert[1]
         print(self.collisionbox)
 
-    def move(self, nextx, nexty, nextr):
+    def move(self, target):
 
-        self.nextx = nextx
-        self.nexty = nexty
-        self.nextr = nextr
-
-        self.nowtick = pygame.time.get_ticks()
-
-        self.velocity_x = (self.nextx - self.x)
-        self.velocity_y = (self.nexty - self.y)
-        self.velocity_r = (self.nextr - self.r)
-
-        if self.velocity_r > 180:
-            self.velocity_r -= 360
-
-        if self.velocity_r < -180:
-            self.velocity_r += 360
-
-        self.lasttick = self.nowtick
+        self.target = target
 
     def action(self):
 
         self.nowtick = pygame.time.get_ticks()
 
-        self.velocity_x = (self.nextx - self.x)
-        self.velocity_y = (self.nexty - self.y)
-        self.velocity_r = (self.nextr - self.r)
+        if (self.x, self.y) != self.target:
 
-        if self.velocity_r > 180:
-            self.velocity_r -= 360
+            self.targetangle = math.degrees(math.atan2((self.target[1] - self.y),
+                                                       (self.target[0] - self.x)))
 
-        if self.velocity_r < -180:
-            self.velocity_r += 360
+            if self.targetangle - self.r > 180:
+
+                self.turnRight()
+
+            elif self.targetangle - self.r < (-180):
+
+                self.turnLeft()
+
+            elif (self.targetangle - self.r > 0
+                  and self.targetangle - self.r < 180):
+
+                self.turnLeft()
+
+            elif (self.targetangle - self.r < 0
+                  and self.targetangle - self.r > (-180)):
+
+                self.turnRight()
+
+            self.speedUp()
+
+        else:
+
+            self.target = (self.x, self.y)
 
         self.lasttick = self.nowtick
+
+        self.velocity_x = (self.speed * self.scale_x)
+        self.velocity_y = (self.speed * self.scale_y)
+
+
+# else:
+#
+# if self.after < (self.nowtick - 1000):
+#
+# pygame.event.post(pygame.event.Event(
+# 26, {'type': 'playermoved',
+# 'x': self.playership.x,
+# 'y': self.playership.y,
+# 'r': self.playership.angle}))
+#
+# self.after = pygame.time.get_ticks()
+
+
+    def speedUp(self):
+
+        self.acceleration = (self.thrust / (self.mass ** 1.08) * 100)
+
+        self.velocity_x = (self.speed * self.scale_x)
+        self.velocity_y = (self.speed * self.scale_y)
+
+        stopx = (self.velocity_x * (self.mass ** 1.08) / self.thrust / 6)
+        stopy = (self.velocity_y * (self.mass ** 1.08) / self.thrust / 6)
+
+        if (abs(self.target[0] - self.x) >= 0.1 + abs(stopx) or abs(self.target[1] - self.y) >= 0.1 + abs(stopy)):
+
+            if self.speed < ((self.acceleration * (self.mass ** 1.08) / self.thrust / 6)):
+
+                self.speed += (self.acceleration * ((self.nowtick - self.lasttick) / 1000))
+
+            else:
+
+                self.speed = ((self.acceleration * (self.mass ** 1.08) / self.thrust / 6))
+
+        else:
+
+            self.slowDown()
+
+    def slowDown(self):
+
+        self.acceleration = (self.thrust / (self.mass ** 1.08) * 100)
+
+        if (self.speed - (self.acceleration * ((self.nowtick - self.lasttick) / 1000))) > 0.01:
+
+            self.speed -= (self.acceleration * ((self.nowtick - self.lasttick) / 1000))
+
+        else:
+
+            self.speed = 0
+
+    def turnLeft(self):
+
+        self.turntime = (self.thrust / (self.mass ** 1.08) * 1000)
+
+        if abs(self.targetangle - self.r) > (self.turntime * ((self.nowtick - self.lasttick) / 1000)):
+
+            self.slowDown()
+            self.r += (self.turntime * ((self.nowtick - self.lasttick) / 1000))
+
+            if self.r > 180:
+
+                self.r -= 360
+
+        else:
+
+            self.r = self.targetangle
+
+        self.scale_x = math.cos(math.radians(self.r))
+        self.scale_y = math.sin(math.radians(self.r))
+
+    def turnRight(self):
+
+        self.turntime = (self.thrust / (self.mass ** 1.08) * 1000)
+
+        if (abs(self.targetangle - self.r) > (self.turntime * ((self.nowtick - self.lasttick) / 1000))):
+
+            self.slowDown()
+
+            self.r -= (self.turntime * ((self.nowtick - self.lasttick) / 1000))
+
+            if self.r < -180:
+
+                self.r += 360
+
+        else:
+
+            self.r = self.targetangle
+
+        self.scale_x = math.cos(math.radians(self.r))
+        self.scale_y = math.sin(math.radians(self.r))
 
 
 

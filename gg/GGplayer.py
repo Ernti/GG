@@ -71,62 +71,8 @@ class Player(object):
                             * (math.tan(math.radians(45 / 2))
                                * (10 + self.z))))
 
-        if (self.playership.x, self.playership.y) != self.target:
-
-            self.targetangle = math.degrees(math.atan2((self.target[1] - self.playership.y),
-                                                       (self.target[0] - self.playership.x)))
-
-            if self.targetangle - self.playership.r > 180:
-
-                self.turnRight()
-
-            elif self.targetangle - self.playership.r < (-180):
-
-                self.turnLeft()
-
-            elif (self.targetangle - self.playership.r > 0
-                  and self.targetangle - self.playership.r < 180):
-
-                self.turnLeft()
-
-            elif (self.targetangle - self.playership.r < 0
-                  and self.targetangle - self.playership.r > (-180)):
-
-                self.turnRight()
-
-            self.speedUp()
-
-        else:
-
-            self.target = (self.playership.x, self.playership.y)
-
-        self.lasttick = self.nowtick
-
-        self.playership.velocity_x = (self.playership.speed * self.playership.scale_x)
-        self.playership.velocity_y = (self.playership.speed * self.playership.scale_y)
-
-        if self.playership.speed > 0:
-            if self.after < (self.nowtick - 50):
-
-                pygame.event.post(pygame.event.Event(
-                                    26, {'type': 'playermoved',
-                                    'x': self.playership.x,
-                                    'y': self.playership.y,
-                                    'r': self.playership.r}))
-
-                self.after = pygame.time.get_ticks()
-
-#        else:
-#
-#           if self.after < (self.nowtick - 1000):
-#
-#               pygame.event.post(pygame.event.Event(
-#                                 26, {'type': 'playermoved',
-#                                 'x': self.playership.x,
-#                                 'y': self.playership.y,
-#                                 'r': self.playership.angle}))
-#
-#               self.after = pygame.time.get_ticks()
+            pygame.event.post(pygame.event.Event(26, {'type': 'playermoved',
+                                                      'target': self.target}))
 
 
     def speedUp(self):

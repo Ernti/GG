@@ -74,7 +74,7 @@ class Render(object):
 
         for objects in self.ggci.objectlist.objectlist:
 
-            if objects.id is not -1 and objects.type is "ss":
+            if objects.id is not self.ggci.player.playership.id and objects.type is "ss":
 
                 objects.renderNameplate()
 

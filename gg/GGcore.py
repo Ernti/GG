@@ -24,11 +24,11 @@ from gg.GGobjloader import *
 
 class GGcore(object):
 
-    def __init__(self):
+    def __init__(self, playerdata):
 
         pygame.init()
         self.ggci = GGCI()
-        self.ss = SpaceShip({'soid': -1, 'x': 0, 'y': 0,
+        self.ss = SpaceShip({'soid': playerdata['soid'], 'x': playerdata['x'], 'y': playerdata['y'],
                              'engine': {'type': "Electromotor", 'thrust': 100, 'mass': 100}}, self.ggci)
         self.ggci.player.playership = self.ss
         self.ggci.objectlist.addObject(self.ss)
@@ -77,8 +77,7 @@ class GGcore(object):
 
             self.ggci.player.move()
             for objects in self.ggci.objectlist.objectlist:
-                if objects.id is not -1:
-                    objects.action()
+                objects.action()
 
             self.test += 1
             self.test1 = self.test2
